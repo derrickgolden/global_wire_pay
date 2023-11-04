@@ -1,34 +1,57 @@
-import { payment_illus, payment_illus_2 } from "../assets/images";
+import { ban_frame_1, ban_frame_2, ban_frame_3, ban_frame_4, ban_right, banner_bg } from "../assets/images";
 
 const LandingPageBody = () =>{
     return(
-        <section className="banner-section payment">
-            <div className="overlay">
-                <div className="shape-area">
-                    <img src={payment_illus_2} className="obj-1" alt="image"/>
-                    <img src={payment_illus} className="obj-2" alt="image"/>
+        <section class="banner-section">
+        <div class="banner-content d-flex align-items-center">
+            <div class="container">
+                <div class="illu-item">
+                    <img class="item-1" src={ban_frame_1} alt="image"/>
+                <img class="item-2" src={ban_frame_2} alt="image"/>
+                    <img class="item-3" src={ban_frame_3} alt="image"/>
+                    <img class="item-4" src={ban_frame_4} alt="image"/>
                 </div>
-                <div className="banner-content">
-                    <div className="container wow fadeInUp">
-                        <div className="row justify-content-between align-items-center">
-                            <div className="col-lg-6 col-md-7">
-                                <div className="main-content">
-                                    <div className="top-area section-text">
-                                        <h5 className="sub-title">International Payments</h5>
-                                        <h1 className="title">Making Global Payments Simple</h1>
-                                        <p className="xlr">Start growing your business with our innovative payment solutions.</p>
+                <div class="row justify-content-start">
+                    <div class="col-lg-7 col-md-10">
+                        <div class="main-content">
+                            <div class="top-area justify-content-center">
+                                <h1>Instantly pay the world</h1>
+                                <p class="xxlr">A simple and highly secure money transfer around the world</p>
+                                <form action="#">
+                                    <div class="input-field d-flex">
+                                        <input type="email" placeholder="Where are you sending money to"/>
+                                        <button class="cmn-btn"><span>Check rate</span></button>
                                     </div>
-                                    <div className="bottom-area d-xxl-flex">
-                                        <a href="sign-up.html" className="cmn-btn">Open a Free Account</a>
-                                        {/* <a className="cmn-btn active mfp-iframe popupvideo" href="https://www.youtube.com/watch?v=Djz8Nc0Qxwk">See How it Works</a> */}
+                                </form>
+                                <div class="bottom-banner d-flex align-items-center">
+                                    <div class="left">
+                                        <a class="icon mfp-iframe popupvideo"
+                                            href="https://www.youtube.com/watch?v=MJ0zpsWQ_XM">
+                                            <img src="assets/img/video-icon.png" alt="icon"/>
+                                        </a>
+                                    </div>
+                                    <div class="right d-grid">
+                                        <h5>245M+</h5>
+                                        <div class="review d-flex align-items-center">
+                                            <h6>4.0</h6>
+                                            <a href="javascript:void(0)"><i class="fas fa-star"></i></a>
+                                            <a href="javascript:void(0)"><i class="fas fa-star"></i></a>
+                                            <a href="javascript:void(0)"><i class="fas fa-star"></i></a>
+                                            <a href="javascript:void(0)"><i class="fas fa-star"></i></a>
+                                            <a href="javascript:void(0)"><i class="fas fa-star blank"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="right-illu">
+                    <img class="right-1 wow fadeInUp" src={ban_right} alt="image"/>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
     )
 }
 
