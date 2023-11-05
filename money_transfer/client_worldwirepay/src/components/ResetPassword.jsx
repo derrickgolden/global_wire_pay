@@ -7,7 +7,9 @@ import { left_arrow, logo } from "../assets/images"
 
 const ResetPassword = () =>{
     const navigate = useNavigate()
-    const {token} = useParams()
+    const {urltoken} = useParams()
+    const [token, setToken] = useState(urltoken.replace(/_/g, '.'));
+
     console.log(token)
 
     const [signupDetails, setSignupDetails] = useState({
@@ -27,13 +29,16 @@ const ResetPassword = () =>{
             return
         }
 
+        // setToken(urltoken.replace(/_/g, '.'));
+
         let data = JSON.stringify(signupDetails);
         let config = {
             method: 'PATCH',
             maxBodyLength: Infinity,
             url: 'http://localhost:5000/user/reset-password',
             headers: { 
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': token
             },
             data : data
         };

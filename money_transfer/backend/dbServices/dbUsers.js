@@ -5,7 +5,7 @@ const getUserDetails = async( email) =>{
         const connection = await pool.getConnection();
 
         const [res] = await connection.query(`
-        SELECT email from user_details 
+        SELECT * from user_details 
         WHERE email = ?;
         `, [email])
 

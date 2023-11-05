@@ -1,9 +1,11 @@
+import { Outlet } from "react-router-dom";
 import AccDetails from "../components/AccDetails";
 import LinkedPayments from "../components/LickedPayments";
 import Transations from "../components/Transations";
 
 const DashboardBody = () =>{
     return(
+        <>
         <section class="dashboard-section body-collapse">
         <div class="overlay pt-120">
             <div class="container-fruid">
@@ -23,6 +25,8 @@ const DashboardBody = () =>{
             </div>
         </div>
     </section>
+        <Outlet />
+    </>
     )
 }
 

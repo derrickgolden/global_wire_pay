@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { option } from "../assets/images";
 
 const AccDetails = () =>{
@@ -35,8 +36,8 @@ const AccDetails = () =>{
                                 <div class="bottom-area">
                                     <div class="left-side">
                                         {/* <a href="pay.html" class="cmn-btn">Transfer Money</a> */}
-                                        <a href="deposit-money.html" class="cmn-btn">Add Money</a>
-                                        <a href="withdraw-money-step-1.html" class="cmn-btn">Withdraw</a>
+                                        <Link to='http://localhost:5173/user/dashboard/deposit-money' class="cmn-btn">Deposit</Link>
+                                        <Link to='http://localhost:5173/user/dashboard/withdraw-money' class="cmn-btn">Withdraw</Link>
                                     </div>
                                     <div class="right-side">
                                         <div class="dropdown-area">

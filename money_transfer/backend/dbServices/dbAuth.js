@@ -101,8 +101,70 @@ const resetPassword = async(password, email) =>{
     }
 }
 
+const storeLinkToken = async(user_id, email, token,) => {
+
+    try {
+        const connection = await pool.getConnection();
+
+        const [res] = await connection.query(`
+        INSERT INTO link_tokens (user_id, email, token)
+        VALUES (?, ?, ?)
+        `, [user_id, email, token,]);
+
+        console.log(res)
+        return {success: true, 
+            details: [{link_tokens_id:res.insertId, user_id, email}]
+        };
+    } catch (error) {
+        console.log(error)
+
+        if (error.sqlMessage) {
+            return { success: false, msg: error.sqlMessage };
+          } else {
+            console.error('Error:', error.message);
+            return { success: false, msg: error.message };
+          }
+    }
+}
+
+const getLinkToken = async(token ) => {
+    try {
+        const connection = await pool.getConnection();
+
+        const [res] = await connection.query(`
+        SELECT * FROM link_tokens
+        WHERE token = ?
+        `, [token]);
+
+        const {user_id, email, token: storedToken, create_time} = res[0]
+        console.log(res);
+        if(res.length === 1 && token === storedToken){
+            const currentDateTime = create_time;
+            currentDateTime.setHours(currentDateTime.getHours() + 3);
+            if(currentDateTime < new Date()){
+                return {success: false, msg: "Link Expired"}
+            }   
+            return {success: true, email, user_id};
+        }else{
+            return {success: false, msg: "Link Invalid"}
+        }
+    } catch (error) {
+        console.log(error)
+        if (error.sqlMessage) {
+            return {userAvailable: false,
+                res:{success: false,  msg: error.sqlMessage} };
+          } else {
+            console.error('Error:', error.message);
+            return {userAvailable: false,
+                res:{success: false, msg: error.message }};
+        }
+    }
+}
+
 module.exports = {
     signupUser,
     loginUser,
     resetPassword,
+    storeLinkToken,
+    getLinkToken,
 }

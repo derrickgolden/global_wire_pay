@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import { logo, avator, bell, search} from "../assets/images";
 
 const Header = (props) =>{
@@ -10,6 +11,7 @@ const Header = (props) =>{
     // }
 
     return(
+        <>
         <header class="header-section body-collapse">
         <div class="overlay w-full">
             <div class="container-fruid">
@@ -220,6 +222,8 @@ const Header = (props) =>{
             </div>
         </div>
     </header>
+    <Outlet/>
+    </>
     )
 }
 

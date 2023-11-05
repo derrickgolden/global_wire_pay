@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 const { 
-    signupUser, loginUser, resetPassword,
+    signupUser, loginUser, resetPassword, storeLinkToken, getLinkToken,
 } =  require('../dbServices/dbAuth');
 // const { sendText } = require('../controllers/sendText');
 // const { generateRandomVerificationCode } = require('../controllers/randomCode');
@@ -14,6 +14,7 @@ const { generateAuthToken } = require('../controllers/generateToken');
 const { getUserDetails } = require('../dbServices/dbUsers');
 const { sendResetPasswordLink } = require('../controllers/sendResetPasswordLink');
 const { generateResetPasswordLink } = require('../controllers/resetPasswordLink');
+const { authenticateToken } = require('../middlewares/authToken');
 
 // router.get('/roles', async(req, res) =>{
 //     try {
@@ -79,40 +80,23 @@ router.post('/login', async (req, res) =>{
 
 });
 
-// router.post('/addnew', authenticateToken, async(req,res) =>{
-//     const { admin_id, admin_role: user_role } = req.user;
-//     if(user_role !== 1){
-//         return res.status(302).send({success: false, 
-//             msg: "Only admin with role of landlord are allowed to add admins"})
-//     };
-
-//     const { firstname, lastname, username, phone, email, 
-//         password, admin_role, } = req.body;
-//     const added_by = admin_id;
-
-//     try{
-//         const hash = await bcrypt.hash(password, 10);
-//         const response = await signupUser(firstname, lastname, username, 
-//             phone, email, hash, admin_role, added_by)
-//         response.success > 0 ? 
-//             res.status(200).send(response) : 
-//             res.status(302).send( response);
-//     }catch(error){
-//         res.status(302).send({success: false, res: error.message})
-//     }
-// });
-
 router.patch('/reset-password', async(req, res) =>{
     const { password, email } = req.body;
+    const token = req.header('Authorization');
 
     try {
-        const hash = await bcrypt.hash(password, 10);
+        const tokenResponce = await getLinkToken(token)
+        if(tokenResponce.success){
+            const hash = await bcrypt.hash(password, 10);
+    
+            const response = await resetPassword(hash, email)
+            return response.success ?
+                res.status(200).send(response) :
+                res.status(400).send(response)
+        }else{
+            return res.status(400).send(tokenResponce);
+        }
 
-        const response = await resetPassword(hash, email)
-
-        response.success ?
-            res.status(200).send(response) :
-            res.status(400).send(response)
     } catch (error) {
         console.log(error)
     }
@@ -122,17 +106,19 @@ router.post('/forgot-password', async(req, res) =>{
     const { email } = req.body;
     console.log(email);
     try {
-        const response = await getUserDetails(email)
+        const response = await getUserDetails(email);
 
         if(response.success ){
-            const link = await generateResetPasswordLink('http://localhost:5173');
-
-            const resp = await sendResetPasswordLink(email, link);
-            return resp.success ?
-                res.status(200).send({msg: "Link sent", ...response}):
-                res.status(400).send(resp)
+            const {user_id, first_name, last_name, email} = response.details[0];
+            const {link,token} = await generateResetPasswordLink('http://localhost:5173');
+            const storeTokens = await storeLinkToken(user_id,email,token,)
+            if(storeTokens.success){
+                const resp = await sendResetPasswordLink(email, link);
+                return resp.success ?
+                    res.status(200).send({msg: "Link sent", ...response}):
+                    res.status(400).send(resp)
+                }
             }
-            
         return res.status(400).send(response)
     } catch (error) {
         console.log(error)
@@ -157,5 +143,30 @@ router.post('/forgot-password', async(req, res) =>{
 //         console.log(error)
 //     }
 // });
+
+
+// router.post('/addnew', authenticateToken, async(req,res) =>{
+//     const { admin_id, admin_role: user_role } = req.user;
+//     if(user_role !== 1){
+//         return res.status(302).send({success: false, 
+//             msg: "Only admin with role of landlord are allowed to add admins"})
+//     };
+
+//     const { firstname, lastname, username, phone, email, 
+//         password, admin_role, } = req.body;
+//     const added_by = admin_id;
+
+//     try{
+//         const hash = await bcrypt.hash(password, 10);
+//         const response = await signupUser(firstname, lastname, username, 
+//             phone, email, hash, admin_role, added_by)
+//         response.success > 0 ? 
+//             res.status(200).send(response) : 
+//             res.status(302).send( response);
+//     }catch(error){
+//         res.status(302).send({success: false, res: error.message})
+//     }
+// });
+
 
 module.exports  = router;
