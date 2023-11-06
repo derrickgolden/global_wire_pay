@@ -1,10 +1,14 @@
 import axios from 'axios';
 import { useState } from "react";
+import { useDispatch } from 'react-redux';
 
 import { Link, useNavigate } from "react-router-dom";
 import { left_arrow, logo } from "../assets/images";
 
+import { setUserDetails } from '../redux/userDetails'; // Adjust the path as needed
+
 const Login = () =>{
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const [loginDetails, setLoginDetails] = useState({
@@ -35,12 +39,13 @@ const Login = () =>{
         axios.request(config)
         .then((response) => {
             console.log(JSON.stringify(response.data));
-            setLoginDetails((obj) =>({...obj, password: ""}))
+            // const {user_id, first_name, last_name, } = response?.data?.details[0];
+            dispatch(setUserDetails(response?.data?.details[0]));
+            // setLoginDetails((obj) =>({...obj, password: ""}))
             navigate('/user/dashboard', {replace: true});
-            // return redirect('user/login')
         })
         .catch((error) => {
-            console.log(error.response.data);
+            console.log(error);
             setLoginDetails((obj) =>({...obj, password: ""}))
         });
     }

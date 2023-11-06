@@ -5,6 +5,7 @@ require('dotenv').config()
 
 
 const adminauth = require("./routes/auth");
+const transactMoney = require("./routes/transactMoney");
 // const { authenticateToken } = require('./middleware/authToken');
 
 
@@ -17,6 +18,7 @@ app.use(express.json())
 
 // app.use(queryRevokedAdmins);
 app.use("/user", adminauth);
+app.use("/user/dashboard", transactMoney);
 
 app.listen(process.env.SEVERPORT, () =>{
     console.log("Listening to port", process.env.SEVERPORT);

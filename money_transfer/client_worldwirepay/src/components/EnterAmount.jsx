@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-const EnterAmount = ({onChangeOption}) =>{
+const EnterAmount = ({onChangeOption, onHandleTransationDetails, transationDetails}) =>{
     return(
         <div class="col-xl-8 col-lg-8 col-md-7">
                             <div class="table-area">
@@ -8,11 +8,13 @@ const EnterAmount = ({onChangeOption}) =>{
                                     <div class="send-banance">
                                         <span class="mdr">How much you want to add?</span>
                                         <div class="input-area">
-                                            <input class="xxlr" placeholder="400.00" type="number"/>
-                                            <select>
-                                                <option value="1">USD</option>
-                                                <option value="2">USD</option>
-                                                <option value="3">USD</option>
+                                            <input onChange={onHandleTransationDetails} required 
+                                            class="xxlr" placeholder="400.00" type="number" name="amount"/>
+                                            <select name="currency" value={transationDetails.currency} 
+                                                onChange={onHandleTransationDetails}
+                                            >
+                                                <option value="KSH">KSH</option>
+                                                <option value="USD">USD</option>
                                             </select>
                                         </div>
                                         <p>Available Balance<b>$30,700.00</b></p>
