@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch } from 'react-redux';
 
 import { Link, useNavigate } from "react-router-dom";
-import { left_arrow, logo } from "../assets/images";
+import { left_arrow, logo, show_hide } from "../assets/images";
 
 import { setUserDetails } from '../redux/userDetails'; // Adjust the path as needed
 
@@ -99,7 +99,7 @@ const Login = () =>{
                                                 <div className="single-input d-flex align-items-center">
                                                     <input onChange={handleInputChange} name='password'
                                                     type="password" className="passInput" placeholder="Password"/>
-                                                    <img className="showPass" src="assets/img/show-hide.png" alt="image"/>
+                                                    <img className="showPass" src={show_hide} alt="image"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -108,11 +108,11 @@ const Login = () =>{
                                         </div>
                                     </form>
                                     <div className="form-bottom">
-                                        <div className="continue"><p>Or continue with</p></div>
+                                        {/* <div className="continue"><p>Or continue with</p></div>
                                         <div className="login-with d-flex align-items-center">
                                             <a href="javascript:void(0)"><img src="assets/img/google.png" alt="image"/></a>
                                             <a href="javascript:void(0)"><img src="assets/img/fb.png" alt="image"/></a>
-                                        </div>
+                                        </div> */}
                                         <div className="forget-pw">
                                             <Link to='http://localhost:5173/user/forgot-password'>Forgot your password?</Link>
                                         </div>
@@ -129,7 +129,7 @@ const Login = () =>{
                                             <div className="col-12">
                                                 <div className="single-input d-flex align-items-center">
                                                     <input type="password" className="passInput" placeholder="Password"/>
-                                                    <img className="showPass" src="assets/img/show-hide.png" alt="image"/>
+                                                    <img className="showPass" src={show_hide} alt="image"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -138,11 +138,11 @@ const Login = () =>{
                                         </div>
                                     </form>
                                     <div className="form-bottom">
-                                        <div className="continue"><p>Or continue with</p></div>
+                                        {/* <div className="continue"><p>Or continue with</p></div>
                                         <div className="login-with d-flex align-items-center">
                                             <a href="javascript:void(0)"><img src="assets/img/google.png" alt="image"/></a>
                                             <a href="javascript:void(0)"><img src="assets/img/fb.png" alt="image"/></a>
-                                        </div>
+                                        </div> */}
                                         <div className="forget-pw">
                                             <Link to='http://localhost:5173/user/forgot-password'>Forgot your password?</Link>
                                         </div>

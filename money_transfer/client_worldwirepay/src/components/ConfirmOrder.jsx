@@ -1,8 +1,10 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import paymentDetails from "../assets/details/paymentDetails";
+// import { paymentDetails } from "../assets/details/paymentDetails"
 
 const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDetails,
-                        onHandleTransateMoney, buttonRef}) =>{
+                        onHandleTransateMoney, buttonRef, deposit }) =>{
     return(
         <div class="col-xl-8 col-lg-8">
                             <form action="#">
@@ -25,17 +27,28 @@ const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDeta
                                                     <b> {transationDetails.method}</b>
                                                 </li>
                                                 <li>
-                                                    <span>{transationDetails.method} Payment Card: </span>
-                                                    <b> **** **** **** 1182</b>
+                                                    <span>{deposit ? "Deposit": "Withdraw"} {transationDetails.method} money to: </span>
+                                                    <b> {paymentDetails[transationDetails.method].send_to} </b>
                                                 </li>
+                                                {
+                                                    deposit? 
+                                                (<li>
+                                                    <span>Name of the account: </span>
+                                                    <b> {paymentDetails[transationDetails.method].name} </b>
+                                                </li>) : null
+                                                }
                                                 <li>
-                                                    <span>You will receive: </span>
+                                                    <span>Amount to {deposit? "Deposit": "Withdraw"}: </span>
                                                     <b> {transationDetails.amount} {transationDetails.currency}</b>
                                                 </li>
-                                                <li>
-                                                    <span>Fee</span>
-                                                    <b>1 USD</b>
-                                                </li>
+                                                {
+                                                    deposit? 
+                                                (<li class="input-area">
+                                                    <p>Enter message code then confirm.</p> <br />
+                                                    <input onChange={onHandleTransationDetails} required 
+                                                    class="xxlr" placeholder="Enter ref code" type="text" name="ref_code"/>
+                                                </li>) : null
+                                                }
                                                 <li>
                                                     <span>E-mail</span>
                                                     <b><a href="https://pixner.net/cdn-cgi/l/email-protection" 

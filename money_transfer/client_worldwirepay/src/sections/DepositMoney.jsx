@@ -6,12 +6,13 @@ import { useRef, useState } from "react";
 import EnterAmount from "../components/EnterAmount";
 import ConfirmOrder from "../components/ConfirmOrder";
 import FeedbackPopup from "../components/FeedbackPopup";
+import { support_icon } from "../assets/images";
 
 const DepositMoney = () =>{
     const [option, setOption] = useState("method");
     const buttonRef = useRef(null)
     const [transationDetails, setTransationDetails] = useState({ user_id: 1, status: "inprogress",
-        method: "Mpesa", amount: "", currency: "KSH", termsConditions: false
+        method: "Mpesa", amount: "", currency: "KSH", termsConditions: false, ref_code: "",
     })
     const changeOption = (e) =>{
         console.log(transationDetails);
@@ -27,7 +28,11 @@ const DepositMoney = () =>{
         buttonRef.current.click(); // Programmatically trigger a click event
     };
     const handleTransateMoney =() =>{
+        console.log(transationDetails);
         let data = JSON.stringify(transationDetails);
+        if(!transationDetails.amount) return alert("Enter amount you want to send")
+        if(transationDetails.termsConditions) return alert("Accept terms and conditions")
+        if(!transationDetails.ref_code) return alert("Enter reference of the message you received after sending money.")
 
         let config = {
             method: 'post',
@@ -49,6 +54,7 @@ const DepositMoney = () =>{
         })
         .catch((error) => {
             console.log(error.response);
+            alert("Server error, try again")
             // setSignupDetails((obj) =>({...obj, password: ""}))
         });
     }
@@ -61,7 +67,7 @@ const DepositMoney = () =>{
                         <div className="head-area d-flex align-items-center justify-content-between">
                             <h4>Deposit Money</h4>
                             <div className="icon-area">
-                                <img src="assets/images/icon/support-icon.png" alt="icon"/>
+                            <img src={support_icon} alt="icon"/>
                             </div>
                         </div>
                         <div className="row justify-content-between pb-120">
@@ -100,6 +106,7 @@ const DepositMoney = () =>{
                                         onChangeOption = {changeOption}
                                         onHandleTransationDetails = {handleTransationDetails}
                                         transationDetails = {transationDetails}
+                                        deposit={true}
                                     /> : 
                                 option === "confirm"? 
                                     <ConfirmOrder 
@@ -109,6 +116,7 @@ const DepositMoney = () =>{
                                         onHandleTransateMoney= {handleTransateMoney}
                                         onHandleClick = {handleClick}
                                         buttonRef = {buttonRef}
+                                        deposit = {true}
                                     /> : null 
                             }
                         </div>

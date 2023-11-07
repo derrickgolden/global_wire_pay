@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom"
 
-const EnterAmount = ({onChangeOption, onHandleTransationDetails, transationDetails}) =>{
+const EnterAmount = ({onChangeOption, onHandleTransationDetails, transationDetails, deposit}) =>{
     return(
         <div class="col-xl-8 col-lg-8 col-md-7">
                             <div class="table-area">
                                 <form action="#">
                                     <div class="send-banance">
-                                        <span class="mdr">How much you want to add?</span>
+                                        <span class="mdr">How much you want to {
+                                            deposit? "deposit" : "withdraw"
+                                        }?</span>
                                         <div class="input-area">
                                             <input onChange={onHandleTransationDetails} required 
                                             class="xxlr" placeholder="400.00" type="number" name="amount"/>

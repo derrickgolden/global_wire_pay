@@ -9,6 +9,10 @@ import avator from "./avatar.png"
 import lipa_na_mpesa from "./mpesa.png"
 import visa_card from "./visa-card.png"
 import mpesa_card from "./M-PESA.jpeg"
+import paypal_card from "./paypal-card.png"
+import paylio_card from "./paylio-card.png"
+import add_new from "./add-new.png"
+import blockchain_card from "./blockchain-card.png"
 
 // landing page
 import payment_illus from "./payment-illus-2.png"
@@ -22,9 +26,19 @@ import ban_frame_4 from "./ban-frame-4.png"
 import ban_right from "./ban-right.png"
 import banner_bg from "./banner-bg.png"
 
+import success from "./icon/success.png";
+import support_icon from "./icon/support-icon.png";
+
+import show_hide from "./show-hide.png"
+import forgot_password_illus from "./forgot-password-illus.png"
+import forgot_pwd_2_illus from "./forgot-pwd-2-illus.png"
+
 export{
-    menu, logo, avator, bell, search, option, right_arrow, mpesa_card, visa_card,
+    menu, logo, avator, bell, search, option, right_arrow, 
+    mpesa_card, visa_card, paylio_card, paypal_card, blockchain_card, add_new,
     payment_illus, payment_illus_2,
     left_arrow, register_illus,
-    ban_frame_1, ban_frame_2, ban_frame_3, ban_frame_4, ban_right, banner_bg
+    ban_frame_1, ban_frame_2, ban_frame_3, ban_frame_4, ban_right, banner_bg,
+    success, support_icon,
+    show_hide, forgot_password_illus, forgot_pwd_2_illus,
 }

@@ -1,16 +1,16 @@
 const { pool } = require("./mysqlSetup");
 
 const transactMoney = async(
-        user_id, method, amount, currency, termsConditions, status, table
+        user_id, method, amount, currency, termsConditions, status, ref_code, table
     ) => {
-        
+        console.log(table)
     try {
         const connection = await pool.getConnection();
 
         const [res] = await connection.query(`
-        INSERT INTO ${table} (user_id, method, amount, currency, termsConditions, status)
-        VALUES (?, ?, ?, ?, ?, ?)
-        `, [user_id, method, amount, currency, termsConditions, status]);
+        INSERT INTO ${table} (user_id, method, amount, currency, termsConditions, status, ref_code)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        `, [user_id, method, amount, currency, termsConditions, status, ref_code]);
 
         console.log(res)
         return {success: true, msg: `Deposit ${status}`, 

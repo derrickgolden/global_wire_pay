@@ -5,6 +5,7 @@ import ChoosePaymentMethod from "../components/ChoosePaymentMethod";
 import EnterAmount from "../components/EnterAmount";
 import ConfirmOrder from "../components/ConfirmOrder";
 import FeedbackPopup from "../components/FeedbackPopup";
+import { support_icon } from '../assets/images';
 
 const WithdrawMoney = () =>{
     const [option, setOption] = useState("method")
@@ -21,6 +22,7 @@ const WithdrawMoney = () =>{
     })
 
     const handleTransationDetails = (e) =>{
+        console.log(e);
         const name = e.target.name
         const value = name === "termsConditions" ? !transationDetails.termsConditions : e.target.value
         console.log(name,value)
@@ -31,6 +33,10 @@ const WithdrawMoney = () =>{
     };
     const handleTransateMoney =() =>{
         let data = JSON.stringify(transationDetails);
+        console.log(transationDetails);
+
+        if(!transationDetails.amount) return alert("Enter amount you want to send")
+        if(!transationDetails.termsConditions) return alert("Accept terms and conditions")
 
         let config = {
             method: 'post',
@@ -64,7 +70,7 @@ const WithdrawMoney = () =>{
                     <div class="head-area d-flex align-items-center justify-content-between">
                         <h4>Withdraw Funds</h4>
                         <div class="icon-area">
-                            <img src="assets/images/icon/support-icon.png" alt="icon"/>
+                            <img src={support_icon} alt="icon"/>
                         </div>
                     </div>
                     <div class="choose-recipient">

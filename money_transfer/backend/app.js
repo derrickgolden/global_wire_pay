@@ -6,6 +6,7 @@ require('dotenv').config()
 
 const adminauth = require("./routes/auth");
 const transactMoney = require("./routes/transactMoney");
+const lipaNaMpesaRoutes = require("./routes/lipanaMpesa")
 // const { authenticateToken } = require('./middleware/authToken');
 
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 
 // app.use(queryRevokedAdmins);
+// app.use('/api',lipaNaMpesaRoutes)
 app.use("/user", adminauth);
 app.use("/user/dashboard", transactMoney);
 

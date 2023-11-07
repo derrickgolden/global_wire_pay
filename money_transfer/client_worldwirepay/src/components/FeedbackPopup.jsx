@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { success } from "../assets/images"
 
 const FeedbackPopup = ({transationDetails}) =>{
     return(
@@ -13,9 +14,9 @@ const FeedbackPopup = ({transationDetails}) =>{
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                                 </div>
                                 <div class="main-content text-center pt-120 pb-120">
-                                    <img class="mb-60" src="assets/images/icon/success.png" alt="icon"/>
+                                    <img class="mb-60" src={success} alt="icon"/>
                                     <h4 class="mb-30">Congratulations</h4>
-                                    <p>You have successfully add fund your account for 
+                                    <p>You have successfully transacted: <br/>
                                         {transationDetails.amount} {transationDetails.currency} 
                                     </p>
                                     <Link to='http://localhost:5173/user/dashboard' class="mt-40"

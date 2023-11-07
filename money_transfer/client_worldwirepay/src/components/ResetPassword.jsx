@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import { left_arrow, logo } from "../assets/images"
+import { forgot_password_illus, forgot_pwd_2_illus, left_arrow, logo, show_hide } from "../assets/images"
 
 const ResetPassword = () =>{
     const navigate = useNavigate()
@@ -52,6 +52,7 @@ const ResetPassword = () =>{
         .catch((error) => {
             console.log(error.response.data);
             setSignupDetails((obj) =>({...obj, password: ""}))
+            alert("Error:", error.response.data)
         });
     }
     return(
@@ -76,13 +77,13 @@ const ResetPassword = () =>{
                 <div class="row justify-content-center">
                     <div class="col-md-5 d-flex align-items-end">
                         <div class="img-area">
-                            <img src="assets/img/forgot-pwd-2-Illus.png" alt="image"/>
+                            <img src={forgot_pwd_2_illus} alt="image"/>
                         </div>
                     </div>
                     <div class="col-lg-6 z-1 text-center d-flex align-items-center">
                         <div class="form-box">
                             <div class="icon-area">
-                                <img src="assets/img/forgot-password-Illus.png" alt="image"/>
+                                <img src={forgot_password_illus} alt="image"/>
                             </div>
                             <h4>Reset Your Password</h4>
                             <p>You can reset password using this form</p>
@@ -98,14 +99,14 @@ const ResetPassword = () =>{
                                         <div class="single-input d-flex align-items-center">
                                             <input onChange={handleInputChange} required
                                             name='password' type="password" class="passInput" placeholder="Password"/>
-                                            <img class="showPass" src="assets/img/show-hide.png" alt="image"/>
+                                            <img class="showPass" src={show_hide} alt="image"/>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="single-input d-flex align-items-center">
                                             <input onChange={handleInputChange} required name='confirm_password'
                                             type="password" class="passInput" placeholder="Confirm Password"/>
-                                            <img class="showPass" src="assets/img/show-hide.png" alt="image"/>
+                                            <img class="showPass" src={show_hide} alt="image"/>
                                         </div>
                                     </div>
                                 </div>

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
-import { left_arrow, logo, register_illus } from "../assets/images";
+import { left_arrow, logo, register_illus, show_hide } from "../assets/images";
 
 const Signup = () =>{
     const navigate = useNavigate()
@@ -125,7 +125,7 @@ const Signup = () =>{
                                                 <div class="single-input d-flex align-items-center">
                                                     <input onChange={handleInputChange} required
                                                     type="password" name="password" class="passInput" placeholder="Password"/>
-                                                    <img class="showPass" src="assets/img/show-hide.png" alt="image"/>
+                                                    <img class="showPass" src={show_hide} alt="image"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -146,13 +146,13 @@ const Signup = () =>{
                                             <button type="submit" class="cmn-btn">Register Now</button>
                                         </div>
                                     </form>
-                                    <div class="bottom-area">
+                                    {/* <div class="bottom-area">
                                         <div class="continue"><p>Or continue with</p></div>
                                         <div class="login-with d-flex align-items-center">
                                             <Link href="javascript:void(0)"><img src="assets/img/google.png" alt="image"/></Link>
                                             <Link href="javascript:void(0)"><img src="assets/img/fb.png" alt="image"/></Link>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div class="privacy">
                                         <p>By registering you accept our <Link href="terms-conditions.html">Terms & Conditions</Link> and <Link href="privacy-policy.html">Privacy Policy</Link></p>
                                     </div>
@@ -188,7 +188,7 @@ const Signup = () =>{
                                             <div class="col-12">
                                                 <div class="single-input d-flex align-items-center">
                                                     <input type="password" class="passInput" placeholder="Password"/>
-                                                    <img class="showPass" src="assets/img/show-hide.png" alt="image"/>
+                                                    <img class="showPass" src={show_hide} alt="image"/>
                                                 </div>
                                             </div>
                                         </div>

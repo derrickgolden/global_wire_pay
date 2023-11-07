@@ -1,4 +1,4 @@
-import { mpesa_card, option, visa_card } from "../assets/images";
+import { blockchain_card, mpesa_card, option, paylio_card, paypal_card, visa_card } from "../assets/images";
 
 const LinkedPayments = () =>{
     return(
@@ -31,6 +31,30 @@ const LinkedPayments = () =>{
                                             <button type="button" class="reg w-100" data-bs-toggle="modal"
                                                 data-bs-target="#cardMod">
                                                 <img src={mpesa_card} alt="image" class="w-100"/>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="single-card">
+                                            <button type="button" class="reg w-100" data-bs-toggle="modal"
+                                                data-bs-target="#cardMod">
+                                                <img src={paylio_card} alt="image" class="w-100"/>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="single-card">
+                                            <button type="button" class="reg w-100" data-bs-toggle="modal"
+                                                data-bs-target="#cardMod">
+                                                <img src={paypal_card} alt="image" class="w-100"/>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="single-card">
+                                            <button type="button" class="reg w-100" data-bs-toggle="modal"
+                                                data-bs-target="#cardMod">
+                                                <img src={blockchain_card} alt="image" class="w-100"/>
                                             </button>
                                         </div>
                                     </div>

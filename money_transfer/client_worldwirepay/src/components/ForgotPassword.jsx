@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { left_arrow, logo } from "../assets/images"
+import { forgot_password_illus, left_arrow, logo } from "../assets/images"
 
 import axios from 'axios';
 import { useState } from "react";
@@ -64,7 +64,7 @@ const ForgotPassword = () =>{
                     <div class="col-lg-6 text-center">
                         <div class="form-box">
                             <div class="icon-area">
-                                <img src="assets/img/forgot-password-Illus.png" alt="image"/>
+                                <img src={forgot_password_illus} alt="image"/>
                             </div>
                             <h4>Forgot your password?</h4>
                             <p>To reset your password, enter the email address that you used to set up your Paylio account. We'll send you a link to help you get back into your account.</p>
