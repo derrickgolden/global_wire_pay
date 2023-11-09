@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-const EnterAmount = ({onChangeOption, onHandleTransationDetails, transationDetails, deposit}) =>{
+const EnterAmount = ({onChangeOption, onHandleTransationDetails, transationDetails, deposit, balance= 0.00}) =>{
     return(
         <div class="col-xl-8 col-lg-8 col-md-7">
                             <div class="table-area">
@@ -15,11 +15,10 @@ const EnterAmount = ({onChangeOption, onHandleTransationDetails, transationDetai
                                             <select name="currency" value={transationDetails.currency} 
                                                 onChange={onHandleTransationDetails}
                                             >
-                                                <option value="KSH">KSH</option>
                                                 <option value="USD">USD</option>
                                             </select>
                                         </div>
-                                        <p>Available Balance<b>$30,700.00</b></p>
+                                        <p>Available Balance<b>{balance}</b></p>
                                     </div>  
                                 </form>
                             </div>

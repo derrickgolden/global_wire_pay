@@ -4,10 +4,12 @@ import { useRef, useState } from "react";
 import ChoosePaymentMethod from "../components/ChoosePaymentMethod";
 import EnterAmount from "../components/EnterAmount";
 import ConfirmOrder from "../components/ConfirmOrder";
-import FeedbackPopup from "../components/FeedbackPopup";
+import FeedbackPopup from "../components/cardPopups/FeedbackPopup";
 import { support_icon } from '../assets/images';
+import { useSelector } from 'react-redux';
 
 const WithdrawMoney = () =>{
+    const { user_id} = useSelector(state => state.userDetails);
     const [option, setOption] = useState("method")
 
     console.log(option)
@@ -17,8 +19,8 @@ const WithdrawMoney = () =>{
         setOption(e.target.id)
     }
     const buttonRef = useRef(null)
-    const [transationDetails, setTransationDetails] = useState({ user_id: 1, status: "inprogress",
-        method: "Mpesa", amount: "", currency: "KSH", termsConditions: false
+    const [transationDetails, setTransationDetails] = useState({ user_id, status: "inprogress",
+        method: "Mpesa", amount: "", currency: "KSH", termsConditions: false, type: "withdraw"
     })
 
     const handleTransationDetails = (e) =>{
@@ -58,6 +60,7 @@ const WithdrawMoney = () =>{
         })
         .catch((error) => {
             console.log(error.response);
+            alert("Error: withdrawal was not successful")
             // setSignupDetails((obj) =>({...obj, password: ""}))
         });
     }

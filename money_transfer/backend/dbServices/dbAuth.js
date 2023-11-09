@@ -11,6 +11,8 @@ const signupUser = async(first_name, last_name, email, remember_me, country, has
         WHERE email = ?
         `, [ email]);
 
+        connection.release();
+
         if(response.length === 0){
             const [res] = await connection.query(`
             INSERT INTO user_details (first_name, last_name, email, remember_me, country,
@@ -42,13 +44,16 @@ const signupUser = async(first_name, last_name, email, remember_me, country, has
 
 const loginUser = async(email, ) => {
     try {
+        console.log("email 1");
         const connection = await pool.getConnection();
+        console.log("email 2");
 
         const [res] = await connection.query(`
         SELECT * FROM user_details
         WHERE email = ?
         `, [email]);
 
+        connection.release();
         console.log(res);
         if(res.length === 1){
             const {user_id, first_name, last_name, email, remember_me, country, password} = res[0]
@@ -82,6 +87,8 @@ const resetPassword = async(password, email) =>{
         WHERE email = ?;
         `, [password, email])
 
+        connection.release();
+
         console.log("response", res)
 
         if(res.affectedRows === 1){
@@ -111,6 +118,8 @@ const storeLinkToken = async(user_id, email, token,) => {
         VALUES (?, ?, ?)
         `, [user_id, email, token,]);
 
+        connection.release();
+
         console.log(res)
         return {success: true, 
             details: [{link_tokens_id:res.insertId, user_id, email}]
@@ -136,6 +145,8 @@ const getLinkToken = async(token ) => {
         WHERE token = ?
         `, [token]);
 
+        connection.release();
+        
         const {user_id, email, token: storedToken, create_time} = res[0]
         console.log(res);
         if(res.length === 1 && token === storedToken){

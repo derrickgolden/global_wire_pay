@@ -101,17 +101,8 @@ const LandingPageHeader = () =>{
                                 </li>
                             </ul>
                             <div class="right-area header-action d-flex align-items-center">
-                                <div class="lang d-flex align-items-center">
-                                    <img src="assets/img/lang.png" alt="icon"/>
-                                    <select>
-                                        <option value="1">EN</option>
-                                        <option value="2">BN</option>
-                                        <option value="3">ES</option>
-                                        <option value="4">NL</option>
-                                    </select>
-                                </div>
-                                <Link to='http://localhost:5173/login' class="cmn-btn login">Login</Link>
-                                <Link to='http://localhost:5173/signup' class="cmn-btn">Sign up</Link>
+                                <Link to='http://localhost:5173/user/login' class="cmn-btn login">Login</Link>
+                                <Link to='http://localhost:5173/user/signup' class="cmn-btn">Sign up</Link>
                             </div>
                         </div>
                     </nav>

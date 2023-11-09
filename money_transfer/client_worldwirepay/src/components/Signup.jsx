@@ -79,11 +79,11 @@ const Signup = () =>{
                                         data-bs-target="#personal" type="button" role="tab" aria-controls="personal"
                                         aria-selected="true">Personal</button>
                                 </li>
-                                <li class="nav-item" role="presentation">
+                                {/* <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="business-tab" data-bs-toggle="tab" data-bs-target="#business"
                                         type="button" role="tab" aria-controls="business"
                                         aria-selected="false">Business</button>
-                                </li>
+                                </li> */}
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">
@@ -132,13 +132,13 @@ const Signup = () =>{
                                         <div class="remember-forgot d-flex justify-content-between">
                                             <div class="form-group d-flex">
                                                 <div class="checkbox_wrapper" >
-                                                    <input class="check-box" id="check1" type="checkbox"/>
+                                                    <input checked = {true} class="check-box" id="check1" type="checkbox"/>
                                                     <label></label>
                                                 </div>
                                                 <label for="check1"><span class="check_span">Remember Me</span></label>
                                             </div>
                                             <div class="forget-pw">
-                                                <Link href="forgot-password.html">Forgot your password?</Link>
+                                                <Link to="http://localhost:5173/user/forgot-password">Forgot your password?</Link>
                                             </div>
                                         </div>
                                         
@@ -157,56 +157,7 @@ const Signup = () =>{
                                         <p>By registering you accept our <Link href="terms-conditions.html">Terms & Conditions</Link> and <Link href="privacy-policy.html">Privacy Policy</Link></p>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="business" role="tabpanel" aria-labelledby="business-tab">
-                                    <form action="#">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="single-input d-flex align-items-center">
-                                                    <select>
-                                                        <option value="1">Select Your Country</option>
-                                                        <option value="2">United State</option>
-                                                        <option value="3">United kingdom</option>
-                                                        <option value="4">Canada</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="single-input d-flex align-items-center">
-                                                    <input type="email" placeholder="Business email"/>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="single-input country-code d-flex align-items-center">
-                                                    <select>
-                                                        <option value="1">+ 44</option>
-                                                        <option value="2">+ 82</option>
-                                                        <option value="2">+ 34</option>
-                                                    </select>
-                                                    <input type="number" placeholder="0000 000000"/>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="single-input d-flex align-items-center">
-                                                    <input type="password" class="passInput" placeholder="Password"/>
-                                                    <img class="showPass" src={show_hide} alt="image"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="btn-area">
-                                            <button class="cmn-btn">Register Now</button>
-                                        </div>
-                                    </form>
-                                    <div class="bottom-area">
-                                        <div class="continue"><p>Or continue with</p></div>
-                                        <div class="login-with d-flex align-items-center">
-                                            <Link href="javascript:void(0)"><img src="assets/img/google.png" alt="image"/></Link>
-                                            <Link href="javascript:void(0)"><img src="assets/img/fb.png" alt="image"/></Link>
-                                        </div>
-                                    </div>
-                                    <div class="privacy">
-                                        <p>By registering you accept our <Link href="terms-conditions.html">Terms & Conditions</Link> and <Link href="privacy-policy.html">Privacy Policy</Link></p>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

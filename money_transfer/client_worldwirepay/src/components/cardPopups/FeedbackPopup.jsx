@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { success } from "../assets/images"
+import { success } from "../../assets/images"
 
 const FeedbackPopup = ({transationDetails}) =>{
     return(
@@ -19,9 +19,9 @@ const FeedbackPopup = ({transationDetails}) =>{
                                     <p>You have successfully transacted: <br/>
                                         {transationDetails.amount} {transationDetails.currency} 
                                     </p>
-                                    <Link to='http://localhost:5173/user/dashboard' class="mt-40"
+                                    {/* <Link to='http://localhost:5173/user/dashboard' class="mt-40"
                                         reloadDocument
-                                    >Back to Dashboard</Link>
+                                    >Back to Dashboard</Link> */}
                                 </div>
                             </div>
                         </div>

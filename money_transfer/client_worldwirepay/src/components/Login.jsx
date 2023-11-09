@@ -23,30 +23,30 @@ const Login = () =>{
         e.preventDefault()
         
         console.log(loginDetails);
-
         let data = JSON.stringify(loginDetails);
-
-        let config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: 'http://localhost:5000/user/login',
-            headers: { 
-                'Content-Type': 'application/json'
-            },
-            data : data
-        };
-
-        axios.request(config)
-        .then((response) => {
-            console.log(JSON.stringify(response.data));
-            // const {user_id, first_name, last_name, } = response?.data?.details[0];
-            dispatch(setUserDetails(response?.data?.details[0]));
-            // setLoginDetails((obj) =>({...obj, password: ""}))
-            navigate('/user/dashboard', {replace: true});
+        
+        fetch('http://localhost:5000/user/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: data
         })
-        .catch((error) => {
+        .then(response => response.json())
+        .then(data => {
+            console.log(JSON.stringify(data));
+            if(data.success){
+                sessionStorage.setItem("user", JSON.stringify(data?.details[0]));
+                dispatch(setUserDetails(data?.details[0]));
+                navigate('/user/dashboard', {replace: true});
+            }else{
+                return alert("Error: ",data.msg)
+            }
+        })
+        .catch(error => {
             console.log(error);
-            setLoginDetails((obj) =>({...obj, password: ""}))
+            setLoginDetails(obj => ({ ...obj, password: '' }));
+            alert("Sorry, something went wrong")
         });
     }
     return(
@@ -79,11 +79,11 @@ const Login = () =>{
                                         data-bs-target="#personal" type="button" role="tab" aria-controls="personal"
                                         aria-selected="true">Personal</button>
                                 </li>
-                                <li className="nav-item" role="presentation">
+                                {/* <li className="nav-item" role="presentation">
                                     <button className="nav-link" id="business-tab" data-bs-toggle="tab" data-bs-target="#business"
                                         type="button" role="tab" aria-controls="business"
                                         aria-selected="false">Business</button>
-                                </li>
+                                </li> */}
                             </ul>
                             <div className="tab-content" id="myTabContent">
                                 <div className="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">                                

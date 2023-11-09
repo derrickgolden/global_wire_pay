@@ -1,0 +1,175 @@
+{/* <div class="accordion mb-3" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseOne"
+              aria-expanded="true"
+              aria-controls="collapseOne"
+            >
+              <h3 class="">
+                <i class="fas fa-chart-pie mr-1"></i>Billing
+              </h3>
+            </button>
+          </h2>
+          <div
+            id="collapseOne"
+            class="accordion-collapse col-12 collapse show"
+            data-bs-parent="#accordionExample"
+          >
+            <div class="accordion-body">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-3 col-6">
+                      <div class="bill-description-block border-end">
+                        <h5 class="description-header">
+                          <b>৳</b> 0.00 TK
+                        </h5>
+                        <span class="description-text">Today</span>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <div class="bill-description-block border-end">
+                        <h5 class="description-header">
+                          <b>৳</b> 0.00 TK
+                        </h5>
+                        <span class="description-text">Yesterday</span>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <div class="bill-description-block border-end">
+                        <h5 class="description-header">
+                          <b>৳</b> 0.00 TK
+                        </h5>
+                        <span class="description-text">Last 7 Days</span>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <div class="bill-description-block">
+                        <h5 class="description-header">
+                          <b>৳</b> 0.00 TK
+                        </h5>
+                        <span class="description-text">This Month</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-6">
+                      <div class="bill-description-block border-end">
+                        <h5 class="description-header">
+                          <b>৳</b> 0.00 TK
+                        </h5>
+                        <span class="description-text">Last Month</span>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <div class="bill-description-block border-end">
+                        <h5 class="description-header">
+                          <b>৳</b> 38091.00 TK
+                        </h5>
+                        <span class="description-text">This Year</span>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <div class="bill-description-block border-end">
+                        <h5 class="description-header">
+                          <b>৳</b> 62048.06 TK
+                        </h5>
+                        <span class="description-text">Last Year</span>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <div class="bill-description-block">
+                        <h5 class="description-header">
+                          <b>৳</b> 100139.06 TK
+                        </h5>
+                        <span class="description-text">All Time</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> */}
+      {/* <div class="row mb-3">
+        <div class=" col-12 col-md-6 ">
+          <div class="accordion" id="mobaim_bank_pay">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne1"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
+                >
+                  Mobile Banking Payment Statistics
+                </button>
+              </h2>
+              <div
+                id="collapseOne1"
+                class="accordion-collapse collapse show"
+                data-bs-parent="#mobail_bank_pay"
+              >
+                <div class="accordion-body">
+                  <div class="row">
+                    <div class="col-12 ">
+                      <div
+                        class="card"
+                        style={{ backgroundColor: "rgb(207, 39, 113)" }}
+                      >
+                        <div class="card-body">
+                          <div class="card-title">Bkash</div>
+                          <div class="card-title">0.00 TK</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class=" col-12 col-md-6 mt-md-0 mt-3">
+          <div class="accordion" id="bank_pay">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne2"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
+                >
+                  Banking Payment Statistics
+                </button>
+              </h2>
+              <div
+                id="collapseOne2"
+                class="accordion-collapse collapse show"
+                data-bs-parent="#bank_pay"
+              >
+                <div class="accordion-body">
+                  <div class="row">
+                    <div class="col-12 ">
+                      <div class="card bg-warning">
+                        <div class="card-body">
+                          <div class="card-title">Paypal</div>
+                          <div class="card-title">0.00 TK</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> */}

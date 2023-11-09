@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ban_frame_1, ban_frame_2, ban_frame_3, ban_frame_4, ban_right, banner_bg } from "../assets/images";
 
 const LandingPageBody = () =>{
@@ -20,7 +21,7 @@ const LandingPageBody = () =>{
                                 <form action="#">
                                     <div class="input-field d-flex">
                                         <input type="email" placeholder="Where are you sending money to"/>
-                                        <button class="cmn-btn"><span>Check rate</span></button>
+                                        <Link to="http://localhost:5173/user/login" class="cmn-btn"><span>Log In</span></Link >
                                     </div>
                                 </form>
                                 <div class="bottom-banner d-flex align-items-center">

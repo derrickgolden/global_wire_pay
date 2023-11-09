@@ -9,6 +9,8 @@ const getUserDetails = async( email) =>{
         WHERE email = ?;
         `, [email])
 
+        connection.release();
+
         console.log("response", res)
 
         if(res.length){

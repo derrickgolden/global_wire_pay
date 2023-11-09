@@ -1,11 +1,37 @@
-import { Link, Outlet } from "react-router-dom";
+// import jwt from "jsonwebtoken"
+
+import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
 import { logo, avator, bell, search} from "../assets/images";
-import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserDetails } from "../redux/userDetails";
+import { useEffect, useState } from "react";
 
 const Header = (props) =>{
-    useEffect(() => {
-        
-      }, []);
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [toggleUserArea, setToggleUserArea] =useState(false);
+
+    const {balance, first_name, last_name, last_received, payouts, user_id} = useSelector(state => state.userDetails)
+    useEffect(() =>{
+        if(!user_id){
+            const user = JSON.parse(sessionStorage.getItem("user"));
+            console.log(user)
+            if(!user){
+                navigate("/user/login");
+            }else{
+                dispatch(setUserDetails(user))
+            }
+        }
+    })
+
+    const handleToggleUserArea = () =>{
+        setToggleUserArea(!toggleUserArea);
+    }
+    const handleLogout = () =>{
+        setToggleUserArea(!toggleUserArea);
+        sessionStorage.clear("user");
+        navigate("/");
+    }
 
     return(
         <>
@@ -26,19 +52,6 @@ const Header = (props) =>{
                             </div>
                         </form>
                         <div className="dashboard-nav">
-                            {/* <div className="single-item language-area">
-                                <div className="language-btn">
-                                    <img src="../assets/images/icon/lang.png" alt="icon"/>
-                                </div>
-                                <ul className="main-area language-content">
-                                    <li>English</li>
-                                    <li>Hindi</li>
-                                    <li className="active">English (US)</li>
-                                    <li>Japanese</li>
-                                    <li>Kannada</li>
-                                    <li>Lithuanian</li>
-                                </ul>
-                            </div> */}
                             <div className="single-item notifications-area">
                                 <div className="notifications-btn">
                                     <img src={bell} className="bell-icon" alt="icon"/>
@@ -106,30 +119,33 @@ const Header = (props) =>{
                                 </div>
                             </div>
                             <div className="single-item user-area">
-                                <div className="profile-area d-flex align-items-center">
+                                <div onClick={handleToggleUserArea}
+                                className="profile-area d-flex align-items-center">
                                     <span className="user-profile">
                                         <img src={avator} alt="User"/>
                                     </span>
                                     <i className="fa-solid fa-sort-down"></i>
                                 </div>
-                                <div className="main-area user-content">
+                                <div className={`main-area user-content ${toggleUserArea? "active": ""} `}>
                                     <div className="head-area d-flex align-items-center">
                                         <div className="profile-img">
-                                            <img src="../assets/images/avatar-2.png" alt="User"/>
+                                            <img src={avator} alt="User"/>
                                         </div>
                                         <div className="profile-head">
                                             <a href="javascript:void(0)">
-                                                <h5>Kevin Martin</h5>
+                                                <h5>{first_name} {last_name}</h5>
                                             </a>
-                                            <p className="wallet-id">Wallet ID: 6264849965</p>
+                                            <p className="wallet-id">Wallet ID: {user_id}</p>
                                         </div>
                                     </div>
-                                    <ul>
+                                    <ul style={{color: "#0c266c"}}>
                                         <li className="border-area">
-                                            <a href="javascript:void(0)"><i className="fas fa-cog"></i>Settings</a>
+                                            <a style={{color: "#0c266c"}}
+                                            href="#"><i className="fas fa-cog"></i>Settings</a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0)"><i className="fas fa-sign-out"></i>Logout</a>
+                                            <Link style={{color: "#0c266c"}} onClick={handleLogout}
+                                            to="http://localhost:5173/"><i className="fas fa-sign-out"></i>Logout</Link>
                                         </li>
                                     </ul>
                                 </div>

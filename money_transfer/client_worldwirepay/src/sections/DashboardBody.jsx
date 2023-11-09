@@ -2,8 +2,16 @@ import { Outlet } from "react-router-dom";
 import AccDetails from "../components/AccDetails";
 import LinkedPayments from "../components/LickedPayments";
 import Transations from "../components/Transations";
+import AddCardPopup from "../components/cardPopups/AddCardPopup";
+import { useState } from "react";
+import CardDetailsPopup from "../components/cardPopups/cardDetailsPopup";
 
 const DashboardBody = () =>{
+    const [cardType, setCardType] = useState("visa");
+    const onHandleAddCardPopup = (e) =>{
+        console.log("id: ", e.target.id)
+        setCardType(e.target.id);
+    }
     return(
         <>
         <section class="dashboard-section body-collapse">
@@ -18,13 +26,20 @@ const DashboardBody = () =>{
                     </div>
                     <div class="col-xl-4 col-lg-5">
                         <div class="side-items">
-                            <LinkedPayments />
+                            <LinkedPayments 
+                                handleAddCardPopup = {onHandleAddCardPopup}
+                            />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+        </section>
+        <AddCardPopup 
+            handleAddCardPopup = {onHandleAddCardPopup} 
+            cardType = {cardType} />
+
+        <CardDetailsPopup />
         <Outlet />
     </>
     )

@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import paymentDetails from "../assets/details/paymentDetails";
-// import { paymentDetails } from "../assets/details/paymentDetails"
+import { worldWirePaymentDetails } from "../assets/details/paymentDetails";
 
 const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDetails,
                         onHandleTransateMoney, buttonRef, deposit }) =>{
+                            const j = worldWirePaymentDetails
     return(
         <div class="col-xl-8 col-lg-8">
                             <form action="#">
@@ -23,22 +23,22 @@ const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDeta
                                         <div class="col-xxl-8 col-xl-9 col-lg-12">
                                             <ul class="details-list">
                                                 <li>
-                                                    <span>Payment System: </span>
+                                                    <span>Payment System: &nbsp;</span>
                                                     <b> {transationDetails.method}</b>
                                                 </li>
                                                 <li>
-                                                    <span>{deposit ? "Deposit": "Withdraw"} {transationDetails.method} money to: </span>
-                                                    <b> {paymentDetails[transationDetails.method].send_to} </b>
+                                                    <span>{deposit ? "Deposit": "Withdraw"} {transationDetails.method} money to: &nbsp;</span>
+                                                    <b> {worldWirePaymentDetails[transationDetails.method].send_to} </b>
                                                 </li>
                                                 {
                                                     deposit? 
                                                 (<li>
-                                                    <span>Name of the account: </span>
-                                                    <b> {paymentDetails[transationDetails.method].name} </b>
+                                                    <span>Name of the account: &nbsp;</span>
+                                                    <b> {worldWirePaymentDetails[transationDetails.method].name} </b>
                                                 </li>) : null
                                                 }
                                                 <li>
-                                                    <span>Amount to {deposit? "Deposit": "Withdraw"}: </span>
+                                                    <span>Amount to {deposit? "Deposit": "Withdraw"}: &nbsp;</span>
                                                     <b> {transationDetails.amount} {transationDetails.currency}</b>
                                                 </li>
                                                 {
@@ -49,13 +49,13 @@ const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDeta
                                                     class="xxlr" placeholder="Enter ref code" type="text" name="ref_code"/>
                                                 </li>) : null
                                                 }
-                                                <li>
+                                                {/* <li>
                                                     <span>E-mail</span>
                                                     <b><a href="https://pixner.net/cdn-cgi/l/email-protection" 
                                                     class="__cf_email__" data-cfemail="7711121b1e141e165905121e1337120f161a071b125914181a">
                                                         [email&#160;protected]</a>
                                                     </b>
-                                                </li>
+                                                </li> */}
                                             </ul>
                                         </div>
                                     </div>

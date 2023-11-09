@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import './App.css'
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+
 import Dashboard from './pages/Dashboard'
 import LandingPage from './pages/LandingPage'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import ResetPassword from './components/ResetPassword'
@@ -11,9 +14,17 @@ import DepositMoney from './sections/DepositMoney'
 import Header from './sections/Header'
 import DashboardBody from './sections/DashboardBody'
 import WithdrawMoney from './sections/WithdrawMoney'
+import Footer from './sections/Footer';
+import AdminDashboard from './admin/pages/AdminDashboard';
+import AdminHeader from './admin/pages/AdminHeader';
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const navigate = useNavigate();
+  // const { user_id} = useSelector(state => state.userDetails)
+  // useEffect(() =>{
+  //     console.log(user_id)
+  //     if (!user_id) navigate("/user/login");
+  // },[user_id])
 
   return (
     <>
@@ -30,7 +41,13 @@ function App() {
         <Route path="/user/reset-password/:urltoken" element={<ResetPassword />} />
         <Route path="/user/forgot-password" element={<ForgotPassword />} />
         <Route path='*' element={<div>Not Found</div>} />
+
+        <Route path="/admin" >
+          <Route path="login" element={<Login />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
+        </Route>
       </Routes>
+      <Footer />
     </>
   )
 }

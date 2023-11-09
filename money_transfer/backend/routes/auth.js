@@ -45,10 +45,12 @@ router.post('/signup', async (req, res) =>{
 
 router.post('/login', async (req, res) =>{
     const { email, password, exp_token} = req.body;
+    console.log(req.body)
 
     const response = await loginUser(email);
     const { passwordHash, userAvailable, details } = response;
 
+    console.log(response);
     try {
         if(!userAvailable){
             return res.status(401).send({success: false, msg: "Email not registered", details: response});

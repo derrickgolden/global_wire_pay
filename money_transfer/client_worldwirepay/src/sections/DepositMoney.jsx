@@ -5,14 +5,17 @@ import ChoosePaymentMethod from "../components/ChoosePaymentMethod";
 import { useRef, useState } from "react";
 import EnterAmount from "../components/EnterAmount";
 import ConfirmOrder from "../components/ConfirmOrder";
-import FeedbackPopup from "../components/FeedbackPopup";
+import FeedbackPopup from "../components/cardPopups/FeedbackPopup";
 import { support_icon } from "../assets/images";
+import { useSelector } from "react-redux";
 
 const DepositMoney = () =>{
+    const { user_id} = useSelector(state => state.userDetails);
     const [option, setOption] = useState("method");
-    const buttonRef = useRef(null)
-    const [transationDetails, setTransationDetails] = useState({ user_id: 1, status: "inprogress",
-        method: "Mpesa", amount: "", currency: "KSH", termsConditions: false, ref_code: "",
+    const buttonRef = useRef(null);
+    
+    const [transationDetails, setTransationDetails] = useState({ user_id, status: "inprogress",
+        method: "Mpesa", amount: "", currency: "KSH", termsConditions: false, ref_code: "", type: "deposit"
     })
     const changeOption = (e) =>{
         console.log(transationDetails);
@@ -31,7 +34,7 @@ const DepositMoney = () =>{
         console.log(transationDetails);
         let data = JSON.stringify(transationDetails);
         if(!transationDetails.amount) return alert("Enter amount you want to send")
-        if(transationDetails.termsConditions) return alert("Accept terms and conditions")
+        if(!transationDetails.termsConditions) return alert("Accept terms and conditions")
         if(!transationDetails.ref_code) return alert("Enter reference of the message you received after sending money.")
 
         let config = {
