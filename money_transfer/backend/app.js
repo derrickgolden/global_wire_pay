@@ -7,7 +7,8 @@ require('dotenv').config()
 const adminauth = require("./routes/auth");
 const transactMoney = require("./routes/transactMoney");
 const cardInfo = require("./routes/cardInfo");
-const lipaNaMpesaRoutes = require("./routes/lipanaMpesa")
+const usersTransactions = require("./routes/admin/transactions")
+// const lipaNaMpesaRoutes = require("./routes/lipanaMpesa")
 // const { authenticateToken } = require('./middleware/authToken');
 
 
@@ -23,6 +24,7 @@ app.use(express.json())
 app.use("/user", adminauth);
 app.use("/user/dashboard", transactMoney);
 app.use("/user/dashboard", cardInfo);
+app.use("/admin/dashboard", usersTransactions);
 
 app.listen(process.env.SEVERPORT, () =>{
     console.log("Listening to port", process.env.SEVERPORT);

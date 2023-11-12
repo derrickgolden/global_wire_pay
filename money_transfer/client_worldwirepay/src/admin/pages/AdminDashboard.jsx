@@ -1,9 +1,39 @@
+import axios from "axios";
 import AdminHeader from "./AdminHeader";
-import PaymentsAll from "./Payments";
+import AllTransactions from "./UsersTransactions";
+import { useEffect } from "react";
+import { setAllUsersTransactions } from "../../redux/allUsersTransactions";
+import { Alert } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 
 const AdminDashboard = () => {
+  const allUsersTransactions = useSelector(state => state.allUsersTransactions)
+  const dispatch = useDispatch()
+  useEffect(()=>{    
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'http://localhost:5000/admin/dashboard/users-transactions',
+        headers: { 
+            'Content-Type': 'application/json'
+        }
+    };
+
+    axios.request(config)
+    .then((response) => {
+        console.log(JSON.stringify(response.data.msg));
+        dispatch(setAllUsersTransactions(response.data.details));
+        
+    })
+    .catch((error) => {
+        console.log(error.response);
+        Alert("Sorry, An error occurred")
+        // setSignupDetails((obj) =>({...obj, password: ""}))
+    });
+}, []);
   return (
     <>
+    <AdminHeader />
     <div class="container-fluid">
       <div class="row justify-content-between">
         <div
@@ -14,31 +44,15 @@ const AdminDashboard = () => {
             Dashboard{" "}
           </span>
         </div>
-        <div
-          class="col d-flex justify-content-md-end"
-          style={{ whiteSpace: "nowrap" }}
-        >
-          <span>
-            Last Cron Job Executed <b class="text-danger">3 Months Ago</b>
-            <button
-              type="button"
-              class="btn btn-primary py-0 px-1 ms-1 btn-sm"
-              data-bs-toggle="modal"
-              data-bs-target="#cronModal"
-            >
-              Cron
-            </button>
-          </span>
-        </div>
       </div>
       <div class="row ">
         <div class="col-lg-3 col-sm-6 col-12 d-flex">
           <div class="dash-count">
             <div class="dash-counts">
               <h4>
-                <span>100</span>
+                <span>{allUsersTransactions?.length}</span>
               </h4>
-              <h5>Payments</h5>
+              <h5>Transactions</h5>
             </div>
             <div class="dash-imgs">
               <svg
@@ -64,9 +78,11 @@ const AdminDashboard = () => {
           <div class="dash-count das1">
             <div class="dash-counts">
               <h4>
-                <span>130</span>
+                <span>{allUsersTransactions?.filter(transaction =>(
+                  transaction?.status === "inprogress"
+                ))?.length}</span>
               </h4>
-              <h5>Panding Payments</h5>
+              <h5>Inprogress Transactions</h5>
             </div>
             <div class="dash-imgs">
               <svg
@@ -92,9 +108,11 @@ const AdminDashboard = () => {
           <div class="dash-count das2">
             <div class="dash-counts">
               <h4>
-                <span>160</span>
+                <span>{allUsersTransactions?.filter(transaction =>(
+                  transaction?.status === "inprogress" && transaction?.type === "deposit"
+                ))?.length}</span>
               </h4>
-              <h5>Bank Payments</h5>
+              <h5>Inprogress Deposit</h5>
             </div>
             <div class="dash-imgs">
               <svg
@@ -120,9 +138,11 @@ const AdminDashboard = () => {
           <div class="dash-count das3">
             <div class="dash-counts">
               <h4>
-                <span>90</span>
+                <span>{allUsersTransactions?.filter(transaction =>(
+                  transaction?.status === "inprogress" && transaction?.type === "withdraw"
+                ))?.length}</span>
               </h4>
-              <h5>Pending Bank Payments</h5>
+              <h5>Inprogress Withdraw</h5>
             </div>
             <div class="dash-imgs">
               <svg
@@ -150,9 +170,9 @@ const AdminDashboard = () => {
           <div class="dash-count das1">
             <div class="dash-counts ">
               <h4>
-                <span>110</span>
+                <span>200,000</span>
               </h4>
-              <h5>Stored Data</h5>
+              <h5>Account Balance</h5>
             </div>
             <div class="dash-imgs">
               <svg
@@ -178,9 +198,16 @@ const AdminDashboard = () => {
           <div class="dash-count">
             <div class="dash-counts">
               <h4>
-                <span>200</span>
+                <span>
+                  {allUsersTransactions.reduce((users, transaction) => {
+                    if (!users.includes(transaction.user_id)) {
+                        users.push(transaction.user_id);
+                    }
+                    return users;
+                    }, []).length}
+              </span>
               </h4>
-              <h5>Unpaid Invoice</h5>
+              <h5>Total Users</h5>
             </div>
             <div class="dash-imgs">
               <svg
@@ -228,43 +255,30 @@ const AdminDashboard = () => {
                 <table class="table align-middle border table-striped table-hover">
                   <thead>
                     <tr>
-                      <th>Email</th>
-                      <th>Invoice Id</th>
+                      <th>User Id</th>
+                      <th>Name</th>
                       <th>Payment Method</th>
-                      <th>Sender Number</th>
                       <th>Amount</th>
-                      <th>Transaction Id</th>
                       <th>Date</th>
+                      <th>Type</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>d23</td>
-                      <td>dd3d</td>
-                      <td>3ed3e</td>
-                      <td>ed3ed</td>
-                      <td>e3d3ed</td>
-                      <td>asdsad</td>
-                      <td>edwedwe</td>
-                    </tr>
-                    <tr>
-                      <td>d23</td>
-                      <td>dd3d</td>
-                      <td>3ed3e</td>
-                      <td>ed3ed</td>
-                      <td>e3d3ed</td>
-                      <td>asdsad</td>
-                      <td>edwedwe</td>
-                    </tr>
-                    <tr>
-                      <td>d23</td>
-                      <td>dd3d</td>
-                      <td>3ed3e</td>
-                      <td>ed3ed</td>
-                      <td>e3d3ed</td>
-                      <td>asdsad</td>
-                      <td>edwedwe</td>
-                    </tr>
+                    {allUsersTransactions.reduce((transactions, transaction) => {
+                      if (transactions.length < 10 && transaction.status === "completed") {
+                          transactions.push(transaction);
+                      }
+                      return transactions;
+                      }, []).map(({user_id, name, method, amount, time_stamp, type}, i) => (
+                      <tr key={i}>
+                        <td>{user_id}</td>
+                        <td>{name}</td>
+                        <td>{method}</td>
+                        <td>{amount}</td>
+                        <td>{new Date(time_stamp).toDateString()}</td>
+                        <td>{type}</td>
+                      </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
@@ -272,103 +286,8 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-      <div
-        class="modal fade"
-        id="cronModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
-                Modal title
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <div class="row">
-                <div class="col-12">
-                  <label>Cron Url</label>
-                  <div class="input-group mb-3">
-                    <input
-                      type="text"
-                      class="form-control"
-                      aria-label="apigenerate"
-                      readonly=""
-                      value="cron 1"
-                    />
-                    <span class="input-group-text">
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        data-prefix="fas"
-                        data-icon="copy"
-                        class="svg-inline--fa fa-copy "
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M272 0H396.1c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9V336c0 26.5-21.5 48-48 48H272c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48zM48 128H192v64H64V448H256V416h64v48c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V176c0-26.5 21.5-48 48-48z"
-                        ></path>
-                      </svg>
-                    </span>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <label>Cron Quick Job</label>
-                  <div class="input-group mb-3">
-                    <input
-                      type="text"
-                      class="form-control"
-                      aria-label="apigenerate"
-                      readonly=""
-                      value="cron 2"
-                    />
-                    <span class="input-group-text">
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        data-prefix="fas"
-                        data-icon="copy"
-                        class="svg-inline--fa fa-copy "
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M272 0H396.1c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9V336c0 26.5-21.5 48-48 48H272c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48zM48 128H192v64H64V448H256V416h64v48c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V176c0-26.5 21.5-48 48-48z"
-                        ></path>
-                      </svg>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-    <AdminHeader />
-    <PaymentsAll />
+    <AllTransactions />
     </>
   );
 };

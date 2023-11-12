@@ -7,6 +7,7 @@ export default function DataTable_Component({ apidata, columns, search }) {
   const [datafinals, setFinals] = useState([])
 
 
+  console.log("apidata", apidata)
 
   useEffect(() => {
     let result = data.filter(val => {
@@ -56,6 +57,7 @@ export default function DataTable_Component({ apidata, columns, search }) {
           highlightOnHover
           responsive
           subHeader
+          noHeader
           subHeaderComponent={
             <div className="row justify-content-start">
               <div className="col-12">
