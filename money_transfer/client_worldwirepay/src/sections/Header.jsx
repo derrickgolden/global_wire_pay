@@ -1,17 +1,19 @@
 // import jwt from "jsonwebtoken"
 
-import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { logo, avator, bell, search} from "../assets/images";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../redux/userDetails";
 import { useEffect, useState } from "react";
+import { setCallApi } from "../redux/callApi";
+import axios from "axios";
 
 const Header = (props) =>{
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [toggleUserArea, setToggleUserArea] =useState(false);
 
-    const {balance, first_name, last_name, last_received, payouts, user_id} = useSelector(state => state.userDetails)
+    const { first_name, last_name, user_id} = useSelector(state => state.userDetails)
     useEffect(() =>{
         if(!user_id){
             const user = JSON.parse(sessionStorage.getItem("user"));
@@ -19,7 +21,25 @@ const Header = (props) =>{
             if(!user){
                 navigate("/user/login");
             }else{
-                dispatch(setUserDetails(user))
+                let config = {
+                    method: 'get',
+                    maxBodyLength: Infinity,
+                    url: `http://localhost:5000/user/dashboard/user-details/${user?.user_id}`,
+                    headers: { 
+                        'Content-Type': 'application/json'
+                    }
+                };
+        
+                axios.request(config)
+                .then((response) => {
+                    console.log(JSON.stringify(response.data));
+                    dispatch(setUserDetails(response.data.details[0]));
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                    alert("Sorry, an error occurred")
+                    // setSignupDetails((obj) =>({...obj, password: ""}))
+                });
             }
         }
     })
@@ -45,12 +65,12 @@ const Header = (props) =>{
                                 <img src={logo} alt="logo"/>
                             </Link>
                         </div>
-                        <form action="#" className="flex-fill">
+                        {/* <form action="#" className="flex-fill">
                             <div className="form-group d-flex align-items-center">
                                 <img src={search} alt="icon"/>
                                 <input type="text" placeholder="Type to search..."/>
                             </div>
-                        </form>
+                        </form> */}
                         <div className="dashboard-nav">
                             <div className="single-item notifications-area">
                                 <div className="notifications-btn">

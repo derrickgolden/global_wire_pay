@@ -1,6 +1,6 @@
 const { pool } = require("./mysqlSetup");
 
-const signupUser = async(first_name, last_name, email, remember_me, country, hash) => {
+const signupUser = async(first_name, last_name, email, remember_me, country, hash, phone) => {
 
     const signup_date = new Date();
     try {
@@ -11,24 +11,26 @@ const signupUser = async(first_name, last_name, email, remember_me, country, has
         WHERE email = ?
         `, [ email]);
 
-        connection.release();
-
+        
         if(response.length === 0){
             const [res] = await connection.query(`
             INSERT INTO user_details (first_name, last_name, email, remember_me, country,
-                password)
-            VALUES (?, ?, ?, ?, ?, ?)
-            `, [first_name, last_name, email, remember_me, country, hash]);
-    
+                password, phone)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                `, [first_name, last_name, email, remember_me, country, hash, phone]);
+
+            connection.release();
             console.log(res)
-            return {success: true, admin_id: res.insertId, msg: "Admin Registered", 
+
+            return {success: true, admin_id: res.insertId, msg: "User Registered", 
                 details: [{first_name, last_name, email, remember_me, country}]
             };
         }else{
+            connection.release();
             if(response[0].email.toLowerCase() === email.toLowerCase()){
-                return { success: false, rejectInput: "email", msg: "Email already Registered, login"};
+                return { success: true, rejectInput: "email", msg: "Email already Registered, login"};
             } 
-            return { success: false, rejectInput: null, msg: "Posibility of insertion of data already in the database"};
+            return { success: true, rejectInput: null, msg: "Posibility of insertion of data already in the database"};
         }
     } catch (error) {
         console.log(error)
@@ -49,17 +51,21 @@ const loginUser = async(email, ) => {
         console.log("email 2");
 
         const [res] = await connection.query(`
-        SELECT * FROM user_details
+        SELECT user_details.*, transaction_totals.total_deposit, transaction_totals.total_withdraw, transaction_totals.balance
+        FROM user_details
+        LEFT JOIN transaction_totals ON user_details.user_id = transaction_totals.user_id
         WHERE email = ?
         `, [email]);
 
         connection.release();
         console.log(res);
         if(res.length === 1){
-            const {user_id, first_name, last_name, email, remember_me, country, password} = res[0]
+            const {user_id, first_name, last_name, email, remember_me, country, password, 
+                total_deposit, total_withdraw, balance} = res[0]
                 
             return {userAvailable: true, passwordHash: password,
-                details: [{user_id, first_name, last_name, email, remember_me, country}]
+                details: [{user_id, first_name, last_name, email, remember_me, country, 
+                    total_deposit, total_withdraw, balance}]
             };
         }else{
             return {userAvailable: false}

@@ -1,6 +1,8 @@
+import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 
-const EnterAmount = ({onChangeOption, onHandleTransationDetails, transationDetails, deposit, balance= 0.00}) =>{
+const EnterAmount = ({onChangeOption, onHandleTransationDetails, transationDetails, deposit}) =>{
+    const { balance} = useSelector(state => state.userDetails)
     return(
         <div class="col-xl-8 col-lg-8 col-md-7">
                             <div class="table-area">
@@ -18,7 +20,7 @@ const EnterAmount = ({onChangeOption, onHandleTransationDetails, transationDetai
                                                 <option value="USD">USD</option>
                                             </select>
                                         </div>
-                                        <p>Available Balance<b>{balance}</b></p>
+                                        <p>Available Balance:<b>$ {balance}</b></p>
                                     </div>  
                                 </form>
                             </div>

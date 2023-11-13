@@ -3,7 +3,7 @@ import { ban_frame_1, ban_frame_2, ban_frame_3, ban_frame_4, ban_right, banner_b
 
 const LandingPageBody = () =>{
     return(
-        <section class="banner-section">
+        <section class="banner-section land-pg">
         <div class="banner-content d-flex align-items-center">
             <div class="container">
                 <div class="illu-item">

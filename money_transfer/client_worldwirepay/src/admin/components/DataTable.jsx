@@ -12,25 +12,20 @@ export default function DataTable_Component({ apidata, columns, search }) {
   useEffect(() => {
     let result = data.filter(val => {
       if (search == 'name') {
-        return val.name?.toLowerCase().match(datafilter?.toLowerCase())
+        const fullName = `${val.first_name} ${val.last_name}`.toLowerCase();
+        return fullName.toLowerCase().match(datafilter?.toLowerCase())
       }
-      else if (search == 'title') {
-        return val.title?.toLowerCase().match(datafilter?.toLowerCase())
+      else if (search == 'type') {
+        return val.type?.toLowerCase().match(datafilter?.toLowerCase())
       }
       else if (search == 'transaction_id') {
         return val.transaction_id?.toString().match(datafilter?.toString())
       }
-      else if (search == 'account_name') {
-        return val.account_name?.toLowerCase().match(datafilter?.toLowerCase())
+      else if (search == 'amount') {
+        return val.amount?.toLowerCase().match(datafilter?.toLowerCase())
       }
-      else if (search == 'log') {
-        return val.log?.toLowerCase().match(datafilter?.toLowerCase())
-      }
-      else if (search == 'api_key') {
-        return val.api_key?.toLowerCase().match(datafilter?.toLowerCase())
-      }
-      else if (search == 'transaction') {
-        return val.transaction?.toLowerCase().match(datafilter?.toLowerCase())
+      else if (search == 'status') {
+        return val.status?.toLowerCase().match(datafilter?.toLowerCase())
       }
     })
 
@@ -61,7 +56,9 @@ export default function DataTable_Component({ apidata, columns, search }) {
           subHeaderComponent={
             <div className="row justify-content-start">
               <div className="col-12">
-                <input type="text" placeholder={`search with ${search}`} className="form-control " value={datafilter} onChange={(e) => setFilter(e.target.value)} />
+                <input type="text" placeholder={`search with ${search}`} className="form-control " 
+                  value={datafilter} onChange={(e) => setFilter(e.target.value)} 
+                />
               </div>
             </div>
            }

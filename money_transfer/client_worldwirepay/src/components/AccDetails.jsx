@@ -3,22 +3,23 @@ import { option } from "../assets/images";
 import { useSelector } from 'react-redux'
 
 const AccDetails = () =>{
-    const {balance, first_name, last_name, last_received, payouts, user_id} = useSelector(state => state.userDetails)
+    const {
+        balance, first_name, last_name, last_received, payouts, user_id, total_deposit, total_withdraw
+    } = useSelector(state => state.userDetails)
     return(
         <div class="acc-details">
                                 <div class="top-area">
                                     <div class="left-side">
                                         <h5>Hi, {first_name} {last_name}!</h5>
-                                        <h2>KSH {balance}</h2>
-                                        <h5 class="receive">Last Received: &nbsp;
-                                            <span> KSH {last_received}</span>
+                                        <h2>$ {balance}</h2>
+                                        <h5 class="receive">Total Deposit: &nbsp;
+                                            <span> $ {total_deposit}</span>
                                         </h5>
                                     </div>
                                     <div class="right-side">
                                         <div class="right-top">
                                             <select>
-                                                <option value="1">KSH</option>
-                                                <option value="2">US Dollar</option>
+                                                <option value="1">US Dollar</option>
                                             </select>
                                             {/* <div class="dropdown-area">
                                                 <button type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -31,8 +32,8 @@ const AccDetails = () =>{
                                             </div> */}
                                         </div>
                                         <div class="right-bottom">
-                                            <h4>KSH {payouts} </h4>
-                                            <h5>Payouts</h5>
+                                            <h4>$ {total_withdraw} </h4>
+                                            <h5>Withdraws</h5>
                                         </div>
                                     </div>
                                 </div>

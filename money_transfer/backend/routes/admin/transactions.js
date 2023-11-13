@@ -30,10 +30,10 @@ router.patch('/update-status', async (req, res) =>{
 });
 
 router.patch('/modify-transaction', async (req, res) =>{
-    const { transaction_id, amount, fees, description } = req.body;
+    const { transaction_id, amount, fees, description, balance, user_id } = req.body;
         console.log(req.body);
     try{
-        const response = await updateUserTransaction(transaction_id, amount, fees, description)
+        const response = await updateUserTransaction(transaction_id, amount, fees, description, balance, user_id)
         response.success ? 
             res.status(200).send(response) : 
             res.status(302).send(response)

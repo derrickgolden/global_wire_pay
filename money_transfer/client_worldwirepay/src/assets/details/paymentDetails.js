@@ -1,80 +1,75 @@
+import { advcash, banktransfer, payoneer, revoult, webmoney } from "../images";
+
 const worldWirePaymentDetails = {
-    mpesa:{
-        send_to: "+254771445702",
-        name: "World Wire Pay"
+    payoneer:{
+        send_to: "isambixx94@gmail.com",
+        name: "World Wire Pay",
+        method:"payoneer",
+        id:"payoneer",
+        value: "payoneer",
+        img: payoneer
     },
-    paypal:{
-        send_to: "goldenderrick95@gmail.com",
-        name: "World Wire Pay"
+    banktransfer:{
+        send_to: "isambixx94@gmail.com",
+        name: "World Wire Pay",
+        method:"banktransfer",
+        id:"banktransfer",
+        value: "banktransfer",
+        img: banktransfer,
     },
-    visa:{
-        send_to: "289137847748",
-        name: "World Wire Pay"
+    revolut:{
+        send_to: "isambixx94@gmail.com",
+        name: "World Wire Pay",
+        method:"revolut",
+        id:"revolut",
+        value: "revolut",
+        img: revoult,
     },
-    paylio:{
-        send_to: "sjdhk268389",
-        name: "World Wire Pay"
+    advcash:{
+        send_to: "isambixx94@gmail.com",
+        name: "World Wire Pay",
+        method:"advcash",
+        id:"advcash",
+        value: "advcash",
+        img: advcash
     },
-    blockchain:{
-        send_to: "cypto253767",
-        name: "World Wire Pay"
+    webmoney:{
+        send_to: "isambixx94@gmail.com",
+        name: "World Wire Pay",
+        method:"webmoney",
+        id:"webmoney",
+        value: "webmoney",
+        img: webmoney
     }
 }
 
-const userCardDetails = {
-    visa:{
-        user_id: "",
-        payment_method: "Visa",
-        card_account_no: "",
-        card_bank_name: "",
-        card_routing_number: "",
-        card_swift_code: "",
-        details: [
-            {label: "Account number", type: "text", id:"card_account_no", placeholder: "012389736494"},
-            { label: "Bank name", type: "text", id:"card_bank_name", placeholder: "Sample Bank" },
-            { label: "Routing number", type: "text", id:"card_routing_number", placeholder: "23456" },
-            { label: "Swift code", type: "text", id:"card_swift_code", placeholder: "231" },
-        ] 
-      },
-     
-                                                
-    mpesa:{
-        user_id: "",
-        payment_method: "Mpesa",
-        mpesa_phone_number: "",
-        mpesa_name: "",
-        details: [
-            {label: "Phone number", type: "text", id:"mpesa_phone_number", placeholder: "+2547285633"},
-            { label: "Mpesa names", type: "text", id:"mpesa_name", placeholder: "Jonh Don" },
-        ] 
-      },
-    paylio:{
-        user_id: "",
-        payment_method: "Paylio",
-        paylio_account: "",  
-        details: [
-            {label: "Phone number", type: "text", id:"paylio_account", placeholder: "YourPaylioAccount12345"},
-        ] 
-      },
-    paypal:{
-        user_id: "",
-        payment_method: "Paypal",
-        paypal_email: "",
-        details: [
-            {label: "Enail", type: "text", id:"paypal_email", placeholder: "yourpaypalemail@gmail.com"},
-        ] 
-      },
-    blockchain:{
-        user_id: "",
-        payment_method: "Blockchain",
-        blockchain_address: "",
-        details: [
-            {label: "Address", type: "text", id:"blockchain_address", placeholder: "YourBlockchainAddress12345"},
-        ] 
-    }
+const collectUserDetails = {
+            
+    payoneer:[
+        {label: "Email or Payoneer ID", type: "text", id:"email_or_id", placeholder: "example@gmail.com"}, 
+        {label: "Full names", type: "text", id:"full_names", placeholder: "John Doe Yen"}
+    ],
+    banktransfer:[
+        {label: "Account number", type: "text", id:"acc_no", placeholder: "012389736494"},
+        { label: "Bank name", type: "text", id:"bank_name", placeholder: "Sample Bank" },
+        { label: "Routing number", type: "text", id:"routing_no", placeholder: "23456" },
+        { label: "Swift code/ BIC", type: "text", id:"swift_code", placeholder: "231" },
+    ],
+    revolut:[
+        {label: "Revolut ID or Phone Number", type: "text", id:"email_or_id", placeholder: "23843749348"}, 
+        {label: "Full names", type: "text", id:"full_names", placeholder: "John Doe Yen"}
+    ],
+    advcash:[
+        {label: "Email or Wallet ID", type: "text", id:"email_or_id", placeholder: "example@gmail.com"}, 
+        {label: "Full names", type: "text", id:"full_names", placeholder: "John Doe Yen"}
+    ],
+    webmoney:[
+        {label: "Purse Number or WMID", type: "text", id:"email_or_id", placeholder: "2833273664"}, 
+        {label: "Full names", type: "text", id:"full_names", placeholder: "John Doe Yen"}
+    ]
 }
 
 export {
-    worldWirePaymentDetails, userCardDetails
+    worldWirePaymentDetails, collectUserDetails
 };
 

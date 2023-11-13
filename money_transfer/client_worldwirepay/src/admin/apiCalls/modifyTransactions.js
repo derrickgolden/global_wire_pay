@@ -1,9 +1,9 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import { setCallApi } from '../../redux/callApi';
 
-const updateTransactionStatus = (row, success, status, error = "Sorry, An error occurred") => {
+const updateTransactionStatus = (row, success, status, dispatch, error = "Sorry, An error occurred") => {
     console.log(row)
-
     let config = {
         method: 'patch',
         maxBodyLength: Infinity,
@@ -30,17 +30,20 @@ const updateTransactionStatus = (row, success, status, error = "Sorry, An error 
                 // setRen(!ren);
                 // rerendar(ren)
                 Swal.fire(success)
+                dispatch(setCallApi());
             })
             .catch((error) => {
                 console.log(error);
                 Swal.fire("Sorry, An error occurred")
+                dispatch(setCallApi());
             });
         } else if (result.isDenied) {
-          Swal.fire('Changes are not saved', '', 'info')
+            Swal.fire('Changes are not saved', '', 'info')
+            dispatch(setCallApi());
         }
       })
 }
-const modifyTransaction = (data, success, setRen, ren, rerendar, error = "Sorry, An error occurred") => {
+const modifyTransaction = (data, success, setRen, ren, rerendar, dispatch, serror = "Sorry, An error occurred") => {
 
     let config = {
         method: 'patch',
@@ -68,13 +71,16 @@ const modifyTransaction = (data, success, setRen, ren, rerendar, error = "Sorry,
                 setRen(!ren);
                 rerendar(ren)
                 Swal.fire(success)
+                dispatch(setCallApi())
             })
             .catch((error) => {
                 console.log(error);
                 Swal.fire("Sorry, An error occurred")
+                dispatch(setCallApi())
             });
         } else if (result.isDenied) {
-          Swal.fire('Changes are not saved', '', 'info')
+            Swal.fire('Changes are not saved', '', 'info')
+            dispatch(setCallApi())
         }
       })
 }

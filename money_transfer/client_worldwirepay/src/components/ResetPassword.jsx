@@ -56,7 +56,7 @@ const ResetPassword = () =>{
         });
     }
     return(
-        <section class="log-reg forgot-pws reset-pws two">
+        <section class="log-reg forgot-pws reset-pws two land-pg">
         <div class="overlay pb-120">
             <div class="container">
                 <div class="top-head-area">

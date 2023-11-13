@@ -42,7 +42,7 @@ const ForgotPassword = () =>{
         });
     }
     return(
-        <section class="log-reg forgot-pws">
+        <section class="log-reg forgot-pws land-pg">
         <div class="overlay pb-120">
             <div class="container">
                 <div class="top-head-area">

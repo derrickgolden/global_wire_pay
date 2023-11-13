@@ -9,7 +9,8 @@ import { support_icon } from '../assets/images';
 import { useSelector } from 'react-redux';
 
 const WithdrawMoney = () =>{
-    const { user_id} = useSelector(state => state.userDetails);
+    const { user_id, balance } = useSelector(state => state.userDetails);
+    
     const [option, setOption] = useState("method")
 
     console.log(option)
@@ -37,6 +38,9 @@ const WithdrawMoney = () =>{
         let data = JSON.stringify(transationDetails);
         console.log(transationDetails);
 
+        if(transationDetails.amount > balance) return alert(
+            "You do not have enough money in your account. Deposit first"
+        )
         if(!transationDetails.amount) return alert("Enter amount you want to send")
         if(!transationDetails.termsConditions) return alert("Accept terms and conditions")
 
@@ -54,9 +58,6 @@ const WithdrawMoney = () =>{
         .then((response) => {
             console.log(JSON.stringify(response.data));
             handleClick();
-            // setSignupDetails((obj) =>({...obj, password: ""}))
-            // navigate('/user/login', {replace: true});
-            // return redirect('user/login')
         })
         .catch((error) => {
             console.log(error.response);
@@ -87,6 +88,7 @@ const WithdrawMoney = () =>{
                                     onChangeOption = {changeOption}
                                     onHandleTransationDetails = {handleTransationDetails}
                                     transationDetails = {transationDetails}
+                                    withdraw = {true}
                                 /> :
                             option === "amount"? 
                                 <EnterAmount 

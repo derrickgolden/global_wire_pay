@@ -1,6 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import { admin } from "../../assets/images";
 
-const AdminHeader = () => {
+const AdminHeader = ({adminDetails}) => {
+  const navigate = useNavigate()
+
+  const handleLogout = () =>{
+    navigate("/")
+  }
   return (
     <div>
       <header class="header mb-4 dropdown" id="header">
@@ -33,7 +39,7 @@ const AdminHeader = () => {
               alt="admin icon"
             />{" "}
           </span>{" "}
-          <span class="ms-1">Mobashir</span>{" "}
+          <span class="ms-1">{adminDetails[0]?.last_name}</span>{" "}
         </div>
         <ul
           class="dropdown-menu dropdown-menu-end"
@@ -41,19 +47,19 @@ const AdminHeader = () => {
           style={{width: "auto"}}
         >
           <li>
-            <a class="dropdown-item" href="/profileSetting">
+            <a class="dropdown-item" href="#">
               Profile
             </a>
           </li>
           <li>
-            <a class="dropdown-item" href="/general-setting">
+            <a class="dropdown-item" href="#">
               Setting
             </a>
           </li>
-          <li class="dropdown-item">Log Out</li>
+          <li onClick={handleLogout} class="dropdown-item">Log out</li>
         </ul>
       </header>
-      <div class="manubar">
+      {/* <div class="manubar">
         <div class="l-navbar " id="nav-bar">
           <nav class="nav">
             <div>
@@ -885,7 +891,7 @@ const AdminHeader = () => {
             </div>
           </nav>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

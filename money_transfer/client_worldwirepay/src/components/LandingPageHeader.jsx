@@ -3,7 +3,7 @@ import { logo } from "../assets/images";
 
 const LandingPageHeader = () =>{
     return(
-        <header class="header-section">
+        <header class="header-section land-pg">
         <div class="overlay">
             <div class="container">
                 <div class="row d-flex header-area">

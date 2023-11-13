@@ -15,23 +15,43 @@
     <link rel="stylesheet" href="./src/assets/css/plugin/nice-select.css">
     <link rel="stylesheet" href="./src/assets/css/arafat-font.css">
     <link rel="stylesheet" href="./src/assets/css/plugin/animate.css">
-    <!-- <link rel="stylesheet" href="./src/assets/css/style.css"> -->
+    
+    <link id="admin" rel="stylesheet" href="./src/assets/css/adminStyle.css">
+    <link rel="stylesheet" href="./src/assets/css/style.css">
     
     <!-- login and sign up -->
     <link rel="stylesheet" href="./src/assets/css/plugin/nice-select.css">
     <link rel="stylesheet" href="./src/assets/css/plugin/slick.css">
     <link rel="stylesheet" href="./src/assets/css/custom-family.css">
     <link rel="stylesheet" href="./src/assets/css/plugin/magnific-popup.css">
-    <!-- <link id="style_login" rel="stylesheet" href="./src/assets/css/style_login.css"> -->
-    
+    <link id="style_login" rel="stylesheet" href="./src/assets/css/style_login.css">
+
     <!-- admin -->
-    <link id="admin" rel="stylesheet" href="./src/assets/css/adminStyle.css">
+    
     
   </head>
   <body >
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     <script src="./src/assets/js/bootstrap.min.js"></script>
+    <script>
+      // Check URL location and dynamically change the stylesheet
+      // if (window.location.href.includes('/admin')) {
+      //     // If URL contains '/admin', enable admin styles
+      //     const adminStyle = document.createElement('link');
+      //     adminStyle.rel = 'stylesheet';
+      //     adminStyle.href = './src/assets/css/adminStyle.css';
+      //     adminStyle.id = 'admin';
+      //     document.head.appendChild(adminStyle);
+      // }
+      // if (window.location.href.includes('/user')){
+      //     const adminStyle = document.createElement('link');
+      //     adminStyle.rel = 'stylesheet';
+      //     adminStyle.href = './src/assets/css/style.css';
+      //     adminStyle.id = 'admin';
+      //     document.head.appendChild(adminStyle);
+      // }
+  </script>
     <!-- <script src="./src/assets/js/jquery.min.js"></script>
     <script src="./src/assets/js/jquery-ui.js"></script>
     <script src="./src/assets/js/plugin/apexcharts.js"></script>

@@ -16,10 +16,11 @@ import { Link } from 'react-router-dom'
 // import {Modal} from 'bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faCheck, faBan, faCircleInfo } from '@fortawesome/free-solid-svg-icons'
-import { useSelector } from 'react-redux'  
+import { useDispatch, useSelector } from 'react-redux'  
 // import { columns } from '../data/table'
 import axios from 'axios'
 import {  updateTransactionStatus } from '../apiCalls/modifyTransactions'
+import { setCallApi } from '../../redux/callApi'
 
 export default function AllTransactions() {
     const apidata = useSelector(state => state.allUsersTransactions)
@@ -44,6 +45,16 @@ export default function AllTransactions() {
     const [open_update_modal, setOpen_update_modal] = useState({ render: true, modal_open: false })
     const [update_modal_data, setUpdate_modal_data] = useState('')
 
+    const [search, setSearch] = useState('name');
+    const [searchType, setSearchType] = useState('name');
+
+    const dispatch = useDispatch();
+
+    const handleSearchChange = (e) => {
+        setSearch(e.target.value);
+        setSearchType(e.target.value); // Prop to set the search type in the parent component
+      };
+
     const brad = [
         {
             name: "home",
@@ -65,12 +76,12 @@ export default function AllTransactions() {
         },
         {
             name: "Name",
-            selector: row => row.first_name,
+            selector: row => `${row.first_name} ${row.last_name}`,
             sortable: true
         },
         {
-            name: "Email",
-            selector: row => row.email,
+            name: "Updates",
+            selector: row => row.manual_update,
             sortable: true
         },
         {
@@ -85,12 +96,13 @@ export default function AllTransactions() {
         },
         {
             name: "Date",
-            cell: (row) => <ul>
-                
-                <li>
-                    {new Date(row.time_stamp).toLocaleString()}
-                </li>
-            </ul>,
+            cell: (row) => new Date(row.time_stamp).toLocaleString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            })
         },
         {
             name: "Status",
@@ -139,7 +151,7 @@ export default function AllTransactions() {
     useEffect(() => {
         setApiState(apidata)
         setApiCol(columns)
-        console.log("render from invoice")
+        console.log("render from transactions")
     }, [rerendarApi])
 
     const setStoreBtn = () => {
@@ -149,7 +161,7 @@ export default function AllTransactions() {
         console.log(row)
         const success = "Transaction status changed to updated"
         const status = "completed"
-        updateTransactionStatus(row, success, status)
+        updateTransactionStatus(row, success, status, dispatch)
         
         // setOpen_email_sender_modal({ render: !open_email_sender_modal.render, modal_open: true })
         // setEmail_sender_modal_data(row)
@@ -166,7 +178,7 @@ export default function AllTransactions() {
     const cancelTransaction = (row) => {
         const success = "Transaction status changed to cancelled";
         const status = "cancelled"
-        updateTransactionStatus(row, success, status)
+        updateTransactionStatus(row, success, status, dispatch)
     }
     const rerender = (e) => {
         setRerendarApi(e)
@@ -192,19 +204,28 @@ export default function AllTransactions() {
             <div className="container-fluid" >
                 <Breadcrumb title={title} brad={brad} />
                 <Link to="#" ><button type="button" className="btn btn-outline-success active btn-sm ">All</button></Link>
-                <Link to="#" ><button type="button" className="btn btn-outline-primary btn-sm ms-1">Deposits</button></Link>
+                {/* <Link to="#" ><button type="button" className="btn btn-outline-primary btn-sm ms-1">Deposits</button></Link>
                 <Link to="#" ><button type="button" className="btn btn-outline-warning btn-sm ms-1">Withdraws</button></Link>
                 <Link to="#" ><button type="button" className="btn btn-outline-secondary btn-sm ms-1">Inprogress</button></Link>
-                <Link to="#" ><button type="button" className="btn btn-outline-danger btn-sm ms-1">Cancelled</button></Link>
+                <Link to="#" ><button type="button" className="btn btn-outline-danger btn-sm ms-1">Cancelled</button></Link> */}
                 <div className="row my-3">
                     <div className="col-12">
                         <div className="card" style={{ borderTop: "2px solid #4723d9" }}>
                             <div className="card-header d-flex justify-content-between border-bottom pb-1">
                                 <h4>{title}</h4>
+                                <select value={search} onChange={handleSearchChange}>
+                                    <option value="name">Name</option>
+                                    <option value="type">Type</option>
+                                    <option value="transaction_id">Transaction_ID</option>
+                                    <option value="amount">Amount</option>
+                                    <option value="status">Status</option>
+                                </select>
                                 {/* <Link to="/add-invoice"><div className="btn btn-info btn-sm text-white">Add Invoice</div></Link> */}
                             </div>
                             <div className="card-body">
-                                <DataTable_Component search="name" title_btn={true} title="payments" apidata={apidata} columns={apicol} />
+                                <DataTable_Component search={ searchType } title_btn={true} 
+                                    title="payments" apidata={apidata} columns={apicol} 
+                                />
                             </div>
                         </div>
                     </div>

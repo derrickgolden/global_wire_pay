@@ -106,8 +106,7 @@ const CardDetailsPopup = () =>{
                                                         <input class="xxlr" placeholder="400.00" type="number"/>
                                                         <select>
                                                             <option value="1">USD</option>
-                                                            <option value="2">USD</option>
-                                                            <option value="3">USD</option>
+                                                            
                                                         </select>
                                                     </div>
                                                     <div

@@ -11,30 +11,19 @@ const {
 // const { authenticateToken } = require('../middleware/authToken');
 // const { storeTokens } = require('../dbServices/dbTokens');
 const { generateAuthToken } = require('../controllers/generateToken');
-const { getUserDetails } = require('../dbServices/dbUsers');
+const { getUserDetailsByemail } = require('../dbServices/dbUsers');
 const { sendResetPasswordLink } = require('../controllers/sendResetPasswordLink');
 const { generateResetPasswordLink } = require('../controllers/resetPasswordLink');
 const { authenticateToken } = require('../middlewares/authToken');
 
-// router.get('/roles', async(req, res) =>{
-//     try {
-//         const response = await getAdminRoles()
-//         response.success ? 
-//             res.status(200).send( response ) : 
-//             res.status(302).send( response)
-//     } catch (error) {
-//         res.status(302).send({success: false, res: error.message})
-//     }
-// });
-
 router.post('/signup', async (req, res) =>{
     const { first_name, last_name, email, remember_me, country,
-        password } = req.body;
+        password, phone } = req.body;
         console.log(req.body);
     try{
         const hash = await bcrypt.hash(password, 10);
         const response = await signupUser(first_name, last_name, email, remember_me, country,
-            hash)
+            hash, phone)
         response.success ? 
             res.status(200).send(response) : 
             res.status(302).send(response)
@@ -53,7 +42,7 @@ router.post('/login', async (req, res) =>{
     console.log(response);
     try {
         if(!userAvailable){
-            return res.status(401).send({success: false, msg: "Email not registered", details: response});
+            return res.status(200).send({success: false, msg: "Email not registered", details: response});
         }
         console.log(details)
 
@@ -73,7 +62,7 @@ router.post('/login', async (req, res) =>{
             //     res.status(200).send({success: true, token, msg: "Admin Found", details}) :
             //     res.status(302).send(resp);
         }else{
-            return res.status(302).send({success: false, msg: "Incorrect Password"});
+            return res.status(200).send({success: false, msg: "Incorrect Password"});
         }
     } catch (error) {
         console.log(error)
@@ -108,7 +97,7 @@ router.post('/forgot-password', async(req, res) =>{
     const { email } = req.body;
     console.log(email);
     try {
-        const response = await getUserDetails(email);
+        const response = await getUserDetailsByemail(email);
 
         if(response.success ){
             const {user_id, first_name, last_name, email} = response.details[0];

@@ -1,10 +1,11 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { worldWirePaymentDetails } from "../assets/details/paymentDetails";
+import { useSelector } from "react-redux";
 
 const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDetails,
                         onHandleTransateMoney, buttonRef, deposit }) =>{
-                            const j = worldWirePaymentDetails
+    const userCards = useSelector(state => state.userCardDetails)
     return(
         <div class="col-xl-8 col-lg-8">
                             <form action="#">
@@ -28,7 +29,16 @@ const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDeta
                                                 </li>
                                                 <li>
                                                     <span>{deposit ? "Deposit": "Withdraw"} {transationDetails.method} money to: &nbsp;</span>
-                                                    <b> {worldWirePaymentDetails[transationDetails.method].send_to} </b>
+                                                    {deposit? <b>{worldWirePaymentDetails[transationDetails.method].send_to}</b> :
+                                                    <b>{userCards.map((userCard, i)=> {
+                                                        if(userCard.email_or_id && userCard.card_name === transationDetails.method ){
+                                                            return userCard.email_or_id;
+                                                        }
+                                                        if(userCard.acc_no && userCard.card_name === transationDetails.method ){
+                                                            return userCard.acc_no;
+                                                        }
+                                                    })}</b>
+                                                    }
                                                 </li>
                                                 {
                                                     deposit? 

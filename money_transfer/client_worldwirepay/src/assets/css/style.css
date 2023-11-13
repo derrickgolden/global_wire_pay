@@ -282,10 +282,10 @@ a {
   line-height: 30px;
 }
 
-p,
-span,
-li,
-label {
+.u-dash p,
+.u-dash span,
+.u-dash li,
+.u-dash label {
   margin: 0;
   font-family: var(--body-font);
   font-size: 18px;

@@ -22,7 +22,7 @@ const Login = () =>{
     const handleLoginDetailsSubmit = (e) =>{
         e.preventDefault()
         
-        console.log(loginDetails);
+        // console.log(loginDetails);
         let data = JSON.stringify(loginDetails);
         
         fetch('http://localhost:5000/user/login', {
@@ -34,13 +34,13 @@ const Login = () =>{
         })
         .then(response => response.json())
         .then(data => {
-            console.log(JSON.stringify(data));
+            console.log(data);
             if(data.success){
                 sessionStorage.setItem("user", JSON.stringify(data?.details[0]));
                 dispatch(setUserDetails(data?.details[0]));
                 navigate('/user/dashboard', {replace: true});
             }else{
-                return alert("Error: ",data.msg)
+                return alert(data.msg)
             }
         })
         .catch(error => {
@@ -50,7 +50,7 @@ const Login = () =>{
         });
     }
     return(
-        <section className="log-reg">
+        <section className="log-reg land-pg">
         <div className="overlay pb-120">
             <div className="container">
                 <div className="top-head-area">
@@ -58,7 +58,7 @@ const Login = () =>{
                         <div className="col-sm-5 col">
                             <Link className="back-home" to="/">
                                 <img src={left_arrow} alt="image"/>
-                                Back To Paylio
+                                Back to World Wire Pay
                             </Link>
                         </div>
                         <div className="col-sm-5 col">
@@ -71,20 +71,8 @@ const Login = () =>{
                 <div className="row justify-content-center">
                     <div className="col-lg-6 text-center">
                         <div className="form-box">
-                            <h4>Log in to Paylio</h4>
+                            <h4>Log in to World Wire Pay</h4>
                             <p className="dont-acc">Don't have an account? <Link to='http://localhost:5173/user/signup'>Register</Link></p>
-                            <ul className="nav nav-tabs" id="myTab" role="tablist">
-                                <li className="nav-item" role="presentation">
-                                    <button className="nav-link active" id="personal-tab" data-bs-toggle="tab"
-                                        data-bs-target="#personal" type="button" role="tab" aria-controls="personal"
-                                        aria-selected="true">Personal</button>
-                                </li>
-                                {/* <li className="nav-item" role="presentation">
-                                    <button className="nav-link" id="business-tab" data-bs-toggle="tab" data-bs-target="#business"
-                                        type="button" role="tab" aria-controls="business"
-                                        aria-selected="false">Business</button>
-                                </li> */}
-                            </ul>
                             <div className="tab-content" id="myTabContent">
                                 <div className="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">                                
                                     <form onSubmit={handleLoginDetailsSubmit} action="#">

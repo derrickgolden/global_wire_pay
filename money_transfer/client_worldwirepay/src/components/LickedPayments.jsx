@@ -1,12 +1,40 @@
-import { blockchain_card, mpesa_card, option, paylio_card, paypal_card, visa_card } from "../assets/images";
+import { useDispatch, useSelector } from "react-redux";
+import { advcash, banktransfer, option, payoneer, revoult, webmoney } from "../assets/images";
+import { useEffect } from "react";
+import axios from "axios";
+import { setUserCardDetails } from "../redux/userCardDetails";
 
 const LinkedPayments = ({handleAddCardPopup}) =>{
+    const dispath = useDispatch()
+
+    const {user_id} = useSelector(state => state.userDetails)
+
+    useEffect(()=>{
+        let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: `http://localhost:5000/user/dashboard/get-card/${user_id}`,
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+        };
+
+        axios.request(config)
+        .then((response) => {
+            console.log(JSON.stringify(response.data));
+           dispath(setUserCardDetails((response.data.details)))
+        })
+        .catch((error) => {
+            console.log(error.response);
+            // alert("Error:", error.response.data)
+        });
+    },[user_id])
 
     return(
         <div class="single-item">
             <div class="section-text d-flex align-items-center justify-content-between">
                                     <h6>Link Payment system</h6>
-                                    <div class="right-side">
+                                    {/* <div class="right-side">
                                         <div class="dropdown-area">
                                             <button type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <img src={option} alt="icon"/>
@@ -16,15 +44,24 @@ const LinkedPayments = ({handleAddCardPopup}) =>{
                                                 <li><a class="dropdown-item" href="javascript:void(0)">Virtual card</a></li>
                                             </ul>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="single-card">
-                                            <button onClick = {handleAddCardPopup} id="visa"
+                                            <button onClick = {handleAddCardPopup}
                                                 type="button" class="reg w-100" data-bs-toggle="modal"
                                                 data-bs-target="#addcardMod">
-                                                <img src={visa_card} alt="image" class="w-100" id="visa"/>
+                                                <img src={payoneer} alt="image" class="w-100" id="payoneer"/>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="single-card">
+                                            <button onClick = {handleAddCardPopup} 
+                                            type="button" class="reg w-100" data-bs-toggle="modal"
+                                                data-bs-target="#addcardMod">
+                                                <img src={revoult} alt="image" class="w-100" id ="revolut"/>
                                             </button>
                                         </div>
                                     </div>
@@ -33,7 +70,7 @@ const LinkedPayments = ({handleAddCardPopup}) =>{
                                             <button onClick = {handleAddCardPopup}
                                             type="button" class="reg w-100" data-bs-toggle="modal"
                                                 data-bs-target="#addcardMod">
-                                                <img src={mpesa_card} alt="image" class="w-100"/>
+                                                <img src={banktransfer} alt="image" class="w-100" id="banktransfer"/>
                                             </button>
                                         </div>
                                     </div>
@@ -42,7 +79,7 @@ const LinkedPayments = ({handleAddCardPopup}) =>{
                                             <button onClick = {handleAddCardPopup}
                                             type="button" class="reg w-100" data-bs-toggle="modal"
                                                 data-bs-target="#addcardMod">
-                                                <img src={paylio_card} alt="image" class="w-100"/>
+                                                <img src={advcash} alt="image" class="w-100" id="advcash"/>
                                             </button>
                                         </div>
                                     </div>
@@ -51,16 +88,7 @@ const LinkedPayments = ({handleAddCardPopup}) =>{
                                             <button onClick = {handleAddCardPopup}
                                             type="button" class="reg w-100" data-bs-toggle="modal"
                                                 data-bs-target="#addcardMod">
-                                                <img src={paypal_card} alt="image" class="w-100"/>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="single-card">
-                                            <button onClick = {handleAddCardPopup}
-                                            type="button" class="reg w-100" data-bs-toggle="modal"
-                                                data-bs-target="#cardMod">
-                                                <img src={blockchain_card} alt="image" class="w-100"/>
+                                                <img src={webmoney} alt="image" class="w-100" id="webmoney"/>
                                             </button>
                                         </div>
                                     </div>

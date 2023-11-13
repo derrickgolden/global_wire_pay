@@ -7,14 +7,14 @@ import { useState } from "react";
 import CardDetailsPopup from "../components/cardPopups/cardDetailsPopup";
 
 const DashboardBody = () =>{
-    const [cardType, setCardType] = useState("visa");
+    const [cardType, setCardType] = useState("payoneer");
     const onHandleAddCardPopup = (e) =>{
         console.log("id: ", e.target.id)
         setCardType(e.target.id);
     }
     return(
         <>
-        <section class="dashboard-section body-collapse">
+        <section class="dashboard-section body-collapse u-dash">
         <div class="overlay pt-120">
             <div class="container-fruid">
                 <div class="row">

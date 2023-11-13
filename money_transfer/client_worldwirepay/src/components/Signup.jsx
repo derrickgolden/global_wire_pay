@@ -4,23 +4,35 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { left_arrow, logo, register_illus, show_hide } from "../assets/images";
 
+import { continents, countries, languages } from 'countries-list'
+
 const Signup = () =>{
     const navigate = useNavigate()
 
     const [signupDetails, setSignupDetails] = useState({
-        last_name: "", first_name:"",email:"", remember_me: false, country: "", password: ""
+        last_name: "", first_name:"",email:"", remember_me: false, country: "US", password: "", phone:""
     })
     const handleInputChange = (e) =>{
+        console.log(e)
         const name = e.target.name
         const value = e.target.value
+        console.log(name, value);
         setSignupDetails((obj) =>({...obj, [name]: value}))
+        console.log(signupDetails);
     }
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
     const handleSignupDetailsSubmit = (e) =>{
         e.preventDefault()
         
         console.log(signupDetails);
-
-        let data = JSON.stringify(signupDetails);
+        const phone = "+" + countries[signupDetails.country].phone + signupDetails.phone
+        let data = JSON.stringify({...signupDetails, phone});
 
         let config = {
             method: 'post',
@@ -34,18 +46,22 @@ const Signup = () =>{
 
         axios.request(config)
         .then((response) => {
-            console.log(JSON.stringify(response.data));
-            setSignupDetails((obj) =>({...obj, password: ""}))
-            navigate('/user/login', {replace: true});
+            console.log(response.data);
+            if(response.data.msg === "User Registered"){
+                navigate('/user/login', {replace: true});
+            }else{
+                alert(response.data.msg)
+            }
             // return redirect('user/login')
         })
         .catch((error) => {
             console.log(error);
-            setSignupDetails((obj) =>({...obj, password: ""}))
+            alert("Server side error")
+            // setSignupDetails((obj) =>({...obj, password: ""}))
         });
     }
     return(
-        <section class="log-reg register">
+        <section class="log-reg register land-pg">
         <div class="overlay">
             <div class="container">
                 <div class="top-head-area">
@@ -53,7 +69,7 @@ const Signup = () =>{
                         <div class="col-sm-5 col">
                             <Link class="back-home" to='http://localhost:5173/'>
                                 <img src={left_arrow} alt="image"/>
-                                Back To Paylio
+                                Back To World Wire Pay
                             </Link>
                         </div>
                         <div class="col-sm-5 col">
@@ -71,20 +87,20 @@ const Signup = () =>{
                     </div>
                     <div class="col-lg-6 col-md-7 z-1 text-center d-flex justify-content-center pb-120">
                         <div class="form-box">
-                            <h4>Register with Paylio</h4>
+                            <h4>Register with World Wire Pay</h4>
                             <p class="alr-acc dont-acc">Already have an account? <Link to='http://localhost:5173/user/login'>Log in now.</Link></p>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            {/* <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="personal-tab" data-bs-toggle="tab"
                                         data-bs-target="#personal" type="button" role="tab" aria-controls="personal"
                                         aria-selected="true">Personal</button>
                                 </li>
-                                {/* <li class="nav-item" role="presentation">
+                                <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="business-tab" data-bs-toggle="tab" data-bs-target="#business"
                                         type="button" role="tab" aria-controls="business"
                                         aria-selected="false">Business</button>
-                                </li> */}
-                            </ul>
+                                </li>
+                            </ul> */}
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">
                                     <form onSubmit={handleSignupDetailsSubmit} action="#">
@@ -104,17 +120,31 @@ const Signup = () =>{
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
+                                            <option value="1">
+                                                            Select Your Country
+                                                        </option>
                                                 <div class="single-input d-flex align-items-center">
-                                                    <select>
-                                                        <option value="1">Select Your Country</option>
-                                                        <option value="2">United State</option>
-                                                        <option value="3">United kingdom</option>
-                                                        <option value="4">Canada</option>
+                                                    <select onChange={handleInputChange} name='country' defaultValue="US" >
+                                                        
+                                                        {Object.keys(countries).map((code, i) =>(
+                                                            <option key={code}
+                                                            value={code}>
+                                                                {countries[code].name}
+                                                            </option>
+                                                        ))}
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
+                                            <div class="col-12">
+                                                <div class="single-input d-flex align-items-center">
+                                                    <span style={{paddingRight: "5px"}}>+{countries[signupDetails.country].phone}</span>
+                                                    <input onChange={handleInputChange} required
+                                                    type="number" name="phone" class="phoneInput" placeholder="Phone Number">
+                                                    </input>
+                                                </div>
+                                            </div>
                                             <div class="col-12">
                                                 <div class="single-input d-flex align-items-center">
                                                     <input onChange={handleInputChange} required
@@ -124,19 +154,23 @@ const Signup = () =>{
                                             <div class="col-12">
                                                 <div class="single-input d-flex align-items-center">
                                                     <input onChange={handleInputChange} required
-                                                    type="password" name="password" class="passInput" placeholder="Password"/>
-                                                    <img class="showPass" src={show_hide} alt="image"/>
+                                                    type={showPassword ? 'text' : 'password'}
+                                                     name="password" class="passInput" placeholder="Password"/>
+                                                    <img onClick={toggleShowPassword}
+                                                        class="showPass" src={show_hide} alt="image"/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="remember-forgot d-flex justify-content-between">
+{/*                                             
                                             <div class="form-group d-flex">
                                                 <div class="checkbox_wrapper" >
-                                                    <input checked = {true} class="check-box" id="check1" type="checkbox"/>
+                                                    <input onChange={handleInputChange} name='remember_me'
+                                                    checked = {signupDetails.remember_me} class="check-box" id="check1" type="checkbox"/>
                                                     <label></label>
                                                 </div>
                                                 <label for="check1"><span class="check_span">Remember Me</span></label>
-                                            </div>
+                                            </div> */}
                                             <div class="forget-pw">
                                                 <Link to="http://localhost:5173/user/forgot-password">Forgot your password?</Link>
                                             </div>

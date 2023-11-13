@@ -2,7 +2,10 @@ import { useState, useEffect, useRef } from 'react'
 import { Modal, Button, Form } from "react-bootstrap";
 import Swal from 'sweetalert2'
 import { modifyTransaction } from '../apiCalls/modifyTransactions';
+import { useDispatch } from 'react-redux';
+import callApi from '../../redux/callApi';
 export default function Add_data_modal({ rerendar,select_data, open_update_data_modal }) {
+    const dispatch = useDispatch();
 
     const [ren, setRen] = useState("false")
     const [update_modal_data, setUpdate_modal_data] = useState(select_data)
@@ -13,15 +16,15 @@ export default function Add_data_modal({ rerendar,select_data, open_update_data_
         amount: select_data?.amount, 
         fees: select_data?.fees || 0.00,
         balance: select_data?.balance,
-        description: select_data?.description
+        description: select_data?.description || ""
     })
 
     useEffect(() => {
         setUpdate_modal_data(select_data)
         set_update_details({
             amount: select_data?.amount, 
-            fees: select_data?.fees || 0.00,
-            balance: select_data?.balance || 0.00,
+            fees: select_data?.fees || 0,
+            balance: select_data?.balance,
             description: select_data?.description
         })
     }, [select_data])
@@ -37,7 +40,6 @@ export default function Add_data_modal({ rerendar,select_data, open_update_data_
     const handleClose = () => {
         set_update_data_modal_Show(false);
     }
-
     const handleUpdateInfo = (e) =>{
         const name = e.target.id
         const value = e.target.value
@@ -51,9 +53,11 @@ export default function Add_data_modal({ rerendar,select_data, open_update_data_
 
     const handleUpdate = () => {
         const success = "Transaction details updated"
-        console.log(update_details)
-        modifyTransaction({transaction_id: update_modal_data.transaction_id, ...update_details}, 
-            success, setRen, ren, rerendar);
+        // console.log(update_details)
+        const {transaction_id, user_id} = update_modal_data;
+        console.log("user_id", user_id)
+        modifyTransaction({transaction_id, user_id, ...update_details}, 
+            success, setRen, ren, rerendar, dispatch,);
         // set_update_details({amount: "", fees:"", balance: "", description: ""})
         // setRen(!ren);
         // typeof rerendar === 'function' && rerendar(ren)

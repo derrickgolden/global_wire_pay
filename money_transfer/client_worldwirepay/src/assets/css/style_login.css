@@ -215,7 +215,7 @@ a {
   line-height: 25px;
 }
 
-p, span, li {
+land-pg p, .land-pg span, land-pg li {
   margin: 0;
   font-family: var(--body-font);
   font-size: 18px;

@@ -13,6 +13,7 @@ const Transations = () =>{
     const [viewAll, setViewAll] = useState(false)
     const [transactions, setTransationDetails] = useState([])
     const {user_id} = useSelector(state => state.userDetails)
+    const { callApi} = useSelector(state => state.callApi);
     console.log(transactions);
     
     useEffect(()=>{
@@ -39,7 +40,7 @@ const Transations = () =>{
             console.log(error.response);
             // setSignupDetails((obj) =>({...obj, password: ""}))
         });
-    }, []);
+    }, [user_id]);
     const handleViewAll = (e) =>{
         // if(e.target.id === "latest-tab"){
         //     setTransationDetails(useSelector(state => state.transactionDetails).slice(0,5))

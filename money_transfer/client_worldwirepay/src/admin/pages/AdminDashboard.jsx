@@ -1,14 +1,17 @@
 import axios from "axios";
 import AdminHeader from "./AdminHeader";
 import AllTransactions from "./UsersTransactions";
-import { useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { setAllUsersTransactions } from "../../redux/allUsersTransactions";
 import { Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 const AdminDashboard = () => {
   const allUsersTransactions = useSelector(state => state.allUsersTransactions)
-  const dispatch = useDispatch()
+  const callApi = useSelector(state => state.callApi)
+  const dispatch = useDispatch();
+  const [adminDetails, setAdminDetails] = useState([])
+
   useEffect(()=>{    
     let config = {
         method: 'post',
@@ -27,14 +30,37 @@ const AdminDashboard = () => {
     })
     .catch((error) => {
         console.log(error.response);
-        Alert("Sorry, An error occurred")
+        alert("Sorry, An error occurred")
         // setSignupDetails((obj) =>({...obj, password: ""}))
     });
-}, []);
+
+    // balance
+    let config2 = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'http://localhost:5000/admin/dashboard/admin-details',
+        headers: { 
+            'Content-Type': 'application/json'
+        }
+    };
+
+    axios.request(config2)
+    .then((response) => {
+        console.log(JSON.stringify(response.data.msg));
+        setAdminDetails(response.data.details);
+    })
+    .catch((error) => {
+        console.log(error.response);
+        alert("Sorry, An error occurred while requesting admin account bal")
+        // setSignupDetails((obj) =>({...obj, password: ""}))
+    });
+}, [callApi]);
   return (
-    <>
-    <AdminHeader />
-    <div class="container-fluid">
+    <Fragment >
+    <AdminHeader 
+      adminDetails = {adminDetails}
+    />
+    <div style={{marginTop: "10vh", padding: "20px"}} class="container-fluid">
       <div class="row justify-content-between">
         <div
           class="col d-flex align-items-center"
@@ -48,11 +74,11 @@ const AdminDashboard = () => {
       <div class="row ">
         <div class="col-lg-3 col-sm-6 col-12 d-flex">
           <div class="dash-count">
-            <div class="dash-counts">
+            <div class="dash-counts text-white" >
               <h4>
-                <span>{allUsersTransactions?.length}</span>
+                <span style={{color: "white", fontSize: "110%"}}>{allUsersTransactions?.length}</span>
               </h4>
-              <h5>Transactions</h5>
+              <h5 style={{color: "white", fontSize: "110%"}}>Transactions</h5>
             </div>
             <div class="dash-imgs">
               <svg
@@ -78,11 +104,14 @@ const AdminDashboard = () => {
           <div class="dash-count das1">
             <div class="dash-counts">
               <h4>
-                <span>{allUsersTransactions?.filter(transaction =>(
+                <span style={{color: "white", fontSize: "110%"}}>
+                  {allUsersTransactions?.filter(transaction =>(
                   transaction?.status === "inprogress"
                 ))?.length}</span>
               </h4>
-              <h5>Inprogress Transactions</h5>
+              <h5 style={{color: "white", fontSize: "110%"}}>
+                Inprogress Transactions
+              </h5>
             </div>
             <div class="dash-imgs">
               <svg
@@ -108,11 +137,11 @@ const AdminDashboard = () => {
           <div class="dash-count das2">
             <div class="dash-counts">
               <h4>
-                <span>{allUsersTransactions?.filter(transaction =>(
+                <span style={{color: "white", fontSize: "110%"}} >{allUsersTransactions?.filter(transaction =>(
                   transaction?.status === "inprogress" && transaction?.type === "deposit"
                 ))?.length}</span>
               </h4>
-              <h5>Inprogress Deposit</h5>
+              <h5 style={{color: "white", fontSize: "110%"}}>Inprogress Deposit</h5>
             </div>
             <div class="dash-imgs">
               <svg
@@ -138,11 +167,11 @@ const AdminDashboard = () => {
           <div class="dash-count das3">
             <div class="dash-counts">
               <h4>
-                <span>{allUsersTransactions?.filter(transaction =>(
+                <span style={{color: "white", fontSize: "110%"}}>{allUsersTransactions?.filter(transaction =>(
                   transaction?.status === "inprogress" && transaction?.type === "withdraw"
                 ))?.length}</span>
               </h4>
-              <h5>Inprogress Withdraw</h5>
+              <h5 style={{color: "white", fontSize: "110%"}}>Inprogress Withdraw</h5>
             </div>
             <div class="dash-imgs">
               <svg
@@ -170,9 +199,9 @@ const AdminDashboard = () => {
           <div class="dash-count das1">
             <div class="dash-counts ">
               <h4>
-                <span>200,000</span>
+                <span style={{color: "white", fontSize: "110%"}}>{adminDetails[0]?.balance}</span>
               </h4>
-              <h5>Account Balance</h5>
+              <h5 style={{color: "white", fontSize: "110%"}}>Account Balance</h5>
             </div>
             <div class="dash-imgs">
               <svg
@@ -198,7 +227,7 @@ const AdminDashboard = () => {
           <div class="dash-count">
             <div class="dash-counts">
               <h4>
-                <span>
+                <span style={{color: "white", fontSize: "110%"}}>
                   {allUsersTransactions.reduce((users, transaction) => {
                     if (!users.includes(transaction.user_id)) {
                         users.push(transaction.user_id);
@@ -207,7 +236,7 @@ const AdminDashboard = () => {
                     }, []).length}
               </span>
               </h4>
-              <h5>Total Users</h5>
+              <h5 style={{color: "white", fontSize: "110%"}}>Total Users</h5>
             </div>
             <div class="dash-imgs">
               <svg
@@ -288,7 +317,7 @@ const AdminDashboard = () => {
       </div>
     </div>
     <AllTransactions />
-    </>
+    </Fragment>
   );
 };
 

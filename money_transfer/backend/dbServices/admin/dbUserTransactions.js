@@ -7,7 +7,7 @@ try {
     const connection = await pool.getConnection();
 
     const [res] = await connection.query(`
-    SELECT t.transaction_id, t.user_id, t.method, t.amount, t.currency, t.termsConditions, t.status, t.time_stamp, t.type, t.ref_code, t.fees, t.description,
+    SELECT t.transaction_id, t.user_id, t.method, t.amount, t.currency, t.termsConditions, t.status, t.time_stamp, t.type, t.ref_code, t.fees, t.description, t.manual_update,
        u.first_name, u.last_name, u.email, u.country, u.signup_date,
        tt.total_deposit, tt.total_withdraw, tt.balance
         FROM transactions t
@@ -19,7 +19,7 @@ try {
 
     connection.release();
 
-    console.log(res)
+    console.log("api call")
     return {success: true, msg: "Users transactions", 
         details: res
     };
@@ -64,16 +64,26 @@ try {
 }
 }
 const updateUserTransaction = async(
-    transaction_id, amount, fees, description
+    transaction_id, amount, fees, description, balance, user_id,
 ) => {
 try {
     const connection = await pool.getConnection();
 
+    await connection.beginTransaction();
+
     const [res] = await connection.query(`
     UPDATE transactions
-    SET amount = ?, fees = ?, description = ?
+    SET amount = ?, fees = ?, description = ?, manual_update = true
     WHERE transaction_id = ?
     `, [amount, fees, description, transaction_id]);
+
+    const [resp] = await connection.query(`
+    UPDATE transaction_totals
+    SET balance = ?
+    WHERE user_id = ?
+    `, [balance, user_id]);
+
+    await connection.commit();
 
     connection.release();
 
@@ -82,6 +92,9 @@ try {
         details: res
     };
 } catch (error) {
+    await connection.rollback();
+    connection.release();
+
     console.log(error)
 
     if (error.sqlMessage) {

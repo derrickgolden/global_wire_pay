@@ -6,13 +6,13 @@ import right_arrow from "./icon/right-arrow.png"
 import left_arrow from "./icon/left-icon.png"
 import logo from "./logo.png"
 import avator from "./avatar-2.png"
-import lipa_na_mpesa from "./mpesa.png"
-import visa_card from "./visa-card.png"
-import mpesa_card from "./M-PESA.jpg"
-import paypal_card from "./paypal-card.png"
-import paylio_card from "./paylio-card.png"
+
+import payoneer from "./payoneer.jpg"
+import revoult from "./revoult.jpg"
+import advcash from "./Adv-cash-usd.png"
+import banktransfer from "./banktransfer.png"
 import add_new from "./add-new.png"
-import blockchain_card from "./blockchain-card.png"
+import webmoney from "./webmoney.png"
 
 // landing page
 import payment_illus from "./payment-illus-2.png"
@@ -43,7 +43,7 @@ import admin from "./admin.5782eaaa75cd9d5732db.jpg"
 
 export{
     menu, logo, avator, bell, search, option, right_arrow, 
-    mpesa_card, visa_card, paylio_card, paypal_card, blockchain_card, add_new,
+    payoneer, revoult, banktransfer, advcash, webmoney, add_new,
     payment_illus, payment_illus_2,
     left_arrow, register_illus, send,
     ban_frame_1, ban_frame_2, ban_frame_3, ban_frame_4, ban_right, banner_bg,

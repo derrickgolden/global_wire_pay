@@ -1,8 +1,38 @@
 import { Link } from "react-router-dom";
-import { add_new, blockchain_card, mpesa_card, paylio_card, paypal_card, visa_card } from "../assets/images";
+import { add_new, advcash, banktransfer, payoneer, revoult, webmoney, } from "../assets/images";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { worldWirePaymentDetails } from "../assets/details/paymentDetails";
+import { useEffect, useState } from "react";
+import userDetails from "../redux/userDetails";
 
-const ChoosePaymentMethod = ({onChangeOption, onHandleTransationDetails, transationDetails}) =>{
-    console.log(transationDetails.method);
+const ChoosePaymentMethod = ({onChangeOption, onHandleTransationDetails, transationDetails, withdraw}) =>{
+    const {user_id} = useSelector(state => state.userDetails)
+    const userCards = useSelector(state => state.userCardDetails)
+    console.log("ChoosePaymentMethod", userCards)
+    // const [userCards, setUserCards] = useState([])
+    if(withdraw){
+        // useEffect(()=>{
+        //     let config = {
+        //         method: 'get',
+        //         maxBodyLength: Infinity,
+        //         url: `http://localhost:5000/user/dashboard/get-card/${user_id}`,
+        //         headers: { 
+        //             'Content-Type': 'application/json'
+        //         },
+        //     };
+    
+        //     axios.request(config)
+        //     .then((response) => {
+        //         console.log(JSON.stringify(response.data));
+        //        setUserCards(response.data.details)
+        //     })
+        //     .catch((error) => {
+        //         console.log(error.response.data);
+        //         alert("Error:", error.response.data)
+        //     });
+        // },[])
+    }
     return(
         <div class="col-xl-9 col-lg-8 col-md-7">
                             <div class="table-area" >
@@ -12,38 +42,40 @@ const ChoosePaymentMethod = ({onChangeOption, onHandleTransationDetails, transat
                                 
                                 <div onChange={onHandleTransationDetails}
                                 class="card-area d-flex flex-wrap">
-                                    <div class="single-card">
-                                        <input checked = {transationDetails.method === "mpesa"} 
-                                        type="radio" name="method" id="mpesa" value="mpesa" />
-                                        <label htmlFor="mpesa">
-                                            <span class="wrapper"></span>
-                                            <img src={mpesa_card} alt="image"/>
-                                        </label>
-                                    </div>
-                                    <div class="single-card">
-                                        <input checked = {transationDetails.method === "visa"} 
-                                        type="radio" name="method" id="visa" value="visa" />
-                                        <label htmlFor="visa">
-                                            <span class="wrapper"></span>
-                                            <img src={visa_card} alt="image"/>
-                                        </label>
-                                    </div>
-                                    <div class="single-card">
-                                        <input checked = {transationDetails.method === "paypal"} 
-                                        type="radio" name="method" id="paypal" value="paypal" />
-                                        <label htmlFor="paypal">
-                                            <span class="wrapper"></span>
-                                            <img src={paypal_card} alt="image"/>
-                                        </label>
-                                    </div>
-                                    <div class="single-card">
-                                        <input checked = {transationDetails.method === "blockchain"} 
-                                        type="radio" name="method" id="blockchain" value="blockchain" />
-                                        <label htmlFor="blockchain">
-                                            <span class="wrapper"></span>
-                                            <img src={blockchain_card} alt="image"/>
-                                        </label>
-                                    </div>
+                                    { withdraw ? !userCards.length? <p>No linked cards at moment. 
+                                        Link a card in the dashboard before proceding.
+                                    </p> :
+                                    (
+                                        userCards.map((userCard, i) =>{
+                                            const paymentmethod = worldWirePaymentDetails[userCard.card_name]
+                                        return(
+                                            <div key={i} class="single-card">
+                                                <input checked = {transationDetails.method === paymentmethod.method} 
+                                                    type="radio" name="method" id={paymentmethod.id} 
+                                                    value={paymentmethod.value} />
+                                                <label htmlFor={paymentmethod.id}>
+                                                    <span class="wrapper"></span>
+                                                    <img src={paymentmethod.img} alt="image"/>
+                                                </label>
+                                            </div>
+                                            )
+                                        })
+                                    ) :
+                                    (
+                                        Object.values(worldWirePaymentDetails).map((paymentmethod, i) =>(
+                                            <div key={i} class="single-card">
+                                                <input checked = {transationDetails.method === paymentmethod.method} 
+                                                    type="radio" name="method" id={paymentmethod.id} 
+                                                    value={paymentmethod.value} />
+                                                <label htmlFor={paymentmethod.id}>
+                                                    <span class="wrapper"></span>
+                                                    <img src={paymentmethod.img} alt="image"/>
+                                                </label>
+                                            </div>
+                                        ))
+                                    )
+                                    }
+                                    
                                     
                                 </div>
                             </div>
@@ -51,7 +83,7 @@ const ChoosePaymentMethod = ({onChangeOption, onHandleTransationDetails, transat
                                 {/* <Link onClick={onChangeOption} id="method">Previous Step</Link> */}
                                 <Link onClick={onChangeOption} id="amount" to="#"  class="active">Next</Link>
                             </div>
-                        </div>
+        </div>
     )
 }
 
