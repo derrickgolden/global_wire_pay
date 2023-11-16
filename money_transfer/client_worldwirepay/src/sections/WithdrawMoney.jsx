@@ -62,7 +62,6 @@ const WithdrawMoney = () =>{
         .catch((error) => {
             console.log(error.response);
             alert("Error: withdrawal was not successful")
-            // setSignupDetails((obj) =>({...obj, password: ""}))
         });
     }
     return(

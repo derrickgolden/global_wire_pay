@@ -11,6 +11,11 @@ const signupUser = async(first_name, last_name, email, remember_me, country, has
         WHERE email = ?
         `, [ email]);
 
+        const [nonuserRes] = await connection.query(`
+        SELECT * FROM nonuser_transfers
+        WHERE email = ?
+        `, [ email]);
+
         
         if(response.length === 0){
             const [res] = await connection.query(`
@@ -19,10 +24,10 @@ const signupUser = async(first_name, last_name, email, remember_me, country, has
                 VALUES (?, ?, ?, ?, ?, ?, ?)
                 `, [first_name, last_name, email, remember_me, country, hash, phone]);
 
-            connection.release();
-            console.log(res)
-
-            return {success: true, admin_id: res.insertId, msg: "User Registered", 
+                console.log(res)
+                connection.release();
+                
+                return {success: true, admin_id: res.insertId, msg: "User Registered", 
                 details: [{first_name, last_name, email, remember_me, country}]
             };
         }else{

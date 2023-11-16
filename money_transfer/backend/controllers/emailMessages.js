@@ -82,10 +82,81 @@ Best regards,
 [Company Name]
 [Contact Information]`
 
+function generateNonuserEmail(recipientNames, senderNames, claimUrl) {
+    return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Template</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+        }
+        .button {
+            display: inline-block;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            background-color: #3498db;
+            color: #ffffff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+<p>Hello ${recipientNames}</p>
+
+<p>We hope this message finds you well.</p>
+
+<p>Great news! ${senderNames} has sent you money through our platform. To claim and receive the funds, all you need to do is complete a quick registration. It's fast, easy, and secure!</p>
+
+<a class="button" href="${claimUrl}" style="text-decoration: none; color: #ffffff;">Claim Now</a>
+
+<p>By registering, you not only ensure a smooth transfer process for this payment but also gain access to a range of features and benefits within our platform.</p>
+
+<p><strong>Why Register?</strong></p>
+    <ul>
+        <li>Seamless money transfers</li>
+        <li>Easy tracking of your transaction history</li>
+        <li>Secure account management</li>
+    </ul>
+
+    <p><strong>How to Register:</strong></p>
+    <ol>
+        <li>Click on the <a href="${claimUrl}" style="text-decoration: none; color: #3498db;">Claim Now</a> button in this email.</li>
+        <li>Follow the simple registration steps.</li>
+        <li>Verify your account.</li>
+    </ol>
+
+    <p>And that's it! Once you've completed these steps, you can access your funds and explore everything our platform has to offer.</p>
+
+    <p>If you have any questions or need assistance during the registration process, our support team is here to help.</p>
+
+    <p>Thank you for choosing [Your Platform Name] for your money transfers. We look forward to welcoming you as a valued member of our community!</p>
+
+    <p>Best regards,<br/>
+    [Your Company Name]<br/>
+    [Your Contact Information]<br/>
+
+</div>
+
+</body>
+</html>
+    `;
+}
+
 module.exports = {
     depositInprogress,
     withdrawInprogress,
     completeTransaction,
-    cancelledTransaction
+    cancelledTransaction,
+    generateNonuserEmail,
 }
 

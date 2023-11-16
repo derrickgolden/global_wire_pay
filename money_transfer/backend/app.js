@@ -10,6 +10,7 @@ const userDetails = require("./routes/userDetails");
 const cardInfo = require("./routes/cardInfo");
 const usersTransactions = require("./routes/admin/transactions")
 const adminTotals = require("./routes/admin/adminTotals")
+const transferMoney = require("./routes/admin/transferMoney");
 // const lipaNaMpesaRoutes = require("./routes/lipanaMpesa")
 // const { authenticateToken } = require('./middleware/authToken');
 
@@ -27,6 +28,7 @@ app.use("/user", adminauth);
 app.use("/user/dashboard", transactMoney);
 app.use("/user/dashboard", userDetails);
 app.use("/user/dashboard", cardInfo);
+app.use("/user/dashboard/transfer-money", transferMoney);
 app.use("/admin/dashboard", usersTransactions);
 app.use("/admin/dashboard", adminTotals);
 

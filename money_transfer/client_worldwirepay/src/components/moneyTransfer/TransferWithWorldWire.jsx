@@ -7,6 +7,7 @@ import ConfirmTransfer from "./ConfirmTransfer";
 import TransferPopup from "../cardPopups/TransferPopup";
 import { useSelector } from "react-redux";
 import FeedbackPopup from "../cardPopups/FeedbackPopup";
+import axios from "axios";
 
 const TransferWithWorldWire = () =>{
     const sender = useSelector(state => state.userDetails)
@@ -29,6 +30,26 @@ const TransferWithWorldWire = () =>{
 
     const onHandleSubmitTransferDetails = (e) =>{
         console.log(transferDetails);
+        const data = JSON.stringify(transferDetails);
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://localhost:5000/user/dashboard/transfer-money/world-wire-pay',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            data : data
+        };
+
+        axios.request(config)
+        .then((response) => {
+            console.log(JSON.stringify(response.data));
+            // handleClick();
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Error: transfer was not successful")
+        });
     }
     return(
         <>

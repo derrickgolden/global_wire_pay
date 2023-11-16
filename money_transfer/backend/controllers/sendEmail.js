@@ -14,7 +14,7 @@ const sendEmail = async (email, subject, message) => {
     from: 'derricknyarangi22@gmail.com',
     to: email, // Use the 'email' parameter instead of a hardcoded email address
     subject: subject,
-    text: `${message}`,
+    html: message,
   };
 
   try {
