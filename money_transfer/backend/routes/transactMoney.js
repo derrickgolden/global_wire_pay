@@ -2,6 +2,7 @@ const express = require('express');
 const { transactMoney, getTransactions } = require('../dbServices/dbDepositMoney');
 const { sendEmail } = require('../controllers/sendEmail');
 const { depositInprogress, withdrawInprogress } = require('../controllers/emailMessages');
+const { getUserEmailById } = require('../dbServices/dbUsers');
 const router = express.Router();
 
 router.post('/deposit-money', async (req, res) =>{
@@ -12,8 +13,11 @@ router.post('/deposit-money', async (req, res) =>{
             user_id, method, amount, currency, termsConditions, status, type, ref_code
         )
         if(response.success) {
-            const emailRes = await sendEmail(email, "Deposit Processing: Awaiting Confirmation", depositInprogress)
-            console.log(emailRes)
+            const getEmail = await getUserEmailById(user_id)
+            if(getEmail.success){
+                const emailRes = await sendEmail(getEmail.email, "Deposit Processing: Awaiting Confirmation", depositInprogress)
+                console.log(emailRes)
+            }
             
             res.status(200).send(response)
         }else{
@@ -32,8 +36,11 @@ router.post('/withdraw-money', async (req, res) =>{
             user_id, method, amount, currency, termsConditions, status, type, ref_code
         )
         if(response.success) {
-            const emailRes = await sendEmail(email, "Withdraw Processing: Awaiting Confirmation", withdrawInprogress)
-            console.log(emailRes)
+            const getEmail = await getUserEmailById(user_id)
+            if(getEmail.success){
+                const emailRes = await sendEmail(getEmail.email, "Withdraw Processing: Awaiting Confirmation", withdrawInprogress)
+                console.log(emailRes)
+            }
             
             res.status(200).send(response)
         }else{

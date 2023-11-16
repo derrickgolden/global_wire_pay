@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 
 const DepositMoney = () =>{
     const { user_id, email} = useSelector(state => state.userDetails);
-    const userDetails= useSelector(state => state.userTransactions);
+    const userDetails= useSelector(state => state.userDetails);
     console.log(userDetails);
     const [option, setOption] = useState("method");
     const buttonRef = useRef(null);

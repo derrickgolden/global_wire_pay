@@ -34,7 +34,7 @@ const Login = () =>{
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            console.log("logind data", data);
             if(data.success){
                 sessionStorage.setItem("user", JSON.stringify(data?.details[0]));
                 dispatch(setUserDetails(data?.details[0]));

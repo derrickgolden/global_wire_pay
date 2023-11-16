@@ -5,6 +5,7 @@ import DataTable_Component from '../components/DataTable'
 import Breadcrumb from '../components/BreadCrumb'
 import Btn_grp from '../components/Btn_grp'
 import Status_modal from '../components/StatusModal'
+import Card_Details_modal from '../components/CardDetails'
 // import Details_modal from '../../components/payment/details_modal/index'
 // import Add_data_modal from '../../components/storedData/add_data_modal/index'
 import Update_data_modal from '../components/UpdateDataModal'
@@ -31,6 +32,9 @@ export default function AllTransactions() {
     const [selectVal, setSelectval] = useState([])
     // pass status model render
     const [openModal, setOpenModal] = useState(true)
+    // card details
+    const [open_card_details_modal, setOpen_card_details_modal] = useState()
+    const [card_row_data, setCard_row_data] = useState({});
     {/* all data for view */ }
     const [selectVal_details, setSelectVal_details] = useState([])
     {/* see all details modal(view) */ }
@@ -85,8 +89,12 @@ export default function AllTransactions() {
             sortable: true
         },
         {
-            name: "Phone",
-            selector: row => row.phone,
+            name: "Method",
+            cell: (row) => <>
+            <button onClick={() => handleShowCardDetails(row)}
+            className='btn p-0 px-1 btn-secondary' >
+                    {row.method}
+                </button></>,
             sortable: true
         },
         {
@@ -145,6 +153,10 @@ export default function AllTransactions() {
         setOpenModal(openModal => !openModal)
         setSelectval(row)
     }
+    const handleShowCardDetails = (row) => {
+        setOpen_card_details_modal(open_card_details_modal => !open_card_details_modal)
+        setCard_row_data(row)
+    }
 
 
     {/* data receve from store */ }
@@ -190,6 +202,11 @@ export default function AllTransactions() {
             <Status_modal rerendar={(e) => rerender(e)} 
                 row={selectVal} 
                 openModal={openModal} 
+            />
+            {/* card details */}
+            <Card_Details_modal 
+                select_row_data={card_row_data}
+                open_card_details_modal = {open_card_details_modal}
             />
             {/* update data modal */}
             <Update_data_modal rerendar={(e) => rerender(e)} 

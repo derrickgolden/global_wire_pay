@@ -60,9 +60,9 @@ export default function Status_modal({ row, openModal,rerendar,status_id }) {
                 <Modal.Body>
                     
                     <Form.Select defaultValue={status_modal_data} aria-label="trash">
-                        <option value="void">Void</option>
-                        <option value="pending">Pending</option>
-                        <option value="complete">Compeleted</option>
+                        <option value="cancelled">Cancelled</option>
+                        <option value="inprogress">inProgress</option>
+                        <option value="completed">Compeleted</option>
                     </Form.Select>
                 </Modal.Body>
                 <Modal.Footer>

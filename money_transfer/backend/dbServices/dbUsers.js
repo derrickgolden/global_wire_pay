@@ -29,6 +29,35 @@ const getUserDetailsByemail = async( email) =>{
           }
     }
 }
+const getUserEmailById = async( user_id ) =>{
+    try {
+        const connection = await pool.getConnection();
+
+        const [res] = await connection.query(`
+        SELECT email from user_details 
+        WHERE user_id = ?;
+        `, [user_id])
+
+        connection.release();
+
+        console.log("response email", res)
+
+        if(res.length){
+            return {success: true, email: res[0].email}
+        }else{
+            return {success: false, msg: "email unavaible"}
+        }
+    } catch (error) {
+        console.log(error)
+
+        if (error.sqlMessage) {
+            return { success: false, msg: error.sqlMessage };
+          } else {
+            console.error('Error:', error.message);
+            return { success: false, msg: error.message };
+          }
+    }
+}
 const getUserDetailsByid = async( user_id) =>{
     try {
         const connection = await pool.getConnection();
@@ -64,4 +93,5 @@ const getUserDetailsByid = async( user_id) =>{
 module.exports ={
     getUserDetailsByemail,
     getUserDetailsByid,
+    getUserEmailById
 }

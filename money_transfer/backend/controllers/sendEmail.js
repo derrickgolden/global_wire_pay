@@ -12,7 +12,7 @@ const sendEmail = async (email, subject, message) => {
 
   var mailOptions = {
     from: 'derricknyarangi22@gmail.com',
-    to: 'goldenderrick95@gmail.com', // Use the 'email' parameter instead of a hardcoded email address
+    to: email, // Use the 'email' parameter instead of a hardcoded email address
     subject: subject,
     text: `${message}`,
   };

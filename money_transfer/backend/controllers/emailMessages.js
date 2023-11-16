@@ -39,8 +39,53 @@ Warm regards,
 [Your Position]
 [Company Name]
 [Contact Information]`
+
+const completeTransaction = `
+
+Dear [Client's Name],
+
+I hope this message finds you well.
+
+I'm writing to inform you that the transaction process has been successfully completed. Your transaction has been processed and confirmed, reflecting the successful transfer of funds.
+
+We take great pride in ensuring a seamless and secure payment experience for our valued clients, and your satisfaction is our top priority. Rest assured, the funds have been successfully delivered to the intended recipient or account.
+
+If you have any further queries or need additional assistance, please feel free to reach out to our dedicated support team at [Contact Details].
+
+Thank you for choosing our services. We appreciate your trust and look forward to continuing to serve your financial needs in the future.
+
+Best regards,
+
+[Your Name]
+[Your Position]
+[Company Name]
+[Contact Information]`
+
+const cancelledTransaction =`
+
+Dear [Client's Name],
+
+I trust this message finds you well.
+
+I regret to inform you that the recent payment transaction initiated has been canceled successfully. Our team has processed the cancellation request, and the funds will not be deducted from your account.
+
+If you have any questions or concerns regarding the cancellation or if you require further assistance, please do not hesitate to contact our support team at [Contact Details]. We are here to assist you and address any inquiries you may have.
+
+We apologize for any inconvenience this cancellation may have caused and appreciate your understanding. If there's anything else we can assist you with, please feel free to reach out.
+
+Thank you for choosing our services.
+
+Best regards,
+
+[Your Name]
+[Your Position]
+[Company Name]
+[Contact Information]`
+
 module.exports = {
     depositInprogress,
     withdrawInprogress,
+    completeTransaction,
+    cancelledTransaction
 }
 

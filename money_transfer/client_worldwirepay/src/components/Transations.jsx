@@ -11,7 +11,8 @@ const Transations = () =>{
     const dispatch = useDispatch()
     const location = useLocation()
     const [viewAll, setViewAll] = useState(false)
-    const [transactions, setTransationDetails] = useState([])
+    const [transactions, setTransationDetails] = useState([]);
+    const [transactionsLength, setTransactionsLength] = useState(transactions);
     const {user_id} = useSelector(state => state.userDetails)
     const { callApi} = useSelector(state => state.callApi);
     console.log(transactions);
@@ -41,11 +42,15 @@ const Transations = () =>{
             // setSignupDetails((obj) =>({...obj, password: ""}))
         });
     }, [user_id]);
+
+    useEffect(() =>{
+        setTransactionsLength(transactions.slice(0,5))
+    }, [transactions])
     const handleViewAll = (e) =>{
-        // if(e.target.id === "latest-tab"){
-        //     setTransationDetails(useSelector(state => state.transactionDetails).slice(0,5))
-        // }
-        // else setTransationDetails(useSelector(state => state.transactionDetails))
+        if(e.target.id === "latest-tab"){
+            setTransactionsLength(transactions.slice(0,5))
+        }
+        else setTransactionsLength(transactions)
     }
     return(
         <div class="transactions-area mt-40">
@@ -95,18 +100,18 @@ const Transations = () =>{
 
                                                         </th>
                                                     </tr>) : (
-                                                    transactions?.slice(0,5)?.map(({method, type, time_stamp, status, amount, currency}) =>(
+                                                    transactionsLength?.map(({method, type, time_stamp, status, amount, currency}) =>(
                                                         <tr data-bs-toggle="modal" data-bs-target="#transactionsMod">
                                                             <th scope="row">
-                                                                <p>{method}</p>
-                                                                <p class="mdr" style={{font: "capitalize"}}>{type}</p>
+                                                                <p style={{textTransform: "capitalize"}}>{method}</p>
+                                                                <p class="mdr" style={{textTransform: "capitalize"}}>{type}</p>
                                                             </th>
                                                             <td>
                                                                 <p>{formatDateAndTime(time_stamp)?.time}</p>
                                                                 <p class="mdr">{formatDateAndTime(time_stamp)?.date}</p>
                                                             </td>
                                                             <td>
-                                                                <p class="inprogress">{status}</p>
+                                                                <p class={status}>{status}</p>
                                                             </td>
                                                             <td>
                                                                 <p>{type === 'deposit'? "+":"-"}{currency} {amount}</p>

@@ -39,7 +39,7 @@ const AccDetails = () =>{
                                 </div>
                                 <div class="bottom-area">
                                     <div class="left-side">
-                                        {/* <a href="pay.html" class="cmn-btn">Transfer Money</a> */}
+                                        <Link to="http://localhost:5173/user/dashboard/transfer-money" class="cmn-btn">Send Money</Link>
                                         <Link to='http://localhost:5173/user/dashboard/deposit-money' class="cmn-btn">Deposit</Link>
                                         <Link to='http://localhost:5173/user/dashboard/withdraw-money' class="cmn-btn">Withdraw</Link>
                                     </div>
@@ -49,6 +49,7 @@ const AccDetails = () =>{
                                                 <img src={option} alt="icon"/>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><Link class="dropdown-item" to='http://localhost:5173/user/dashboard/transfer-money'>Send Money</Link></li>
                                                 <li><Link class="dropdown-item" to='http://localhost:5173/user/dashboard/deposit-money'>Deposit Money</Link></li>
                                                 <li><Link class="dropdown-item" to='http://localhost:5173/user/dashboard/withdraw-money'>Withdraw Money</Link></li>
                                             </ul>

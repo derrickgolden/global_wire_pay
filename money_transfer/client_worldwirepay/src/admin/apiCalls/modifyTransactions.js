@@ -11,7 +11,7 @@ const updateTransactionStatus = (row, success, status, dispatch, error = "Sorry,
         headers: { 
             'Content-Type': 'application/json'
         },
-        data: JSON.stringify({transaction_id: row.transaction_id, status })
+        data: JSON.stringify({transaction_id: row.transaction_id, status, email: row.email })
     };
 
     Swal.fire({

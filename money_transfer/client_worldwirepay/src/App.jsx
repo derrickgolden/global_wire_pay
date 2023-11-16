@@ -6,35 +6,26 @@ import { useSelector } from "react-redux";
 import Dashboard from './pages/Dashboard'
 import LandingPage from './pages/LandingPage'
 import { Routes, Route, useNavigate } from 'react-router-dom'
-import Login from './components/Login'
-import Signup from './components/Signup'
-import ResetPassword from './components/ResetPassword'
-import ForgotPassword from './components/ForgotPassword'
-import DepositMoney from './sections/DepositMoney'
-import Header from './sections/Header'
-import DashboardBody from './sections/DashboardBody'
-import WithdrawMoney from './sections/WithdrawMoney'
-import Footer from './sections/Footer';
 import AdminDashboard from './admin/pages/AdminDashboard';
-import AdminHeader from './admin/pages/AdminHeader';
+
+import { DashboardBody, Header, TransferMoney, WithdrawMoney, Footer, DepositMoney  } from './sections';
+import { Login, Signup, ResetPassword, ForgotPassword, TransferWithBank, TransferWithWorldWire } from './components';
 
 function App() {
-  // const navigate = useNavigate();
-  // const { user_id} = useSelector(state => state.userDetails)
-  // useEffect(() =>{
-  //     console.log(user_id)
-  //     if (!user_id) navigate("/user/login");
-  // },[user_id])
 
   return (
     <>
-    {/* <LandingPage /> */}
       <Routes>
         <Route path='/' element={<LandingPage />} />
         <Route path='/user/dashboard' element={<Header />} >
           <Route index element={<DashboardBody />} />
           <Route path='deposit-money' element={<DepositMoney />} />
           <Route path='withdraw-money' element={<WithdrawMoney />} />
+          <Route path='transfer-money' >
+            <Route index element={<TransferMoney />} />
+            <Route path='world-wire-pay' element={<TransferWithWorldWire />} />
+            <Route path="bank-account" element={<TransferWithBank />} />
+          </Route>
         </Route>
         <Route path="/user/login" element={<Login />} />
         <Route path="/user/signup" element={<Signup />} />

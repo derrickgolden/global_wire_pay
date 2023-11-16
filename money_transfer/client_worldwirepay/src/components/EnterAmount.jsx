@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 
 const EnterAmount = ({onChangeOption, onHandleTransationDetails, transationDetails, deposit}) =>{
     const { balance} = useSelector(state => state.userDetails)
+    useEffect(() => {
+        // Scroll to the top of the page when the component mounts
+        window.scrollTo(0, 0);
+      }, []);
     return(
         <div class="col-xl-8 col-lg-8 col-md-7">
                             <div class="table-area">
@@ -14,7 +19,7 @@ const EnterAmount = ({onChangeOption, onHandleTransationDetails, transationDetai
                                         <div class="input-area">
                                             <input onChange={onHandleTransationDetails} required 
                                             class="xxlr" placeholder="400.00" type="number" name="amount"/>
-                                            <select name="currency" value={transationDetails.currency} 
+                                            <select name="currency" value={transationDetails?.currency} 
                                                 onChange={onHandleTransationDetails}
                                             >
                                                 <option value="USD">USD</option>

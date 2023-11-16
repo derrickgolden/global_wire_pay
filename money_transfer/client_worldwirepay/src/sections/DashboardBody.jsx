@@ -3,7 +3,7 @@ import AccDetails from "../components/AccDetails";
 import LinkedPayments from "../components/LickedPayments";
 import Transations from "../components/Transations";
 import AddCardPopup from "../components/cardPopups/AddCardPopup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CardDetailsPopup from "../components/cardPopups/cardDetailsPopup";
 
 const DashboardBody = () =>{
@@ -12,6 +12,10 @@ const DashboardBody = () =>{
         console.log("id: ", e.target.id)
         setCardType(e.target.id);
     }
+    useEffect(() => {
+        // Scroll to the top of the page when the component mounts
+        window.scrollTo(0, 0);
+      }, []);
     return(
         <>
         <section class="dashboard-section body-collapse u-dash">

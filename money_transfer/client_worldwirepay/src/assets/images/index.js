@@ -5,7 +5,7 @@ import option from "./icon/option.png"
 import right_arrow from "./icon/right-arrow.png"
 import left_arrow from "./icon/left-icon.png"
 import logo from "./logo.png"
-import avator from "./avatar-2.png"
+import avator from "./avatar.png"
 
 import payoneer from "./payoneer.jpg"
 import revoult from "./revoult.jpg"
@@ -41,6 +41,13 @@ import linkedin from "./linkedin.png";
 import twitter from "./twitter.png"
 import admin from "./admin.5782eaaa75cd9d5732db.jpg"
 
+// payments icons
+import bank_account_icon from "./icon/bank-account-icon.png";
+import paylio_account_icon from "./icon/paylio-account-icon.png"
+import company_icon from "./icon/company-icon.png"
+import individual_icon from "./icon/individual-icon.png"
+import user_profile from "./user-profile.png"
+
 export{
     menu, logo, avator, bell, search, option, right_arrow, 
     payoneer, revoult, banktransfer, advcash, webmoney, add_new,
@@ -49,5 +56,6 @@ export{
     ban_frame_1, ban_frame_2, ban_frame_3, ban_frame_4, ban_right, banner_bg,
     success, support_icon, admin,
     show_hide, forgot_password_illus, forgot_pwd_2_illus,
-    facebook, instagram, linkedin, twitter
+    facebook, instagram, linkedin, twitter,
+    bank_account_icon, paylio_account_icon, company_icon, individual_icon, user_profile
 }

@@ -53,8 +53,8 @@ const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDeta
                                                 </li>
                                                 {
                                                     deposit? 
-                                                (<li class="input-area">
-                                                    <p>Enter message code then confirm.</p> <br />
+                                                (<li class="input-area flex flex-column">
+                                                    <p>Enter message code below if applicable or Date and time you have done transaction then confirm.</p> <br />
                                                     <input onChange={onHandleTransationDetails} required 
                                                     class="xxlr" placeholder="Enter ref code" type="text" name="ref_code"/>
                                                 </li>) : null
