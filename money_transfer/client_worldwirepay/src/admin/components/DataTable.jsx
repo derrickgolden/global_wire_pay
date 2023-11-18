@@ -7,7 +7,7 @@ export default function DataTable_Component({ apidata, columns, search }) {
   const [datafinals, setFinals] = useState([])
 
 
-  console.log("apidata", apidata)
+  // console.log("apidata", apidata)
 
   useEffect(() => {
     let result = data.filter(val => {
@@ -15,11 +15,11 @@ export default function DataTable_Component({ apidata, columns, search }) {
         const fullName = `${val.first_name} ${val.last_name}`.toLowerCase();
         return fullName.toLowerCase().match(datafilter?.toLowerCase())
       }
-      else if (search == 'type') {
-        return val.type?.toLowerCase().match(datafilter?.toLowerCase())
+      else if (search == 'Sender Email') {
+        return val.sender_email?.toLowerCase().match(datafilter?.toLowerCase())
       }
-      else if (search == 'transaction_id') {
-        return val.transaction_id?.toString().match(datafilter?.toString())
+      else if (search == 'transfer_id') {
+        return val.transfer_id?.toString().match(datafilter?.toString())
       }
       else if (search == 'amount') {
         return val.amount?.toLowerCase().match(datafilter?.toLowerCase())

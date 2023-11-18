@@ -11,7 +11,7 @@ export default function Card_Details_modal({ select_row_data, open_card_details_
     const [ren, setRen] = useState("false")
 
     useEffect(() =>{
-        set_status_modal_Show(true)
+        set_status_modal_Show(open_card_details_modal.modal_open)
     }, [open_card_details_modal]);
     useEffect(() =>{
         const fetchData = async () => {

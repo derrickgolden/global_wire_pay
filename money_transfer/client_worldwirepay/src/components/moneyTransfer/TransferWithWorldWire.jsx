@@ -8,9 +8,11 @@ import TransferPopup from "../cardPopups/TransferPopup";
 import { useSelector } from "react-redux";
 import FeedbackPopup from "../cardPopups/FeedbackPopup";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const TransferWithWorldWire = () =>{
     const sender = useSelector(state => state.userDetails)
+    const navigate = useNavigate()
 
     const [connectedUsers, setConnectedUsers] = useState([
         {first_name: "John", last_name: "Doe", email:"example1@gmail.com"},
@@ -22,6 +24,10 @@ const TransferWithWorldWire = () =>{
     const [transferDetails, setTransferDetails] = useState({amount:"", recipient: {}, sender})
     
 
+    useEffect(() =>{
+        setTransferDetails(obj =>({...obj, sender}));
+    },[sender]);
+    
     useEffect(() =>{
         setTransferDetails(obj =>({...obj, 
             recipient: connectedUsers.filter(user => user.email === chooseRecipient)[0]
@@ -44,7 +50,8 @@ const TransferWithWorldWire = () =>{
         axios.request(config)
         .then((response) => {
             console.log(JSON.stringify(response.data));
-            // handleClick();
+            alert(response.data.msg);
+            navigate("/user/dashboard/transfers")
         })
         .catch((error) => {
             console.log(error);

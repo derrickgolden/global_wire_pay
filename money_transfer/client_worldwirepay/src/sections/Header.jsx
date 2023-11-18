@@ -1,17 +1,20 @@
 // import jwt from "jsonwebtoken"
 
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { logo, avator, bell, search} from "../assets/images";
+import { logo, avator, bell, search, menu, dashboard} from "../assets/images";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../redux/userDetails";
 import { useEffect, useState } from "react";
 import { setCallApi } from "../redux/callApi";
 import axios from "axios";
+import { sideBarDetails } from "../assets/details/sideBarDetails";
 
 const Header = (props) =>{
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [toggleUserArea, setToggleUserArea] =useState(false);
+    const [toggleSideBar, setToggleSideBar] = useState(false);
+    const [activeLink, setActiveLink] = useState("Dashboard");
 
     const { first_name, last_name, user_id} = useSelector(state => state.userDetails)
     useEffect(() =>{
@@ -47,6 +50,14 @@ const Header = (props) =>{
     const handleToggleUserArea = () =>{
         setToggleUserArea(!toggleUserArea);
     }
+    const handleNavLink = (e) =>{
+        setActiveLink(e.target.id)
+        if(toggleSideBar){
+            setTimeout(()=>{
+                setToggleSideBar(!toggleSideBar)
+            },500)  
+        }
+    }
     const handleLogout = () =>{
         setToggleUserArea(!toggleUserArea);
         sessionStorage.clear("user");
@@ -55,22 +66,21 @@ const Header = (props) =>{
 
     return(
         <>
-        <header className="header-section body-collapse">
+        <header className={`${toggleSideBar? "body-collapse" : "" } header-section `}>
         <div className="overlay w-full">
             <div className="container-fruid">
                 <div className="row d-flex header-area">
                     <div className="navbar-area d-flex align-items-center justify-content-between">
-                        <div className="sidebar-icon">
-                            <Link to='http://localhost:5173/user/dashboard'>
-                                <img src={logo} alt="logo"/>
-                            </Link>
+                        <div onClick={()=>setToggleSideBar(!toggleSideBar)}
+                        class="sidebar-icon">
+                            <img src={menu} alt="icon" />
                         </div>
-                        {/* <form action="#" className="flex-fill">
+                        <form action="#" className="flex-fill">
                             <div className="form-group d-flex align-items-center">
                                 <img src={search} alt="icon"/>
                                 <input type="text" placeholder="Type to search..."/>
                             </div>
-                        </form> */}
+                        </form>
                         <div className="dashboard-nav">
                             <div className="single-item notifications-area">
                                 <div className="notifications-btn">
@@ -83,7 +93,7 @@ const Header = (props) =>{
                                     </div>
                                     <ul>
                                         <li>
-                                            <a href="javascript:void(0)" className="d-flex">
+                                            <Link href="javascript:void(0)" className="d-flex">
                                                 <div className="img-area">
                                                     <img src="../assets/images/user-1.png" className="max-un" alt="image"/>
                                                 </div>
@@ -92,7 +102,7 @@ const Header = (props) =>{
                                                             Green</b></p>
                                                     <p className="mdr time-area">09.39AM</p>
                                                 </div>
-                                            </a>
+                                            </Link>
                                             <i className="fa-solid fa-caret-right"></i>
                                         </li>
                                         <li>
@@ -172,75 +182,42 @@ const Header = (props) =>{
                             </div>
                         </div>
                     </div>
-                    {/* <div className="sidebar-wrapper">
-                        <div className="close-btn">
+                    <div className={`${toggleSideBar? " " : "active " } sidebar-wrapper`}>
+                        <div onClick={()=>setToggleSideBar(!toggleSideBar)}
+                        className="close-btn">
                             <i className="fa-solid fa-xmark"></i>
                         </div>
                         <div className="sidebar-logo">
-                            <a href="dashboard.html"><img src={logo} alt="logo"/></a>
+                            <Link to="http://localhost:5173/user/dashboard"><img src={logo} alt="logo"/></Link>
                         </div>
-                        <ul>
-                            <li className="active">
-                                <a href="dashboard.html">
-                                    <img src="assets/images/icon/dashboard.png" alt="Dashboard"/> <span>Dashboard</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="transactions.html">
-                                    <img src="assets/images/icon/transactions.png" alt="Transactions"/> <span>Transactions</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="pay.html">
-                                    <img src="assets/images/icon/pay.png" alt="Pay"/> <span>Pay</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="receive-step-1.html">
-                                    <img src="assets/images/icon/receive.png" alt="Receive"/> <span>Receive</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="money-exchange.html">
-                                    <img src="assets/images/icon/exchange.png" alt="Exchange"/> <span>Exchange</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="recipients.html">
-                                    <img src="assets/images/icon/recipients.png" alt="Recipients"/> <span>Recipients</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="crypto.html">
-                                    <img src="assets/images/icon/crypto.png" alt="Crypto"/> <span>Crypto</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="deposit-money.html">
-                                    <img src="assets/images/icon/deposit.png" alt="Deposit"/> <span>Deposit Money</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="withdraw-money-step-1.html">
-                                    <img src="assets/images/icon/withdraw.png" alt="Withdraw"/> <span>Withdraw Money</span>
-                                </a>
-                            </li>
+                        <ul style={{color: "blue"}}>
+                            {sideBarDetails.map((detail, i) =>(
+                                <li key={i} 
+                                className={`${activeLink === detail.alt? "active ": " "}`}>
+                                    <Link onClick={handleNavLink}
+                                    to={detail.to} id={detail.alt}>
+                                        <img src={detail.img} alt={detail.alt} id={detail.alt}/> 
+                                        <span style={{color: "#414BA3"}}>{detail.text}</span>
+                                    </Link>
+                                </li>
+                            ))}
+                            
                         </ul>
-                        <ul className="bottom-item">
+                        {/* <ul className="bottom-item">
                             <li>
-                                <a href="account.html">
+                                <Link href="account.html">
                                     <img src="assets/images/icon/account.png" alt="Account"/> <span>Account</span>
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="javascript:void(0)">
+                                <Link href="javascript:void(0)">
                                     <img src="assets/images/icon/support.png" alt="Support"/> <span>Support</span>
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="javascript:void(0)">
+                                <Link href="javascript:void(0)">
                                     <img src="assets/images/icon/quit.png" alt="Quit"/> <span>Quit</span>
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                         <div className="pt-120">
@@ -249,10 +226,10 @@ const Header = (props) =>{
                                     <img src="assets/images/invite-now-illus.png" alt="Image"/>
                                 </div>
                                 <p>Invite your friend and get $25</p>
-                                <a href="javascript:void(0)" className="cmn-btn">Invite Now</a>
+                                <Link href="javascript:void(0)" className="cmn-btn">Invite Now</Link>
                             </div>
-                        </div>
-                    </div> */}
+                        </div> */}
+                    </div>
                 </div>
             </div>
         </div>

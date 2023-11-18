@@ -48,6 +48,16 @@ import company_icon from "./icon/company-icon.png"
 import individual_icon from "./icon/individual-icon.png"
 import user_profile from "./user-profile.png"
 
+// side bar icons
+import dashboard from "./icon/dashboard.png"
+import transactions from "./icon/transactions.png"
+import pay from "./icon/pay.png"
+import receive from "./icon/receive.png"
+import exchange from "./icon/exchange.png"
+import recipients from "./icon/recipients.png"
+import deposit from "./icon/deposit.png"
+import withdraw from "./icon/withdraw.png"
+
 export{
     menu, logo, avator, bell, search, option, right_arrow, 
     payoneer, revoult, banktransfer, advcash, webmoney, add_new,
@@ -57,5 +67,6 @@ export{
     success, support_icon, admin,
     show_hide, forgot_password_illus, forgot_pwd_2_illus,
     facebook, instagram, linkedin, twitter,
-    bank_account_icon, paylio_account_icon, company_icon, individual_icon, user_profile
+    bank_account_icon, paylio_account_icon, company_icon, individual_icon, user_profile,
+    dashboard, transactions, pay, receive, exchange, recipients, deposit, withdraw,
 }

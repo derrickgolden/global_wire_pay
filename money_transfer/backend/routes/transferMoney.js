@@ -1,8 +1,8 @@
 const express = require('express');
-const { getUserDetailsByemail } = require('../../dbServices/dbUsers');
-const { insertTransfersDetails, insertNonuserTransferDetails } = require('../../dbServices/admin/dbTransferMoney');
-const { sendEmail } = require('../../controllers/sendEmail');
-const { generateNonuserEmail } = require('../../controllers/emailMessages');
+const { getUserDetailsByemail } = require('../dbServices/dbUsers');
+const { insertTransfersDetails, insertNonuserTransferDetails, getTransfersDetails } = require('../dbServices/dbTransferMoney');
+const { sendEmail } = require('../controllers/sendEmail');
+const { generateNonuserEmail } = require('../controllers/emailMessages');
 const router = express.Router();
 
 router.post('/world-wire-pay', async (req, res) =>{
@@ -62,5 +62,17 @@ router.post('/world-wire-pay', async (req, res) =>{
         }
     }
 });
+
+router.get("/transfers/:user_id", async (req, res) =>{
+    const { user_id } = req.params;
+    console.log(req.body)
+    try {
+        const transfersRes = await getTransfersDetails(user_id);
+        return res.status(200).send(transfersRes);
+    } catch (error) {
+        console.log(error)
+        return res.status(302).send({success: false, res: error.message})   
+    }
+})
 
 module.exports = router

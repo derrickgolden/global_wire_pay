@@ -1,4 +1,4 @@
-const { pool } = require("../mysqlSetup");
+const { pool } = require("./mysqlSetup");
 
 const insertTransfersDetails = async(
         {sender_id, receiver_id, recipient_email, amount}
@@ -28,7 +28,6 @@ const insertTransfersDetails = async(
           }
     }
 }
-
 const insertNonuserTransferDetails = async(
         {sender_id, recipient_email, amount, company_name, user_type, first_name, last_name, country}
     ) => {
@@ -58,8 +57,35 @@ const insertNonuserTransferDetails = async(
           }
     }
 }
+const getTransfersDetails = async(user_id) => {
+    try {
+        const connection = await pool.getConnection();
+
+        const [res] = await connection.query(`
+            SELECT * FROM transfers
+            WHERE sender_id = ? OR receiver_id = ?
+        `, [user_id, user_id]);
+
+        connection.release();
+        
+        console.log(res)
+        return {success: true, msg: "Transfer Details", 
+            details: res
+        };
+    } catch (error) {
+        console.log(error)
+
+        if (error.sqlMessage) {
+            return { success: false, msg: error.sqlMessage };
+          } else {
+            console.error('Error:', error.message);
+            return { success: false, msg: error.message };
+          }
+    }
+}
 
 module.exports ={
     insertTransfersDetails,
-    insertNonuserTransferDetails
+    insertNonuserTransferDetails,
+    getTransfersDetails
 }

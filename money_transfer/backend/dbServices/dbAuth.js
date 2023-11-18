@@ -13,7 +13,7 @@ const signupUser = async(first_name, last_name, email, remember_me, country, has
 
         const [nonuserRes] = await connection.query(`
         SELECT * FROM nonuser_transfers
-        WHERE email = ?
+        WHERE recipient_email = ?
         `, [ email]);
 
         
@@ -25,6 +25,21 @@ const signupUser = async(first_name, last_name, email, remember_me, country, has
                 `, [first_name, last_name, email, remember_me, country, hash, phone]);
 
                 console.log(res)
+
+            if(nonuserRes.length > 0){
+                await connection.beginTransaction();
+
+                nonuserRes.map(async(nonuser, i) =>{
+                    const receiver_id = res.insertId;
+                    const {sender_id, recipient_email, amount} = nonuser;
+
+                    const [transferRes] = await connection.query(`
+                    INSERT INTO transfers(sender_id, receiver_id, recipient_email, amount)
+                    VALUES (?, ?, ?, ?)
+                `, [sender_id, receiver_id, recipient_email, amount]);   
+                });
+                await connection.commit();
+            };
                 connection.release();
                 
                 return {success: true, admin_id: res.insertId, msg: "User Registered", 

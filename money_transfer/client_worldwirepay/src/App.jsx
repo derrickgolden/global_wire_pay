@@ -1,15 +1,15 @@
-import { useState } from 'react'
 import './App.css'
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
 
-import Dashboard from './pages/Dashboard'
 import LandingPage from './pages/LandingPage'
+import Transfers from './pages/Transfers';
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import AdminDashboard from './admin/pages/AdminDashboard';
 
 import { DashboardBody, Header, TransferMoney, WithdrawMoney, Footer, DepositMoney  } from './sections';
 import { Login, Signup, ResetPassword, ForgotPassword, TransferWithBank, TransferWithWorldWire } from './components';
+import AdminHeader from './admin/pages/AdminHeader';
+import AdminTransfers from './admin/pages/AdminTransfers';
+import UsersDetails from './admin/pages/UsersDetails';
 
 function App() {
 
@@ -26,17 +26,22 @@ function App() {
             <Route path='world-wire-pay' element={<TransferWithWorldWire />} />
             <Route path="bank-account" element={<TransferWithBank />} />
           </Route>
+          <Route path='transfers' element={<Transfers />} />
         </Route>
         <Route path="/user/login" element={<Login />} />
         <Route path="/user/signup" element={<Signup />} />
         <Route path="/user/reset-password/:urltoken" element={<ResetPassword />} />
         <Route path="/user/forgot-password" element={<ForgotPassword />} />
-        <Route path='*' element={<div>Not Found</div>} />
 
         <Route path="/admin" >
           <Route path="login" element={<Login />} />
-          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="dashboard" element={<AdminHeader />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path='transfers' element={<AdminTransfers />} />
+            <Route path='users' element={<UsersDetails />} />
+          </Route>
         </Route>
+        <Route path='*' element={<div>Not Found</div>} />
       </Routes>
       <Footer />
     </>

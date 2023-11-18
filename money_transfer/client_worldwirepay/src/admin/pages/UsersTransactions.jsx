@@ -10,7 +10,6 @@ import Card_Details_modal from '../components/CardDetails'
 // import Add_data_modal from '../../components/storedData/add_data_modal/index'
 import Update_data_modal from '../components/UpdateDataModal'
 import Email_sender_data_modal from '../components/SendEmail'
-import Swal from 'sweetalert2'
 // import { btn_link } from "./btn_link/btn_link";
 // import { apidata } from './store/store'
 import { Link } from 'react-router-dom'
@@ -33,7 +32,7 @@ export default function AllTransactions() {
     // pass status model render
     const [openModal, setOpenModal] = useState(true)
     // card details
-    const [open_card_details_modal, setOpen_card_details_modal] = useState()
+    const [open_card_details_modal, setOpen_card_details_modal] = useState({ render: true, modal_open: false })
     const [card_row_data, setCard_row_data] = useState({});
     {/* all data for view */ }
     const [selectVal_details, setSelectVal_details] = useState([])
@@ -154,7 +153,8 @@ export default function AllTransactions() {
         setSelectval(row)
     }
     const handleShowCardDetails = (row) => {
-        setOpen_card_details_modal(open_card_details_modal => !open_card_details_modal)
+        // setOpen_card_details_modal(open_card_details_modal => !open_card_details_modal)
+        setOpen_card_details_modal({render: !open_card_details_modal.render, modal_open: true})
         setCard_row_data(row)
     }
 
@@ -204,6 +204,7 @@ export default function AllTransactions() {
                 openModal={openModal} 
             />
             {/* card details */}
+            
             <Card_Details_modal 
                 select_row_data={card_row_data}
                 open_card_details_modal = {open_card_details_modal}

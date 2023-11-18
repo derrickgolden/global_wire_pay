@@ -1,0 +1,166 @@
+const { pool } = require("../mysqlSetup");
+
+const getAllnonuserTransfers = async() => {
+    try {
+        const connection = await pool.getConnection();
+
+        const [res] = await connection.query(`
+            SELECT * FROM nonuser_transfers
+            ORDER BY timestamp DESC
+        `);
+
+        connection.release();
+
+        console.log("non_user transfers details")
+        return {success: true, msg: "Transfers details", 
+            details: res
+        };
+    } catch (error) {
+        console.log(error)
+
+        if (error.sqlMessage) {
+            return { success: false, msg: error.sqlMessage };
+        } else {
+            console.error('Error:', error.message);
+            return { success: false, msg: error.message };
+        }
+    }
+}
+const  getAllTransfers = async() => {
+    try {
+        const connection = await pool.getConnection();
+
+        const [res] = await connection.query(`
+        SELECT
+            transfers.transfer_id,
+            transfers.sender_id,
+            transfers.receiver_id,
+            transfers.recipient_email,
+            transfers.amount,
+            transfers.status,
+            transfers.timestamp,
+            transfers.sender_fees, 
+            transfers.receiver_fees, 
+            transfers.description,
+            user_sender.first_name AS sender_first_name,
+            user_sender.last_name AS sender_last_name,
+            user_sender.email AS sender_email,
+            transaction_sender.balance AS sender_balance,
+            user_receiver.first_name AS receiver_first_name,
+            user_receiver.last_name AS receiver_last_name,
+            user_receiver.email AS receiver_email,
+            transaction_receiver.balance AS receiver_balance
+        FROM
+            transfers
+        LEFT JOIN
+            user_details AS user_sender ON transfers.sender_id = user_sender.user_id
+        LEFT JOIN
+            user_details AS user_receiver ON transfers.receiver_id = user_receiver.user_id
+        LEFT JOIN
+            transaction_totals AS transaction_sender ON transfers.sender_id = transaction_sender.user_id
+        LEFT JOIN
+            transaction_totals AS transaction_receiver ON transfers.receiver_id = transaction_receiver.user_id
+        ORDER BY transfers.timestamp DESC
+        `);
+
+        connection.release();
+
+        console.log("transfers details")
+        return {success: true, msg: "Transfers details", 
+            details: res
+        };
+    } catch (error) {
+        console.log(error)
+
+        if (error.sqlMessage) {
+            return { success: false, msg: error.sqlMessage };
+        } else {
+            console.error('Error:', error.message);
+            return { success: false, msg: error.message };
+        }
+    }
+}
+
+const updateStatusTransfers = async(
+    transfer_id, status
+) => {
+try {
+    const connection = await pool.getConnection();
+
+    const [res] = await connection.query(`
+    UPDATE transfers
+    SET status = ?
+    WHERE transfer_id = ?
+    `, [status, transfer_id]);
+
+    connection.release();
+
+    console.log("Transfers updated", status)
+    return {success: true, msg: "Transfers updated", 
+        details: res
+    };
+} catch (error) {
+    console.log(error)
+
+    if (error.sqlMessage) {
+        return { success: false, msg: error.sqlMessage };
+      } else {
+        console.error('Error:', error.message);
+        return { success: false, msg: error.message };
+      }
+}
+}
+const updateUserTransfers = async(
+    transfer_id, amount, receiver_fees, sender_fees, description, receiver_balance, sender_balance, receiver_id, sender_id
+) => {
+try {
+    const connection = await pool.getConnection();
+
+    await connection.beginTransaction();
+
+    const [res] = await connection.query(`
+        UPDATE transfers
+        SET amount = ?, sender_fees = ?, receiver_fees = ?, description = ?, manual_update = true
+        WHERE transfer_id = ?
+    `, [amount, sender_fees, receiver_fees, description, transfer_id]);
+
+    const [resp] = await connection.query(`
+        UPDATE transaction_totals
+        SET balance = CASE
+            WHEN user_id = ? THEN ?
+            WHEN user_id = ? THEN ?
+            ELSE balance
+        END;
+    `, [receiver_id, receiver_balance, sender_id, sender_balance]);
+
+
+    await connection.commit();
+
+    connection.release();
+
+    console.log("Transfers updated", amount)
+    return {success: true, msg: "Transaction updated", 
+        details: res
+    };
+} catch (error) {
+    await connection.rollback();
+    connection.release();
+
+    console.log(error)
+
+    if (error.sqlMessage) {
+        return { success: false, msg: error.sqlMessage };
+      } else {
+        console.error('Error:', error.message);
+        return { success: false, msg: error.message };
+      }
+}
+}
+
+
+module.exports = {
+    getAllTransfers,
+    getAllnonuserTransfers,
+    updateStatusTransfers,
+    updateUserTransfers,
+}

@@ -57,9 +57,9 @@ const AdminDashboard = () => {
 }, [callApi]);
   return (
     <Fragment >
-    <AdminHeader 
+    {/* <AdminHeader 
       adminDetails = {adminDetails}
-    />
+    /> */}
     <div style={{marginTop: "10vh", padding: "20px"}} class="container-fluid">
       <div class="row justify-content-between">
         <div
