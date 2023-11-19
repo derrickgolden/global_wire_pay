@@ -7,7 +7,7 @@ import { left_arrow, logo, show_hide } from "../assets/images";
 
 import { setUserDetails } from '../redux/userDetails'; // Adjust the path as needed
 
-const Login = () =>{
+const Login = ({loginType}) =>{
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -34,11 +34,19 @@ const Login = () =>{
         })
         .then(response => response.json())
         .then(data => {
-            console.log("logind data", data);
+            console.log("login successful", data);
             if(data.success){
-                sessionStorage.setItem("user", JSON.stringify(data?.details[0]));
-                dispatch(setUserDetails(data?.details[0]));
-                navigate('/user/dashboard', {replace: true});
+                if(loginType === "user"){
+                    sessionStorage.setItem("user", JSON.stringify(data?.details[0]));
+                    sessionStorage.setItem("userToken", JSON.stringify(data?.token));
+                    dispatch(setUserDetails(data?.details[0]));
+                    navigate('/user/dashboard', {replace: true});
+                }else if(loginType === "admin"){
+                    // sessionStorage.setItem("admin", JSON.stringify(data?.details[0]));
+                    sessionStorage.setItem("adminToken", JSON.stringify(data?.token));
+                    // dispatch(setUserDetails(data?.details[0]));
+                    navigate('/admin/dashboard', {replace: true});
+                }
             }else{
                 return alert(data.msg)
             }

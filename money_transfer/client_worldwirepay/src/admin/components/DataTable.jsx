@@ -1,13 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
 import DataTable from 'react-data-table-component'
 export default function DataTable_Component({ apidata, columns, search }) {
   const [data, setData] = useState([])
   const [datafilter, setFilter] = useState('')
   const [datafinals, setFinals] = useState([])
-
-
-  // console.log("apidata", apidata)
 
   useEffect(() => {
     let result = data.filter(val => {

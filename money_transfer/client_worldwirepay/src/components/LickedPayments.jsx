@@ -3,30 +3,40 @@ import { advcash, banktransfer, option, payoneer, revoult, webmoney } from "../a
 import { useEffect } from "react";
 import axios from "axios";
 import { setUserCardDetails } from "../redux/userCardDetails";
+import { useNavigate } from "react-router-dom";
 
 const LinkedPayments = ({handleAddCardPopup}) =>{
     const dispath = useDispatch()
+    const navigate = useNavigate()
 
     const {user_id} = useSelector(state => state.userDetails)
 
     useEffect(()=>{
+        const token = JSON.parse(sessionStorage.getItem("userToken"));
+
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
             url: `http://localhost:5000/user/dashboard/get-card/${user_id}`,
             headers: { 
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `${token}`,
             },
         };
 
         axios.request(config)
         .then((response) => {
-            console.log(JSON.stringify(response.data));
+            console.log("Fecthed linked payments succesfully");
            dispath(setUserCardDetails((response.data.details)))
         })
         .catch((error) => {
             console.log(error.response);
-            // alert("Error:", error.response.data)
+            if(error.response.data.reLogin){
+                alert("Could not parse your authentication token. Please try to Login again.")
+                navigate("/user/login");
+            }else{
+                alert("Sorry, an error occurred while fetching user details")
+            }
         });
     },[user_id])
 

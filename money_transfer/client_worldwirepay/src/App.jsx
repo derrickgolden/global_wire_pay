@@ -28,13 +28,13 @@ function App() {
           </Route>
           <Route path='transfers' element={<Transfers />} />
         </Route>
-        <Route path="/user/login" element={<Login />} />
+        <Route path="/user/login" element={<Login loginType = "user" />} />
         <Route path="/user/signup" element={<Signup />} />
         <Route path="/user/reset-password/:urltoken" element={<ResetPassword />} />
         <Route path="/user/forgot-password" element={<ForgotPassword />} />
 
         <Route path="/admin" >
-          <Route path="login" element={<Login />} />
+          <Route path="login" element={<Login loginType = "admin" />} />
           <Route path="dashboard" element={<AdminHeader />}>
             <Route index element={<AdminDashboard />} />
             <Route path='transfers' element={<AdminTransfers />} />

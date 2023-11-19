@@ -1,44 +1,47 @@
 
 import { useEffect, useState } from "react";
 import { right_arrow } from "../assets/images";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import formatDateAndTime from "../utils/dateTimeFormat";
-import { useLocation } from "react-router-dom";
-import { setTransactions } from "../redux/transactions";
+import {  useNavigate } from "react-router-dom";
 
 const Transations = () =>{
-    const dispatch = useDispatch()
-    const location = useLocation()
-    const [viewAll, setViewAll] = useState(false)
+    const navigate = useNavigate();
     const [transactions, setTransationDetails] = useState([]);
     const [transactionsLength, setTransactionsLength] = useState(transactions);
     const {user_id} = useSelector(state => state.userDetails)
-    const { callApi} = useSelector(state => state.callApi);
-    console.log(transactions);
     
     useEffect(()=>{
         let data = JSON.stringify({user_id});
-        console.log("useEffect", user_id);
+        const token = JSON.parse(sessionStorage.getItem("userToken"));
+        console.log(token)
         
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
             url: 'http://localhost:5000/user/dashboard/transactions',
             headers: { 
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `${token}`,
             },
             data : data
         };
 
         axios.request(config)
         .then((response) => {
-            console.log(JSON.stringify(response.data));
+            // console.log(JSON.stringify(response.data));
             setTransationDetails(response.data.details)
             
         })
         .catch((error) => {
             console.log(error.response);
+            if(error.response.data.reLogin){
+                alert("Could not parse your authentication token. Please try to Login again.")
+                navigate("/user/login");
+            }else{
+                alert("Sorry, an error occurred while fetching user details")
+            }
             // setSignupDetails((obj) =>({...obj, password: ""}))
         });
     }, [user_id]);

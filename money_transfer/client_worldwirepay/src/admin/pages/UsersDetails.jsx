@@ -3,20 +3,16 @@
 import { useState, useEffect, useRef } from 'react'
 import DataTable_Component from '../components/DataTable'
 import Update_data_modal from '../components/UpdateDataModal'
-import Swal from 'sweetalert2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faTrash, faEnvelope, faCopy, faCheck, faBan, faMoneyBillTrendUp } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom'
 import Breadcrumb from '../components/BreadCrumb'
 import Status_modal from '../components/StatusModal'
 import Add_data_modal from '../components/UpdateDataModal'
 import axios from 'axios'
-import { updateTransferStatus } from '../apiCalls/modifyTransfers'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export default function UsersDetails() {
 
-    const dispatch = useDispatch()
     const callApi = useSelector(state =>state.callApi)
 
     const title = "All Users Details"
@@ -102,7 +98,7 @@ export default function UsersDetails() {
         {
             name: "action",
             cell: (row) => <>{
-                <button onClick={() => changeUserBalance(row)} className=" btn btn-primary btn-sm ms-1"  >
+                <button onClick={() => handleUserBalanceChange(row)} className=" btn btn-primary btn-sm ms-1"  >
                     <FontAwesomeIcon icon={faMoneyBillTrendUp} />
                 </button>
                 }
@@ -111,10 +107,11 @@ export default function UsersDetails() {
     
     ]
     
-    const changeUserBalance = (row) => {
-        const success = "Transaction status changed to updated"
-        const status = "completed"
-        updateTransferStatus(row, success, status, dispatch)
+    const handleUserBalanceChange = (row) => {
+        //status model e pass data
+        console.log(row) 
+        setOpenModal(openModal => !openModal)
+        setSelectval(row)
     }
 
     {/* data receve from store */ }
@@ -154,13 +151,13 @@ export default function UsersDetails() {
     return (
         <>
             {/* status modal component */}
-            {/* <Status_modal rerendar={(e) => rerender_status(e)} row={selectVal} openModal={openModal} /> */}
+            <Status_modal rerendar={(e) => rerender_status(e)} row={selectVal} openModal={openModal} /> 
             {/* add data modal */}
             {/* <Add_data_modal rerendar={(e) => rerender(e)} openAddDataModal={open_add_modal} /> */}
             {/* add data modal */}
             <Update_data_modal rerendar={(e) => rerender_update(e)} 
                 select_data={update_modal_data} open_update_data_modal={open_update_modal}
-                data_type = "users" 
+                data_type = "usersDetails" 
             />
 
             <div className="container-fluid" >
@@ -176,7 +173,7 @@ export default function UsersDetails() {
                             <div className="card-body">
                                 {/* <div className="card-title text-center bg-warning py-2 rounded">All Data stored from the APK</div> */}
 
-                                <DataTable_Component search="transfer_id" title_btn="All Users Details" title={title} apidata={filter_apistate} columns={apicol} />
+                                <DataTable_Component search="name" title_btn="All Users Details" title={title} apidata={filter_apistate} columns={apicol} />
 
                             </div>
                         </div>

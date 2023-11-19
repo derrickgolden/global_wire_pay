@@ -4,7 +4,7 @@ import { worldWirePaymentDetails } from "../assets/details/paymentDetails";
 import { useSelector } from "react-redux";
 
 const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDetails,
-                        onHandleTransateMoney, buttonRef, deposit }) =>{
+                        onHandleTransateMoney, buttonRef, deposit, disableBtn }) =>{
     const userCards = useSelector(state => state.userCardDetails)
     return(
         <div class="col-xl-8 col-lg-8">
@@ -77,7 +77,8 @@ const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDeta
                                 </div>
                                 <div class="footer-area mt-40">
                                     <Link onClick={onChangeOption} id="amount" to="javascript:void(0)"  class="active">Previous Step</Link>
-                                    <Link onClick={onHandleTransateMoney} class="active" id="amount" to="javascript:void(0)" >Confirm</Link>
+                                    <Link onClick={onHandleTransateMoney}
+                                        class="active" id="amount" to="javascript:void(0)" >Confirm</Link>
                                     
                                     <a ref={buttonRef} style={{display:"none"}} href="javascript:void(0)" class="active" data-bs-toggle="modal" data-bs-target="#congratulationsMod">Next</a>
                                 </div>

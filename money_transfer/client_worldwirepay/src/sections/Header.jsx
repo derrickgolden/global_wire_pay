@@ -20,28 +20,34 @@ const Header = (props) =>{
     useEffect(() =>{
         if(!user_id){
             const user = JSON.parse(sessionStorage.getItem("user"));
-            console.log(user)
+            console.log("stored user")
             if(!user){
                 navigate("/user/login");
             }else{
+                const token = JSON.parse(sessionStorage.getItem("userToken"));
                 let config = {
                     method: 'get',
                     maxBodyLength: Infinity,
                     url: `http://localhost:5000/user/dashboard/user-details/${user?.user_id}`,
                     headers: { 
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `${token}`,
                     }
                 };
         
                 axios.request(config)
                 .then((response) => {
-                    console.log(JSON.stringify(response.data));
+                    // console.log(JSON.stringify(response.data));
                     dispatch(setUserDetails(response.data.details[0]));
                 })
                 .catch((error) => {
                     console.log(error.response);
-                    alert("Sorry, an error occurred")
-                    // setSignupDetails((obj) =>({...obj, password: ""}))
+                    if(error.response.data.reLogin){
+                        alert("Could not parse your authentication token. Please try to Login again.")
+                        navigate("/user/login");
+                    }else{
+                        alert("Sorry, an error occurred while fetching user details")
+                    }
                 });
             }
         }
@@ -66,7 +72,7 @@ const Header = (props) =>{
 
     return(
         <>
-        <header className={`${toggleSideBar? "body-collapse" : "" } header-section `}>
+        <header className={`${toggleSideBar? "body-collapse" : "" } user-header-section `}>
         <div className="overlay w-full">
             <div className="container-fruid">
                 <div className="row d-flex header-area">
@@ -165,7 +171,8 @@ const Header = (props) =>{
                                             <a href="javascript:void(0)">
                                                 <h5>{first_name} {last_name}</h5>
                                             </a>
-                                            <p className="wallet-id">Wallet ID: {user_id}</p>
+                                            <p style={{color: "#414BA3"}}
+                                            className="wallet-id">Wallet ID: {user_id}</p>
                                         </div>
                                     </div>
                                     <ul style={{color: "#0c266c"}}>

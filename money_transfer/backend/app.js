@@ -12,7 +12,8 @@ const transferMoney = require("./routes/transferMoney");
 
 const adminTotals = require("./routes/admin/adminTotals")
 const transfers = require("./routes/admin/transfers")
-const allUsersDetails = require("./routes/admin/allUsersDetails")
+const allUsersDetails = require("./routes/admin/allUsersDetails");
+const { authenticateToken } = require('./middlewares/authToken');
 // const lipaNaMpesaRoutes = require("./routes/lipanaMpesa")
 // const { authenticateToken } = require('./middleware/authToken');
 
@@ -27,7 +28,7 @@ app.use(express.json())
 // app.use(queryRevokedAdmins);
 // app.use('/api',lipaNaMpesaRoutes)
 app.use("/user", adminauth);
-app.use("/user/dashboard", transactMoney);
+app.use("/user/dashboard", authenticateToken, transactMoney);
 app.use("/user/dashboard", userDetails);
 app.use("/user/dashboard", cardInfo);
 app.use("/user/dashboard", transferMoney);

@@ -44,6 +44,37 @@ try {
 }
 }
 
+const updateUserBalance = async(
+    balance, user_id
+) => {
+try {
+    const connection = await pool.getConnection();
+
+    const [res] = await connection.query(`
+        UPDATE transaction_totals
+        SET balance = ?
+        WHERE user_id = ?
+    `, [balance, user_id]);
+
+    connection.release();
+
+    console.log("Balance update")
+    return {success: true, msg: "Balance Updated", 
+        details: res
+    };
+} catch (error) {
+    console.log(error)
+
+    if (error.sqlMessage) {
+        return { success: false, msg: error.sqlMessage };
+      } else {
+        console.error('Error:', error.message);
+        return { success: false, msg: error.message };
+      }
+}
+}
+
 module.exports = {
     getAllUsersDetails,
+    updateUserBalance,
 }

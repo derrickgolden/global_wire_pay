@@ -36,14 +36,10 @@
     <script src="./src/assets/js/bootstrap.min.js"></script>
     <script>
       // Check URL location and dynamically change the stylesheet
-      // if (window.location.href.includes('/admin')) {
-      //     // If URL contains '/admin', enable admin styles
-      //     const adminStyle = document.createElement('link');
-      //     adminStyle.rel = 'stylesheet';
-      //     adminStyle.href = './src/assets/css/adminStyle.css';
-      //     adminStyle.id = 'admin';
-      //     document.head.appendChild(adminStyle);
-      // }
+      if (window.location.href.includes('/user')) {
+          // If URL contains '/admin', enable admin styles
+          document.body.classList.add("styleBody")
+      }
       // if (window.location.href.includes('/user')){
       //     const adminStyle = document.createElement('link');
       //     adminStyle.rel = 'stylesheet';

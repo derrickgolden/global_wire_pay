@@ -62,7 +62,7 @@ const Signup = () =>{
     }
     return(
         <section class="log-reg register land-pg">
-        <div class="overlay">
+        <div class="overlay pb-120">
             <div class="container">
                 <div class="top-head-area">
                     <div class="row d-flex align-items-center">
@@ -79,13 +79,13 @@ const Signup = () =>{
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center align-items-center">
+                <div class="row justify-content-center align-items-center ">
                     <div class="col-md-5">
                         <div class="img-area">
                             <img src={register_illus} alt="image"/>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-7 z-1 text-center d-flex justify-content-center pb-120">
+                    <div class="col-lg-6 col-md-7 z-1 text-center ">
                         <div class="form-box">
                             <h4>Register with World Wire Pay</h4>
                             <p class="alr-acc dont-acc">Already have an account? <Link to='http://localhost:5173/user/login'>Log in now.</Link></p>
@@ -120,15 +120,12 @@ const Signup = () =>{
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
-                                            <option value="1">
-                                                            Select Your Country
-                                                        </option>
                                                 <div class="single-input d-flex align-items-center">
-                                                    <select onChange={handleInputChange} name='country' defaultValue="US" >
-                                                        
-                                                        {Object.keys(countries).map((code, i) =>(
-                                                            <option key={code}
-                                                            value={code}>
+                                                    <select style={{width: "100%"}}
+                                                    onChange={handleInputChange} name='country' defaultValue="US" >
+                                                        <option value="1">Select Your Country</option>
+                                                        {Object.keys(countries).map((code, i) => (
+                                                            <option key={code} value={code}>
                                                                 {countries[code].name}
                                                             </option>
                                                         ))}
@@ -136,6 +133,7 @@ const Signup = () =>{
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="single-input d-flex align-items-center">

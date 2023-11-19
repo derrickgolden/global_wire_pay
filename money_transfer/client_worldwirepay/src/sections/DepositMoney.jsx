@@ -1,6 +1,6 @@
 import axios from "axios"
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ChoosePaymentMethod from "../components/ChoosePaymentMethod";
 import { useEffect, useRef, useState } from "react";
 import EnterAmount from "../components/EnterAmount";
@@ -10,10 +10,11 @@ import { support_icon } from "../assets/images";
 import { useSelector } from "react-redux";
 
 const DepositMoney = () =>{
+    const navigate = useNavigate();
     const { user_id, email} = useSelector(state => state.userDetails);
-    const userDetails= useSelector(state => state.userDetails);
-    console.log(userDetails);
+
     const [option, setOption] = useState("method");
+    const [disableBtn, setDisableBtn] = useState(true)
     const buttonRef = useRef(null);
     
     const [transationDetails, setTransationDetails] = useState({ user_id, email, status: "inprogress",
@@ -42,12 +43,15 @@ const DepositMoney = () =>{
         if(!transationDetails.termsConditions) return alert("Accept terms and conditions")
         if(!transationDetails.ref_code) return alert("Enter reference of the message you received after sending money.")
 
+        setDisableBtn(true);
+        const token = JSON.parse(sessionStorage.getItem("userToken"));
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
             url: 'http://localhost:5000/user/dashboard/deposit-money',
             headers: { 
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': token,
             },
             data : data
         };
@@ -62,8 +66,15 @@ const DepositMoney = () =>{
         })
         .catch((error) => {
             console.log(error.response);
-            alert("Server error, try again")
-            // setSignupDetails((obj) =>({...obj, password: ""}))
+            if(error.response.data.reLogin){
+                alert("Could not parse your authentication token. Please try to Login again.")
+                navigate("/user/login");
+            }else{
+                alert("Sorry, server error. Try again")
+            }
+        })
+        .finally(() =>{
+            setDisableBtn(false);
         });
     }
     return(
@@ -125,6 +136,7 @@ const DepositMoney = () =>{
                                         onHandleClick = {handleClick}
                                         buttonRef = {buttonRef}
                                         deposit = {true}
+                                        disableBtn ={disableBtn}
                                     /> : null 
                             }
                         </div>

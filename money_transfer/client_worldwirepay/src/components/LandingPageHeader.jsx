@@ -16,7 +16,7 @@ const LandingPageHeader = () =>{
                             <i class="fas fa-bars"></i>
                         </button>
                         <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-                            <ul class="navbar-nav">
+                            {/* <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
                                     <a class="nav-link active dropdown-toggle" href="javascript:void(0)" role="button"
                                         data-bs-toggle="dropdown">
@@ -99,7 +99,7 @@ const LandingPageHeader = () =>{
                                         <li><a class="nav-item" href="help-center-details.html">Help Center Details</a></li>
                                     </ul>
                                 </li>
-                            </ul>
+                            </ul> */}
                             <div class="right-area header-action d-flex align-items-center">
                                 <Link to='http://localhost:5173/user/login' class="cmn-btn login">Login</Link>
                                 <Link to='http://localhost:5173/user/signup' class="cmn-btn">Sign up</Link>
