@@ -1,7 +1,7 @@
 const { completeTransaction, cancelledTransaction } = require("../../controllers/emailMessages");
 const { sendEmail } = require("../../controllers/sendEmail");
 const { getUsersTransactions, updateStatusTransaction, updateUserTransaction } = require("../../dbServices/admin/dbUserTransactions");
-// const router = require("../transactMoney");
+
 const express = require('express');
 const router = express.Router();
 

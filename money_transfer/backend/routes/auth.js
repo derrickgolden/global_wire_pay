@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 const { 
-    signupUser, loginUser, resetPassword, storeLinkToken, getLinkToken,
+    signupUser, loginUser, resetPassword, storeLinkToken, getLinkToken, loginAdmin,
 } =  require('../dbServices/dbAuth');
 // const { sendText } = require('../controllers/sendText');
 // const { generateRandomVerificationCode } = require('../controllers/randomCode');
@@ -33,7 +33,7 @@ router.post('/signup', async (req, res) =>{
 });
 
 router.post('/login', async (req, res) =>{
-    const { email, password, exp_token} = req.body;
+    const { email, password, loginType} = req.body;
     console.log(req.body)
 
     const response = await loginUser(email);
@@ -50,17 +50,49 @@ router.post('/login', async (req, res) =>{
         if(match) {
             // Create a JWT token
             const {user_id, first_name, last_name, email} = details;
-            const expiresInDays = exp_token || 30;
+            const expiresInDays = 1;
 
             const { token, exp_date } = await generateAuthToken(
                 user_id, first_name, last_name, email, expiresInDays
             );
             
+            return res.status(200).send({success: true, token, msg: "User Found", details}) ;
+            
+        }else{
+            return res.status(200).send({success: false, msg: "Incorrect Password"});
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(404).send({success: false, msg: error.message})
+    }
+
+});
+router.post('/loginadmin', async (req, res) =>{
+    const { email, password, loginType} = req.body;
+    console.log(req.body)
+
+    const response = await loginAdmin(email);
+    const { passwordHash, userAvailable, details } = response;
+
+    console.log(response);
+    try {
+        if(!userAvailable){
+            return res.status(200).send({success: false, msg: "Email not registered", details: response});
+        }
+        console.log(details)
+
+        const match = await bcrypt.compare(password, passwordHash);
+        if(match) {
+            // Create a JWT token
+            const {admin_id, first_name, last_name, email} = details;
+            const expiresInDays = 1;
+
+            const { token, exp_date } = await generateAuthToken(
+                admin_id, first_name, last_name, email, expiresInDays
+            );
+            
             return res.status(200).send({success: true, token, msg: "Admin Found", details}) ;
-            // const resp = await storeTokens(admin_id, token, exp_date);
-            // return resp.success?
-            //     res.status(200).send({success: true, token, msg: "Admin Found", details}) :
-            //     res.status(302).send(resp);
+            
         }else{
             return res.status(200).send({success: false, msg: "Incorrect Password"});
         }

@@ -61,7 +61,7 @@ const getCardInfo = async(user_id) => {
           
           connection.release();
           
-        console.log(res)
+        console.log("cards details", res)
         return {success: true, msg: "Card Details",
             details: res
         };

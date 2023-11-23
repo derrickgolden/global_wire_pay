@@ -47,7 +47,8 @@ const RecipientsPopup = ({setConnectedUsers, setChooseRecipient}) =>{
                                     <h6>Add Recipient</h6>
                                     <button ref={btnRef} type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"><i className="fa-solid fa-xmark"></i></button>
                                 </div>
-                                <ul className="nav nav-tabs flex flex-row no-wrap" role="tablist" >
+                                <ul style={{flexWrap: "nowrap"}}
+                                className="nav nav-tabs flex flex-row no-wrap" role="tablist" >
                                     <li className="nav-item" role="presentation">
                                         <button onClick={handleButtonClick} name="company"
                                         className={`${recipientDetails.user_type === "company"? "active" : " " } nav-link`}  
@@ -83,7 +84,8 @@ const RecipientsPopup = ({setConnectedUsers, setChooseRecipient}) =>{
                                                 {recipientDetails.user_type === "company" ? (
                                                     <div className="col-md-12">
                                                         <div className="single-input">
-                                                            <label for="companyname">Company Name</label>
+                                                            <label style={{color: "#212529"}}
+                                                            htmlFor="companyname">Company Name</label>
                                                             <input onChange={handleInputChange} required
                                                             value={recipientDetails.company_name} name="company_name"
                                                             type="text" id="companyname" placeholder="Internatial lmtd"/>
@@ -93,7 +95,8 @@ const RecipientsPopup = ({setConnectedUsers, setChooseRecipient}) =>{
                                                     <>
                                                     <div className="col-md-6">
                                                         <div className="single-input">
-                                                            <label for="companyfname">First Name</label>
+                                                            <label style={{color: "#212529"}}
+                                                            htmlFor="companyfname">First Name</label>
                                                             <input onChange={handleInputChange} required
                                                             value={recipientDetails.first_name} name="first_name"
                                                             type="text" id="companyfname" placeholder="Dana"/>
@@ -101,7 +104,8 @@ const RecipientsPopup = ({setConnectedUsers, setChooseRecipient}) =>{
                                                     </div>
                                                     <div className="col-md-6">
                                                         <div className="single-input">
-                                                            <label for="companylname">Last Name</label>
+                                                            <label style={{color: "#212529"}}
+                                                            htmlFor="companylname">Last Name</label>
                                                             <input onChange={handleInputChange} required
                                                             value={recipientDetails.last_name} name="last_name"
                                                             type="text" id="companylname" placeholder="Patton"/>
@@ -111,7 +115,8 @@ const RecipientsPopup = ({setConnectedUsers, setChooseRecipient}) =>{
                                                 )}
                                                 <div className="col-md-12">
                                                     <div className="single-input">
-                                                        <label for="companyemail">Email</label>
+                                                        <label style={{color: "#212529"}}
+                                                        htmlFor="companyemail">Email</label>
                                                         <input onChange={handleInputChange} required
                                                         value={recipientDetails.email} name="email"
                                                         type="text" id="email" placeholder="danap24@gmail.com"/>
@@ -119,8 +124,9 @@ const RecipientsPopup = ({setConnectedUsers, setChooseRecipient}) =>{
                                                 </div>
                                                 <div className="col-12">
                                                     <div className="single-input">
-                                                        <label>Select Country</label>
-                                                        <select onChange={handleInputChange} name='country' 
+                                                        <label style={{color: "#212529"}}
+                                                        htmlFor="country">Select Country</label>
+                                                        <select onChange={handleInputChange} name='country' id="country"
                                                         value={recipientDetails.country} 
                                                          className="w-3/4" style={{width: "80%"}}>
                                                             
@@ -135,7 +141,7 @@ const RecipientsPopup = ({setConnectedUsers, setChooseRecipient}) =>{
                                                 </div>
                                                 {/* <div className="col-md-12">
                                                     <div className="single-input">
-                                                        <label for="companyphone">Phone</label>
+                                                        <label htmlFor="companyphone">Phone</label>
                                                         <div className="select-area d-flex align-items-center">
                                                             <span style={{paddingRight: "5px"}}>+{countries[recipientDetails.country].phone}</span>
                                                             <input type="text" id="companyphone" placeholder="(070) 4567-8800"/>

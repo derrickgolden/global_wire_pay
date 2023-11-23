@@ -1,61 +1,78 @@
 import { user_profile } from "../../assets/images";
 
-const TransactionPopup = ({selectedRow}) =>{
+const TransactionPopup = ({selectedRow, user_id}) =>{
+    const {
+        recipient_email, timestamp, amount, status, sender_id, sender_fees, receiver_fees, transfer_id,
+        receiver_email, sender_email, receiver_first_name, receiver_last_name, sender_first_name,
+        sender_last_name,
+    } = selectedRow
     return(
-        <div class="transactions-popup">
-        <div class="container-fruid">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="modal fade" id="transactionsMod" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header justify-content-between">
-                                    <h5>Transaction Details</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+        <div className="transactions-popup">
+        <div className="container-fruid">
+            <div className="row">
+                <div className="col-lg-6">
+                    <div className="modal fade" id="transactionsMod" aria-hidden="true">
+                        <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content">
+                                <div className="modal-header justify-content-between">
+                                    <h5>Transfer Details</h5>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        <i className="fa-solid fa-xmark"></i>
+                                    </button>
                                 </div>
-                                <div class="main-content">
-                                    <div class="row">
-                                        <div class="col-sm-5 text-center">
-                                            <div class="icon-area">
+                                <div className="main-content">
+                                    <div className="row">
+                                        <div className="col-sm-5 text-center">
+                                            <div className="icon-area">
                                                 <img src={user_profile} alt="icon"/>
                                                 {/* <img src="assets/images/icon/transaction-details-icon.png" alt="icon"/> */}
                                             </div>
-                                            <div class="text-area">
-                                                <h6>{selectedRow.recipient_email}</h6>
-                                                <p>{new Date(selectedRow.timestamp).toDateString()}</p>
-                                                <h3>{selectedRow.amount} USD</h3>
-                                                <p class="com">{selectedRow.status}</p>
+                                            <div className="text-area">
+                                                <h6>{receiver_email}||{sender_email}</h6>
+                                                <p>{new Date(timestamp).toDateString()}</p>
+                                                <h3>{amount} USD</h3>
+                                                <p className="com">{status}</p>
                                             </div>
                                         </div>
-                                        <div class="col-sm-7">
-                                            <div class="right-area">
-                                                <h6>Transaction Details</h6>
-                                                <ul class="payment-details">
+                                        <div className="col-sm-7">
+                                            <div className="right-area">
+                                                <h6>Transfer Details</h6>
+                                                <ul className="payment-details">
                                                     <li>
                                                         <span>Payment Amount</span>
-                                                        <span>{selectedRow.amount} USD</span>
+                                                        <span>{amount} USD</span>
                                                     </li>
                                                     <li>
                                                         <span>Fee</span>
-                                                        <span>0.00 USD</span>
+                                                        <span>{sender_id === user_id ? 
+                                                            sender_fees || 0 : 
+                                                            receiver_fees || 0} USD
+                                                        </span>
                                                     </li>
                                                     <li>
                                                         <span>Total Amount</span>
-                                                        <span>{selectedRow.amount} USD</span>
+                                                        <span>{amount} USD</span>
                                                     </li>
                                                 </ul>
-                                                <ul class="payment-info">
+                                                <ul className="payment-info">
                                                     <li>
-                                                        <p>Payment From</p>
-                                                        <span class="mdr">{selectedRow.sender_id}</span>
+                                                        <p>Payment {sender_id === user_id? "To":"From"}</p>
+                                                        <span className="mdr">{
+                                                            sender_id === user_id?`
+                                                            ${receiver_first_name} ${receiver_last_name}
+                                                            `: `
+                                                            ${sender_first_name} ${sender_last_name}
+                                                            `
+                                                        }
+                                                        </span>
                                                     </li>
                                                     <li>
                                                         <p>Payment Description</p>
-                                                        <span class="mdr">No description</span>
+                                                        <span className="mdr">No description</span>
                                                     </li>
                                                     <li>
                                                         <p>Transaction  ID:</p>
-                                                        <span class="mdr">{selectedRow.transfer_id}</span>
+                                                        <span className="mdr">{transfer_id}</span>
                                                     </li>
                                                 </ul>
                                             </div>

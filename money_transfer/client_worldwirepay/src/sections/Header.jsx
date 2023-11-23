@@ -78,7 +78,7 @@ const Header = (props) =>{
                 <div className="row d-flex header-area">
                     <div className="navbar-area d-flex align-items-center justify-content-between">
                         <div onClick={()=>setToggleSideBar(!toggleSideBar)}
-                        class="sidebar-icon">
+                        className="sidebar-icon">
                             <img src={menu} alt="icon" />
                         </div>
                         <form action="#" className="flex-fill">
@@ -99,7 +99,7 @@ const Header = (props) =>{
                                     </div>
                                     <ul>
                                         <li>
-                                            <Link href="javascript:void(0)" className="d-flex">
+                                            <Link href="#" className="d-flex">
                                                 <div className="img-area">
                                                     <img src="../assets/images/user-1.png" className="max-un" alt="image"/>
                                                 </div>
@@ -112,7 +112,7 @@ const Header = (props) =>{
                                             <i className="fa-solid fa-caret-right"></i>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0)" className="d-flex">
+                                            <a href="#" className="d-flex">
                                                 <div className="img-area">
                                                     <img src="../assets/images/user-2.png" className="max-un" alt="image"/>
                                                 </div>
@@ -126,7 +126,7 @@ const Header = (props) =>{
                                             <i className="fa-solid fa-caret-right"></i>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0)" className="d-flex">
+                                            <a href="#" className="d-flex">
                                                 <div className="img-area">
                                                     <img src="../assets/images/master-card.png" className="max-un" alt="image"/>
                                                 </div>
@@ -139,7 +139,7 @@ const Header = (props) =>{
                                             <i className="fa-solid fa-caret-right"></i>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0)" className="d-flex">
+                                            <a href="#" className="d-flex">
                                                 <div className="img-area">
                                                     <img src="../assets/images/user-3.png" className="max-un" alt="image"/>
                                                 </div>
@@ -168,7 +168,7 @@ const Header = (props) =>{
                                             <img src={avator} alt="User"/>
                                         </div>
                                         <div className="profile-head">
-                                            <a href="javascript:void(0)">
+                                            <a href="#">
                                                 <h5>{first_name} {last_name}</h5>
                                             </a>
                                             <p style={{color: "#414BA3"}}
@@ -217,12 +217,12 @@ const Header = (props) =>{
                                 </Link>
                             </li>
                             <li>
-                                <Link href="javascript:void(0)">
+                                <Link href="#">
                                     <img src="assets/images/icon/support.png" alt="Support"/> <span>Support</span>
                                 </Link>
                             </li>
                             <li>
-                                <Link href="javascript:void(0)">
+                                <Link href="#">
                                     <img src="assets/images/icon/quit.png" alt="Quit"/> <span>Quit</span>
                                 </Link>
                             </li>
@@ -233,7 +233,7 @@ const Header = (props) =>{
                                     <img src="assets/images/invite-now-illus.png" alt="Image"/>
                                 </div>
                                 <p>Invite your friend and get $25</p>
-                                <Link href="javascript:void(0)" className="cmn-btn">Invite Now</Link>
+                                <Link href="#" className="cmn-btn">Invite Now</Link>
                             </div>
                         </div> */}
                     </div>

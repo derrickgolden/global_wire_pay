@@ -21,7 +21,7 @@ const WithdrawMoney = () =>{
     }
     const buttonRef = useRef(null)
     const [transationDetails, setTransationDetails] = useState({ user_id, status: "inprogress",
-        method: "Mpesa", amount: "", currency: "KSH", termsConditions: false, type: "withdraw"
+        method: "webmoney", amount: "", currency: "USD", termsConditions: false, type: "withdraw"
     })
 
     const handleTransationDetails = (e) =>{
@@ -44,12 +44,14 @@ const WithdrawMoney = () =>{
         if(!transationDetails.amount) return alert("Enter amount you want to send")
         if(!transationDetails.termsConditions) return alert("Accept terms and conditions")
 
+        const token = JSON.parse(sessionStorage.getItem("userToken"));
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
             url: 'http://localhost:5000/user/dashboard/withdraw-money',
             headers: { 
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': token,
             },
             data : data
         };
@@ -61,7 +63,12 @@ const WithdrawMoney = () =>{
         })
         .catch((error) => {
             console.log(error.response);
-            alert("Error: withdrawal was not successful")
+            if(error.response.data.reLogin){
+                alert("Could not parse your authentication token. Please try to Login again.")
+                navigate("/user/login");
+            }else{
+                alert("Error: withdrawal was not successful")
+            }
         });
     }
     return(

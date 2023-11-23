@@ -53,36 +53,39 @@ export default function Status_modal({ row, openModal,rerendar,status_id }) {
            
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
+                const token = JSON.parse(sessionStorage.getItem("adminToken"))
+
                 let config = {
                     method: 'post',
                     maxBodyLength: Infinity,
                     url: `http://localhost:5000/admin/dashboard/user/balance-update`,
                     headers: { 
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `${token}`,
                     },
                     data: JSON.stringify({user_id:users_modal_data.user_id, balance})
                 };
 
                 axios.request(config)
                 .then((response) => {
-                    console.log(JSON.stringify(response.data)); 
+                    // console.log(JSON.stringify(response.data)); 
                     Swal.fire('Balance changed to:'+balance)
                     dispatch(setCallApi());
                 })
                 .catch((error) => {
                     console.log(error);
-                    // return response.data;
-                    Swal.fire('Changes are not saved', '', 'info')
-                });
-                
-            
+                    if(error.response.data.reLogin){
+                        Swal.fire("Could not parse your authentication token. Please try to Login again.")
+                    }else{
+                        Swal.fire("Sorry, an error occurred while changing balance.")
+                    }
+                });  
             } else if (result.isDenied) {
                 Swal.fire('Changes are not saved', '', 'info')
             }
           })
         
         typeof rerendar === 'function' && rerendar(ren)
-        // set_status_modal_Show(false);
     }
 
     return (

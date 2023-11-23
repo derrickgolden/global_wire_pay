@@ -90,8 +90,9 @@ export default function AllTransactions() {
         {
             name: "Method",
             cell: (row) => <>
-            <button onClick={() => handleShowCardDetails(row)}
-            className='btn p-0 px-1 btn-secondary' >
+            <button style={{whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}
+                onClick={() => handleShowCardDetails(row)}
+                className='btn p-0 px-1 btn-secondary' >
                     {row.method}
                 </button></>,
             sortable: true

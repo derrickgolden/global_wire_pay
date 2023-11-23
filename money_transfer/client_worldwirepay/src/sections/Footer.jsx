@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { facebook, instagram, linkedin, twitter, send } from "../assets/images";
+import { FaCcPaypal, FaCcVisa } from "react-icons/fa";
+import { FaCcMastercard } from "react-icons/fa";
 
 const Footer = () =>{
     return(
@@ -75,22 +77,24 @@ const Footer = () =>{
                     <div className="row d-flex align-items-center">
                         <div className="col-lg-6 col-md-8 cus-order d-flex justify-content-md-start justify-content-center">
                             <div className="left-area">
-                                <p className="mdr">WORLDWIREPAY © 2022. ALL RIGHTS RESERVED. <span>|</span> Designed by
-                                    <a href="https://themeforest.net/user/pixelaxis">Derrick</a>
+                                <p>World Wire Limited is a licensed payment service provider</p>
+                                <p className="mdr">WORLDWIREPAY © 2020. ALL RIGHTS RESERVED. <span>|</span> Written by
+                                    <Link target="_blank" to="https://nyarangiportfolio.netlify.app/">Derrick</Link>
                                 </p>
                             </div>
                         </div>
                         <div className="col-lg-6 col-md-4 d-flex justify-content-md-end justify-content-center">
-                            <div className="right-area">
-                                <select name="lang">
-                                    <option value="en">English</option>
-                                </select>
+                            <div className="right-area flex mr-10 ">
+                               <FaCcVisa size={50} style={{marginRight: "30px"}}/>
+                               <FaCcMastercard size={50} style={{marginRight: "30px"}}/>
+                               <FaCcPaypal size={50}/>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        
 
     </footer>
     )

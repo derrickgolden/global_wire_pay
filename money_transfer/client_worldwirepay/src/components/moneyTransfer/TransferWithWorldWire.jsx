@@ -15,9 +15,9 @@ const TransferWithWorldWire = () =>{
     const navigate = useNavigate()
 
     const [connectedUsers, setConnectedUsers] = useState([
-        {first_name: "John", last_name: "Doe", email:"example1@gmail.com"},
-        {first_name: "John", last_name: "Doe", email:"example2@gmail.com"},
-        {first_name: "John", last_name: "Doe", email:"example3@gmail.com"},
+        // {first_name: "John", last_name: "Doe", email:"example1@gmail.com"},
+        // {first_name: "John", last_name: "Doe", email:"example2@gmail.com"},
+        // {first_name: "John", last_name: "Doe", email:"example3@gmail.com"},
     ])
     const [steps, setSteps] = useState("1")
     const [chooseRecipient, setChooseRecipient] = useState("");
@@ -35,14 +35,16 @@ const TransferWithWorldWire = () =>{
     },[chooseRecipient]);
 
     const onHandleSubmitTransferDetails = (e) =>{
-        console.log(transferDetails);
+        const token = JSON.parse(sessionStorage.getItem("userToken"));
+
         const data = JSON.stringify(transferDetails);
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
             url: 'http://localhost:5000/user/dashboard/transfer-money/world-wire-pay',
             headers: { 
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `${token}`,
             },
             data : data
         };
@@ -55,7 +57,12 @@ const TransferWithWorldWire = () =>{
         })
         .catch((error) => {
             console.log(error);
-            alert("Error: transfer was not successful")
+            if(error.response.data.reLogin){
+                alert("Could not parse your authentication token. Please try to Login again.")
+                navigate("/user/login");
+            }else{
+                alert("Error: transfer was not successful")
+            }
         });
     }
     return(

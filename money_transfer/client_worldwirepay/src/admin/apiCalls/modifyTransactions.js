@@ -3,25 +3,27 @@ import Swal from "sweetalert2";
 import { setCallApi } from '../../redux/callApi';
 
 const updateTransactionStatus = (row, success, status, dispatch, error = "Sorry, An error occurred") => {
-    console.log(row)
-    let config = {
-        method: 'patch',
-        maxBodyLength: Infinity,
-        url: 'http://localhost:5000/admin/dashboard/update-status',
-        headers: { 
-            'Content-Type': 'application/json'
-        },
-        data: JSON.stringify({transaction_id: row.transaction_id, status, email: row.email })
-    };
-
+    
     Swal.fire({
         icon: 'warning',
         title: 'Are you want to take this action?',
         showCancelButton: true,
         confirmButtonText: 'Yes',
-      }).then((result) => {
+    }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
+            const token = JSON.parse(sessionStorage.getItem("adminToken"))
+            
+            let config = {
+                method: 'patch',
+                maxBodyLength: Infinity,
+                url: 'http://localhost:5000/admin/dashboard/update-status',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `${token}`,
+                },
+                data: JSON.stringify({transaction_id: row.transaction_id, status, email: row.email })
+            };
             axios.request(config)
             .then((response) => {
                 console.log(JSON.stringify(response.data.msg)); 
@@ -34,7 +36,11 @@ const updateTransactionStatus = (row, success, status, dispatch, error = "Sorry,
             })
             .catch((error) => {
                 console.log(error);
-                Swal.fire("Sorry, An error occurred")
+                if(error.response.data.reLogin){
+                    Swal.fire("Could not parse your authentication token. Please try to Login again.")
+                }else{
+                    Swal.fire("Sorry, an error occurred")
+                }
                 dispatch(setCallApi());
             });
         } else if (result.isDenied) {
@@ -45,24 +51,27 @@ const updateTransactionStatus = (row, success, status, dispatch, error = "Sorry,
 }
 const modifyTransaction = (data, success, setRen, ren, rerendar, dispatch, serror = "Sorry, An error occurred") => {
 
-    let config = {
-        method: 'patch',
-        maxBodyLength: Infinity,
-        url: 'http://localhost:5000/admin/dashboard/modify-transaction',
-        headers: { 
-            'Content-Type': 'application/json'
-        },
-        data: JSON.stringify(data)
-    };
-
+    
     Swal.fire({
         icon: 'warning',
         title: 'Are you want to take this action?',
         showCancelButton: true,
         confirmButtonText: 'Yes',
-      }).then((result) => {
+    }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
+            const token = JSON.parse(sessionStorage.getItem("adminToken"))
+
+            let config = {
+                method: 'patch',
+                maxBodyLength: Infinity,
+                url: 'http://localhost:5000/admin/dashboard/modify-transaction',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `${token}`,
+                },
+                data: JSON.stringify(data)
+            };
             axios.request(config)
             .then((response) => {
                 console.log(JSON.stringify(response.data.msg)); 
@@ -75,7 +84,11 @@ const modifyTransaction = (data, success, setRen, ren, rerendar, dispatch, serro
             })
             .catch((error) => {
                 console.log(error);
-                Swal.fire("Sorry, An error occurred")
+                if(error.response.data.reLogin){
+                    Swal.fire("Could not parse your authentication token. Please try to Login again.")
+                }else{
+                    Swal.fire("Sorry, an error occurred")
+                }
                 dispatch(setCallApi())
             });
         } else if (result.isDenied) {

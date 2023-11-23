@@ -12,7 +12,7 @@ const Login = ({loginType}) =>{
     const navigate = useNavigate()
 
     const [loginDetails, setLoginDetails] = useState({
-        email:"", password: ""
+        email:"", password: "",
     })
     const handleInputChange = (e) =>{
         const name = e.target.name
@@ -24,8 +24,9 @@ const Login = ({loginType}) =>{
         
         // console.log(loginDetails);
         let data = JSON.stringify(loginDetails);
-        
-        fetch('http://localhost:5000/user/login', {
+        const login = loginType === "admin"? "loginadmin" : "login"
+
+        fetch(`http://localhost:5000/user/${login}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -34,7 +35,7 @@ const Login = ({loginType}) =>{
         })
         .then(response => response.json())
         .then(data => {
-            console.log("login successful", data);
+            console.log("login successful");
             if(data.success){
                 if(loginType === "user"){
                     sessionStorage.setItem("user", JSON.stringify(data?.details[0]));

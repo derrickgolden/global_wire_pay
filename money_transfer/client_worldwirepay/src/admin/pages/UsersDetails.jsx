@@ -10,6 +10,7 @@ import Status_modal from '../components/StatusModal'
 import Add_data_modal from '../components/UpdateDataModal'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
+import Swal from 'sweetalert2'
 
 export default function UsersDetails() {
 
@@ -128,12 +129,15 @@ export default function UsersDetails() {
     }
 
     useEffect(() =>{
+        const token = JSON.parse(sessionStorage.getItem("adminToken"))
+        
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
             url: 'http://localhost:5000/admin/dashboard/allusers',
             headers: { 
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `${token}`,
             }
         };
     
@@ -144,7 +148,11 @@ export default function UsersDetails() {
         })
         .catch((error) => {
             console.log(error.response);
-            alert("Sorry, An error occurred while fetching users data")
+            if(error.response.data.reLogin){
+                Swal.fire("Could not parse your authentication token. Please try to Login again.")
+            }else{
+                Swal.fire("Sorry, an error occurred while fetching users data")
+            }
         });
     }, [callApi]);
     

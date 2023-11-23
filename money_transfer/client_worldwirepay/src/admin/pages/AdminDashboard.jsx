@@ -5,6 +5,7 @@ import { Fragment, useEffect, useState } from "react";
 import { setAllUsersTransactions } from "../../redux/allUsersTransactions";
 import { Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const AdminDashboard = () => {
   const allUsersTransactions = useSelector(state => state.allUsersTransactions)
@@ -12,13 +13,16 @@ const AdminDashboard = () => {
   const dispatch = useDispatch();
   const [adminDetails, setAdminDetails] = useState([])
 
-  useEffect(()=>{    
+  useEffect(()=>{   
+    const token = JSON.parse(sessionStorage.getItem("adminToken"))
+
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
         url: 'http://localhost:5000/admin/dashboard/users-transactions',
         headers: { 
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`,
         }
     };
 
@@ -30,8 +34,11 @@ const AdminDashboard = () => {
     })
     .catch((error) => {
         console.log(error.response);
-        alert("Sorry, An error occurred")
-        // setSignupDetails((obj) =>({...obj, password: ""}))
+        if(error.response.data.reLogin){
+          Swal.fire("Could not parse your authentication token. Please try to Login again.")
+        }else{
+          Swal.fire("Sorry, an error occurred")
+        }
     });
 
     // balance
@@ -40,7 +47,8 @@ const AdminDashboard = () => {
         maxBodyLength: Infinity,
         url: 'http://localhost:5000/admin/dashboard/admin-details',
         headers: { 
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`,
         }
     };
 
@@ -51,10 +59,14 @@ const AdminDashboard = () => {
     })
     .catch((error) => {
         console.log(error.response);
-        alert("Sorry, An error occurred while requesting admin account bal")
-        // setSignupDetails((obj) =>({...obj, password: ""}))
+        if(error.response.data.reLogin){
+          Swal.fire("Could not parse your authentication token. Please try to Login again.")
+        }else{
+          Swal.fire("Sorry, An error occurred while fetching admin account bal")
+        }
     });
 }, [callApi]);
+
   return (
     <Fragment >
     {/* <AdminHeader 

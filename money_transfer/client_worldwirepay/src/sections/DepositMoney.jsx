@@ -60,7 +60,6 @@ const DepositMoney = () =>{
         .then((response) => {
             console.log(JSON.stringify(response.data));
             handleClick();
-            // setSignupDetails((obj) =>({...obj, password: ""}))
             // navigate('/user/login', {replace: true});
             // return redirect('user/login')
         })

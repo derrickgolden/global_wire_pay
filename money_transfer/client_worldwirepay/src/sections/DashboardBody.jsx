@@ -18,18 +18,18 @@ const DashboardBody = () =>{
       }, []);
     return(
         <>
-        <section class="dashboard-section body-collapse u-dash">
-        <div class="overlay pt-120">
-            <div class="container-fruid">
-                <div class="row">
-                    <div class="col-xl-8 col-lg-7">
-                        <div class="section-content">
+        <section className="dashboard-section body-collapse u-dash">
+        <div className="overlay pt-120">
+            <div className="container-fruid">
+                <div className="row">
+                    <div className="col-xl-8 col-lg-7">
+                        <div className="section-content">
                             <AccDetails />
                             <Transations />
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-5">
-                        <div class="side-items">
+                    <div className="col-xl-4 col-lg-5">
+                        <div className="side-items">
                             <LinkedPayments 
                                 handleAddCardPopup = {onHandleAddCardPopup}
                             />

@@ -34,7 +34,7 @@ const ForgotPassword = () =>{
         axios.request(config)
         .then((response) => {
             console.log(JSON.stringify(response.data));
-            alert("Link sent to your email")
+            alert("Link sent to your email, use the link to reset your password")
         })
         .catch((error) => {
             console.log(error.response.data);
@@ -48,15 +48,15 @@ const ForgotPassword = () =>{
                 <div class="top-head-area">
                     <div class="row d-flex align-items-center">
                         <div class="col-sm-5 col">
-                            <a class="back-home" href="index.html">
+                            <Link class="back-home" to="http://localhost:5173">
                                 <img src={left_arrow} alt="image"/>
                                 Back To Paylio
-                            </a>
+                            </Link>
                         </div>
                         <div class="col-sm-5 col">
-                            <a href="index.html">
+                            <Link to="http://localhost:5173">
                                 <img src={logo} alt="image"/>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

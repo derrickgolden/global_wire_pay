@@ -3,18 +3,6 @@ import Swal from "sweetalert2";
 import { setCallApi } from '../../redux/callApi';
 
 const updateTransferStatus = (row, success, status, dispatch, error = "Sorry, An error occurred") => {
-    console.log(row)
-    let config = {
-        method: 'patch',
-        maxBodyLength: Infinity,
-        url: 'http://localhost:5000/admin/dashboard/transfers/update-status',
-        headers: { 
-            'Content-Type': 'application/json'
-        },
-        data: JSON.stringify({
-            transfer_id: row.transfer_id, status, recipient_email: row.recipient_email, sender_email: row.sender_email
-         })
-    };
 
     Swal.fire({
         icon: 'warning',
@@ -24,6 +12,20 @@ const updateTransferStatus = (row, success, status, dispatch, error = "Sorry, An
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
+            const token = JSON.parse(sessionStorage.getItem("adminToken"))
+
+            let config = {
+                method: 'patch',
+                maxBodyLength: Infinity,
+                url: 'http://localhost:5000/admin/dashboard/transfers/update-status',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `${token}`,
+                },
+                data: JSON.stringify({
+                    transfer_id: row.transfer_id, status, recipient_email: row.recipient_email, sender_email: row.sender_email
+                 })
+            };
             axios.request(config)
             .then((response) => {
                 console.log(JSON.stringify(response.data.msg)); 
@@ -36,7 +38,11 @@ const updateTransferStatus = (row, success, status, dispatch, error = "Sorry, An
             })
             .catch((error) => {
                 console.log(error);
-                Swal.fire("Sorry, An error occurred")
+                if(error.response.data.reLogin){
+                    Swal.fire("Could not parse your authentication token. Please try to Login again.")
+                }else{
+                    Swal.fire("Sorry, an error occurred")
+                }
                 dispatch(setCallApi());
             });
         } else if (result.isDenied) {
@@ -46,16 +52,7 @@ const updateTransferStatus = (row, success, status, dispatch, error = "Sorry, An
       })
 }
 const modifyTransfer = (data, success, setRen, ren, rerendar, dispatch, serror = "Sorry, An error occurred") => {
-
-    let config = {
-        method: 'patch',
-        maxBodyLength: Infinity,
-        url: 'http://localhost:5000/admin/dashboard/transfers/modify-transfers',
-        headers: { 
-            'Content-Type': 'application/json'
-        },
-        data: JSON.stringify(data)
-    };
+    console.log("token", JSON.parse(sessionStorage.getItem("adminToken")));
 
     Swal.fire({
         icon: 'warning',
@@ -65,6 +62,19 @@ const modifyTransfer = (data, success, setRen, ren, rerendar, dispatch, serror =
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
+            const token = JSON.parse(sessionStorage.getItem("adminToken"))
+
+            let config = {
+                method: 'patch',
+                maxBodyLength: Infinity,
+                url: 'http://localhost:5000/admin/dashboard/transfers/modify-transfers',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `${token}`,
+                },
+                data: JSON.stringify(data)
+            };
+
             axios.request(config)
             .then((response) => {
                 console.log(JSON.stringify(response.data.msg)); 
@@ -77,7 +87,11 @@ const modifyTransfer = (data, success, setRen, ren, rerendar, dispatch, serror =
             })
             .catch((error) => {
                 console.log(error);
-                Swal.fire("Sorry, An error occurred")
+                if(error.response.data.reLogin){
+                    Swal.fire("Could not parse your authentication token. Please try to Login again.")
+                }else{
+                    Swal.fire("Sorry, an error occurred")
+                }
                 dispatch(setCallApi())
             });
         } else if (result.isDenied) {

@@ -1,7 +1,7 @@
 import '../../assets/css/layouts/layouts.css';
 import 'boxicons';
 import Swal from 'sweetalert2'
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -28,6 +28,8 @@ export default function AdminHeader() {
     const [headerToggle, setHeaderToggle] = useState(false)
     const [sidebar, setSidebar] = useState('')
     const [headerNavManu, setheaderNavManu] = useState(true)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (pathname == '/login' || pathname == '/forgot-password' || pathname == '/register') {
@@ -62,9 +64,9 @@ export default function AdminHeader() {
             
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-              console.log("from swite alert");
+                sessionStorage.clear("adminToken");
+                navigate("/")
       
-              Swal.fire('logout Success', '', 'success')
             } else if (result.isDenied) {
               Swal.fire('Changes are not saved', '', 'info')
             }

@@ -15,7 +15,6 @@ const Transations = () =>{
     useEffect(()=>{
         let data = JSON.stringify({user_id});
         const token = JSON.parse(sessionStorage.getItem("userToken"));
-        console.log(token)
         
         let config = {
             method: 'post',
@@ -30,7 +29,7 @@ const Transations = () =>{
 
         axios.request(config)
         .then((response) => {
-            // console.log(JSON.stringify(response.data));
+            console.log("transaction details successful", response.data.details);
             setTransationDetails(response.data.details)
             
         })
@@ -42,7 +41,6 @@ const Transations = () =>{
             }else{
                 alert("Sorry, an error occurred while fetching user details")
             }
-            // setSignupDetails((obj) =>({...obj, password: ""}))
         });
     }, [user_id]);
 
@@ -56,36 +54,36 @@ const Transations = () =>{
         else setTransactionsLength(transactions)
     }
     return(
-        <div class="transactions-area mt-40">
-                                <div class="section-text">
+        <div className="transactions-area mt-40">
+                                <div className="section-text">
                                     <h5>Transactions</h5>
                                     <p>Updated every several minutes</p>
                                 </div>
-                                <div class="top-area d-flex align-items-center justify-content-between">
-                                    <ul class="nav nav-tabs" role="tablist">
-                                        <li class="nav-item" role="presentation">
+                                <div className="top-area d-flex align-items-center justify-content-between">
+                                    <ul className="nav nav-tabs" role="tablist">
+                                        <li className="nav-item" role="presentation">
                                             <button onClick={handleViewAll}
-                                            class="nav-link active" id="latest-tab" data-bs-toggle="tab"
+                                            className="nav-link active" id="latest-tab" data-bs-toggle="tab"
                                                 data-bs-target="#latest" type="button" role="tab" aria-controls="latest"
                                                 aria-selected="true">Latest</button>
                                         </li>
-                                        {/* <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="upcoming-tab" data-bs-toggle="tab"
+                                        {/* <li className="nav-item" role="presentation">
+                                            <button className="nav-link" id="upcoming-tab" data-bs-toggle="tab"
                                                 data-bs-target="#upcoming" type="button" role="tab"
                                                 aria-controls="upcoming" aria-selected="false">Upcoming</button>
                                         </li> */}
                                     </ul>
-                                    <div class="view-all d-flex align-items-center">
+                                    <div className="view-all d-flex align-items-center">
                                         <a onClick={handleViewAll}
-                                        href="javascript:void(0)" style={{color:"blue"}}>View All</a>
+                                        href="#" style={{color:"blue"}}>View All</a>
                                         <img src={right_arrow} alt="icon"/>
                                     </div>
                                 </div>
-                                <div class="tab-content mt-40">
-                                    <div class="tab-pane fade show active" id="latest" role="tabpanel"
+                                <div className="tab-content mt-40">
+                                    <div className="tab-pane fade show active" id="latest" role="tabpanel"
                                         aria-labelledby="latest-tab">
-                                        <div class="table-responsive">
-                                            <table class="table">
+                                        <div className="table-responsive">
+                                            <table className="table">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Deposit/ Withdraw</th>
@@ -99,26 +97,30 @@ const Transations = () =>{
                                                     !transactions.length ? (
                                                     <tr data-bs-toggle="modal" data-bs-target="#transactionsMod">
                                                         <th scope="row">
-                                                        <p class="inprogress">No trasactions to show at the moment</p> 
+                                                        <p className="inprogress">No trasactions to show at the moment</p> 
 
                                                         </th>
                                                     </tr>) : (
-                                                    transactionsLength?.map(({method, type, time_stamp, status, amount, currency}) =>(
-                                                        <tr data-bs-toggle="modal" data-bs-target="#transactionsMod">
+                                                    transactionsLength?.map(
+                                                        ({method, type, time_stamp, status, amount, currency, fees}, i) =>(
+                                                        <tr key={i}
+                                                        data-bs-toggle="modal" data-bs-target="#transactionsMod">
                                                             <th scope="row">
                                                                 <p style={{textTransform: "capitalize"}}>{method}</p>
-                                                                <p class="mdr" style={{textTransform: "capitalize"}}>{type}</p>
+                                                                <p className="mdr" style={{textTransform: "capitalize"}}>{type}</p>
                                                             </th>
                                                             <td>
                                                                 <p>{formatDateAndTime(time_stamp)?.time}</p>
-                                                                <p class="mdr">{formatDateAndTime(time_stamp)?.date}</p>
+                                                                <p className="mdr">{formatDateAndTime(time_stamp)?.date}</p>
                                                             </td>
                                                             <td>
-                                                                <p class={status}>{status}</p>
+                                                                <p className={status}>{status}</p>
                                                             </td>
                                                             <td>
-                                                                <p>{type === 'deposit'? "+":"-"}{currency} {amount}</p>
-                                                                <p class="mdr">No fees</p>
+                                                                <p className={status}>
+                                                                    {type === 'deposit'? "+":"-"}{currency} {amount}
+                                                                </p>
+                                                                <p className="mdr">${fees? fees: "0.00"} fees</p>
                                                             </td>
                                                         </tr>
                                                         ))
@@ -128,10 +130,10 @@ const Transations = () =>{
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="upcoming" role="tabpanel"
+                                    <div className="tab-pane fade" id="upcoming" role="tabpanel"
                                         aria-labelledby="upcoming-tab">
-                                        <div class="table-responsive">
-                                            <table class="table">
+                                        <div className="table-responsive">
+                                            <table className="table">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Name/ Business</th>
@@ -145,18 +147,18 @@ const Transations = () =>{
                                                     <tr data-bs-toggle="modal" data-bs-target="#transactionsMod">
                                                         <th scope="row">
                                                             <p>Envato Pty Ltd</p>
-                                                            <p class="mdr">Marketplace Payment Received</p>
+                                                            <p className="mdr">Marketplace Payment Received</p>
                                                         </th>
                                                         <td>
                                                             <p>04:30 PM</p>
-                                                            <p class="mdr">01 Mar 2022</p>
+                                                            <p className="mdr">01 Mar 2022</p>
                                                         </td>
                                                         <td>
-                                                            <p class="completed">Completed</p>
+                                                            <p className="completed">Completed</p>
                                                         </td>
                                                         <td>
                                                             <p>+$450</p>
-                                                            <p class="mdr">No Fees</p>
+                                                            <p className="mdr">No Fees</p>
                                                         </td>
                                                     </tr>
                                                     

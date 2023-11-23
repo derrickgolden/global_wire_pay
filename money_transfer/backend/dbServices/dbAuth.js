@@ -1,74 +1,179 @@
 const { pool } = require("./mysqlSetup");
 
-const signupUser = async(first_name, last_name, email, remember_me, country, hash, phone) => {
+// const signupUser = async(first_name, last_name, email, remember_me, country, hash, phone) => {
 
-    const signup_date = new Date();
+//     const signup_date = new Date();
+//     try {
+//         const connection = await pool.getConnection();
+
+//         const [response] = await connection.query(`
+//         SELECT * FROM user_details
+//         WHERE email = ?
+//         `, [ email]);
+
+//         const [nonuserRes] = await connection.query(`
+//         SELECT * FROM nonuser_transfers
+//         WHERE recipient_email = ?
+//         `, [ email]);
+
+        
+//         if(response.length === 0){
+//             const [res] = await connection.query(`
+//             INSERT INTO user_details (first_name, last_name, email, remember_me, country,
+//                 password, phone)
+//                 VALUES (?, ?, ?, ?, ?, ?, ?)
+//                 `, [first_name, last_name, email, remember_me, country, hash, phone]);
+
+//                 console.log(res)
+
+//             if(nonuserRes.length > 0){
+//                 await connection.beginTransaction();
+
+//                 try {
+//                     for (const nonuser of nonuserRes) {
+//                         const receiver_id = res.insertId;
+//                         const { sender_id, recipient_email, amount } = nonuser;
+
+//                         // Insert into transfers
+//                         const [transferRes] = await connection.query(`
+//                             INSERT INTO transfers(sender_id, receiver_id, recipient_email, amount)
+//                             VALUES (?, ?, ?, ?)
+//                         `, [sender_id, receiver_id, recipient_email, amount]);
+
+//                         const new_transfer_id = transferRes.insertId;
+
+//                         // Update nonuser_transfers
+//                         const [updateNonuserTransfer] = await connection.query(`
+//                             UPDATE nonuser_transfers
+//                             SET status = ?, new_transfer_id = ?
+//                             WHERE sender_id = ? AND recipient_email = ? AND amount = ?
+//                         `, ["completed", new_transfer_id, sender_id, recipient_email, amount]);
+//                     }
+
+//                     await connection.commit();
+//                 } catch (error) {
+//                     await connection.rollback();
+//                     console.error('Transaction failed. Rolling back...', error);
+
+//                     return {success: true, admin_id: res.insertId, msg: "Registration successfull, but failed to transfer money. Contant Customer care for help.", 
+//                     details: [{first_name, last_name, email, remember_me, country}]
+//                 }
+
+//             };
+//                 connection.release();
+                
+//                 return {success: true, admin_id: res.insertId, msg: "User Registered", 
+//                 details: [{first_name, last_name, email, remember_me, country}]
+//             };
+//         }else{
+//             connection.release();
+//             if(response[0].email.toLowerCase() === email.toLowerCase()){
+//                 return { success: true, rejectInput: "email", msg: "Email already Registered, login"};
+//             } 
+//             return { success: true, rejectInput: null, msg: "Posibility of insertion of data already in the database"};
+//         }
+//     } catch (error) {
+//         console.log(error)
+
+//         if (error.sqlMessage) {
+//             return { success: false, msg: error.sqlMessage };
+//           } else {
+//             console.error('Error:', error.message);
+//             return { success: false, msg: error.message };
+//           }
+//     }
+// };
+
+const signupUser = async (first_name, last_name, email, remember_me, country, hash, phone) => {
     try {
         const connection = await pool.getConnection();
 
-        const [response] = await connection.query(`
-        SELECT * FROM user_details
-        WHERE email = ?
-        `, [ email]);
+        // Check if the user already exists
+        const [existingUser] = await connection.query(`
+            SELECT * FROM user_details
+            WHERE email = ?
+        `, [email]);
 
-        const [nonuserRes] = await connection.query(`
-        SELECT * FROM nonuser_transfers
-        WHERE recipient_email = ?
-        `, [ email]);
-
-        
-        if(response.length === 0){
-            const [res] = await connection.query(`
-            INSERT INTO user_details (first_name, last_name, email, remember_me, country,
-                password, phone)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-                `, [first_name, last_name, email, remember_me, country, hash, phone]);
-
-                console.log(res)
-
-            if(nonuserRes.length > 0){
-                await connection.beginTransaction();
-
-                nonuserRes.map(async(nonuser, i) =>{
-                    const receiver_id = res.insertId;
-                    const {sender_id, recipient_email, amount} = nonuser;
-
-                    const [transferRes] = await connection.query(`
-                    INSERT INTO transfers(sender_id, receiver_id, recipient_email, amount)
-                    VALUES (?, ?, ?, ?)
-                `, [sender_id, receiver_id, recipient_email, amount]);   
-                });
-                await connection.commit();
-            };
-                connection.release();
-                
-                return {success: true, admin_id: res.insertId, msg: "User Registered", 
-                details: [{first_name, last_name, email, remember_me, country}]
-            };
-        }else{
+        if (existingUser.length > 0) {
             connection.release();
-            if(response[0].email.toLowerCase() === email.toLowerCase()){
-                return { success: true, rejectInput: "email", msg: "Email already Registered, login"};
-            } 
-            return { success: true, rejectInput: null, msg: "Posibility of insertion of data already in the database"};
+            return { success: true, rejectInput: "email", msg: "Email already registered, please log in" };
         }
+
+        // Insert user details
+        const [insertUser] = await connection.query(`
+            INSERT INTO user_details (first_name, last_name, email, remember_me, country, password, phone)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        `, [first_name, last_name, email, remember_me, country, hash, phone]);
+
+        const userId = insertUser.insertId;
+
+        // If nonuser transfers exist, transfer funds
+        const [nonuserTransfers] = await connection.query(`
+            SELECT * FROM nonuser_transfers
+            WHERE recipient_email = ?
+        `, [email]);
+
+        if (nonuserTransfers.length > 0) {
+            await connection.beginTransaction();
+
+            try {
+                for (const nonuserTransfer of nonuserTransfers) {
+                    const { transfer_id, timestamp, sender_id, recipient_email, amount } = nonuserTransfer;
+
+                    // Insert into transfers
+                    const [transferRes] = await connection.query(`
+                        INSERT INTO transfers(sender_id, receiver_id, recipient_email, amount, timestamp)
+                        VALUES (?, ?, ?, ?, ?)
+                    `, [sender_id, userId, recipient_email, amount, timestamp]);
+
+                    const new_transfer_id = transferRes.insertId;
+
+                    // Update nonuser_transfers
+                    await connection.query(`
+                        UPDATE nonuser_transfers
+                        SET status = ?, new_transfer_id = ?
+                        WHERE transfer_id = ?
+                    `, ["registered", new_transfer_id, transfer_id ]);
+                }
+
+                await connection.commit();
+            } catch (error) {
+                await connection.rollback();
+                console.error('Transaction failed. Rolling back...', error);
+                return {
+                    success: true,
+                    admin_id: userId,
+                    msg: "Registration successful, but failed to transfer money. Contact Customer Care for help.",
+                    details: [{ first_name, last_name, email, remember_me, country }]
+                };
+            } finally {
+                connection.release();
+            }
+        } else {
+            connection.release();
+        }
+
+        return {
+            success: true,
+            admin_id: userId,
+            msg: "User Registered",
+            details: [{ first_name, last_name, email, remember_me, country }]
+        };
     } catch (error) {
-        console.log(error)
+        console.error('Error:', error.message);
 
         if (error.sqlMessage) {
             return { success: false, msg: error.sqlMessage };
-          } else {
-            console.error('Error:', error.message);
+        } else {
             return { success: false, msg: error.message };
-          }
+        }
     }
-}
+};
+
 
 const loginUser = async(email, ) => {
     try {
-        console.log("email 1");
         const connection = await pool.getConnection();
-        console.log("email 2");
 
         const [res] = await connection.query(`
         SELECT user_details.*, transaction_totals.total_deposit, transaction_totals.total_withdraw, transaction_totals.balance
@@ -86,6 +191,38 @@ const loginUser = async(email, ) => {
             return {userAvailable: true, passwordHash: password,
                 details: [{user_id, first_name, last_name, email, remember_me, country, 
                     total_deposit, total_withdraw, balance}]
+            };
+        }else{
+            return {userAvailable: false}
+        }
+    } catch (error) {
+        console.log(error)
+        if (error.sqlMessage) {
+            return {userAvailable: false,
+                res:{success: false,  msg: error.sqlMessage} };
+          } else {
+            console.error('Error:', error.message);
+            return {userAvailable: false,
+                res:{success: false, msg: error.message }};
+        }
+    }
+}
+const loginAdmin = async(email, ) => {
+    try {
+        const connection = await pool.getConnection();
+
+        const [res] = await connection.query(`
+        SELECT * FROM admin_details
+        WHERE email = ?
+        `, [email]);
+
+        connection.release();
+        console.log(res);
+        if(res.length === 1){
+            const {admin_id, first_name, last_name, email, password, balance} = res[0]
+                
+            return {userAvailable: true, passwordHash: password,
+                details: [{admin_id, first_name, last_name, email, balance}]
             };
         }else{
             return {userAvailable: false}
@@ -201,6 +338,7 @@ const getLinkToken = async(token ) => {
 module.exports = {
     signupUser,
     loginUser,
+    loginAdmin,
     resetPassword,
     storeLinkToken,
     getLinkToken,

@@ -41,13 +41,13 @@ router.post('/world-wire-pay', async (req, res) =>{
                     const sendEnailRes = await sendEmail(recipient.email, "You have received money", message);
                     if(sendEnailRes.success){
                         return res.status(200).send({
-                            success: true, msg: `The recipient has been sent email, the transaction will be completed if they register within 7 days else money will be refunded `
+                            success: true, msg: `The recipient has been sent email, the transaction will be completed if the recipient registers `
                         });
                     }else{
                         return res.status(200).send({
                             success: true, msg: `Transaction process initiated. The system was unable to send email to
                             recipient. Will try again after some time. 
-                            The transaction will be completed if they register within 7 days else money will be refunded `
+                            The transaction will be completed if the recipient registers `
                         });
                     }
                 }else{

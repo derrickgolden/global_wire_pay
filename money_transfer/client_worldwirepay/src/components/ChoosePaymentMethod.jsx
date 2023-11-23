@@ -64,7 +64,8 @@ const ChoosePaymentMethod = ({onChangeOption, onHandleTransationDetails, transat
                                     (
                                         Object.values(worldWirePaymentDetails).map((paymentmethod, i) =>(
                                             <div key={i} class="single-card">
-                                                <input checked = {transationDetails.method === paymentmethod.method} 
+                                                <input onChange={() =>{}}
+                                                checked = {transationDetails.method === paymentmethod.method} 
                                                     type="radio" name="method" id={paymentmethod.id} 
                                                     value={paymentmethod.value} />
                                                 <label htmlFor={paymentmethod.id}>

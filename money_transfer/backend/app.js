@@ -29,15 +29,15 @@ app.use(express.json())
 // app.use('/api',lipaNaMpesaRoutes)
 app.use("/user", adminauth);
 app.use("/user/dashboard", authenticateToken, transactMoney);
-app.use("/user/dashboard", userDetails);
-app.use("/user/dashboard", cardInfo);
-app.use("/user/dashboard", transferMoney);
-app.use("/user/dashboard/transfer-money", transferMoney);
+app.use("/user/dashboard", authenticateToken, userDetails);
+app.use("/user/dashboard", authenticateToken, cardInfo);
+app.use("/user/dashboard", authenticateToken, transferMoney);
+app.use("/user/dashboard/transfer-money", authenticateToken, transferMoney);
 
-app.use("/admin/dashboard", usersTransactions);
-app.use("/admin/dashboard", adminTotals);
-app.use("/admin/dashboard", transfers);
-app.use("/admin/dashboard", allUsersDetails);
+app.use("/admin/dashboard", authenticateToken, usersTransactions);
+app.use("/admin/dashboard", authenticateToken, adminTotals);
+app.use("/admin/dashboard", authenticateToken, transfers);
+app.use("/admin/dashboard", authenticateToken, allUsersDetails);
 
 app.listen(process.env.SEVERPORT, () =>{
     console.log("Listening to port", process.env.SEVERPORT);

@@ -211,7 +211,7 @@ export default function AdminTransfers() {
             cell: (row) => <>
             <button 
             // onClick={() => handleShow(row)} 
-                className={`btn py-0 px-1 ${row.status.toLowerCase() == "completed" && "btn-success"}    
+                className={`btn py-0 px-1 ${row.status.toLowerCase() == "registered" && "btn-success"}    
                 ${row.status.toLowerCase() == "pending" ? "btn-primary" : ""}  
                 ${row.status.toLowerCase() == "cancelled" ? "btn-danger" : ""} btn-sm`}  
                 >{row.status}
@@ -318,12 +318,14 @@ export default function AdminTransfers() {
     }
 
     useEffect(() =>{
+        const token = JSON.parse(sessionStorage.getItem("adminToken"))
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
             url: 'http://localhost:5000/admin/dashboard/transfers',
             headers: { 
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `${token}`,
             }
         };
     
@@ -334,28 +336,37 @@ export default function AdminTransfers() {
         })
         .catch((error) => {
             console.log(error.response);
-            alert("Sorry, An error occurred while fetching transfers data")
+            if(error.response.data.reLogin){
+                Swal.fire("Could not parse your authentication token. Please try to Login again.")
+            }else{
+                Swal.fire("Sorry, An error occurred while fetching transfers data")
+            }
         });
     }, [callApi]);
     
     useEffect(() =>{
+        const token = JSON.parse(sessionStorage.getItem("adminToken"))
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
             url: 'http://localhost:5000/admin/dashboard/transfers/non-users',
             headers: { 
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `${token}`,
             }
         };
     
         axios.request(config)
         .then((response) => {
-            console.log(JSON.stringify(response.data));
             setNonuserTransfers(response.data.details);
         })
         .catch((error) => {
             console.log(error.response);
-            alert("Sorry, An error occurred while fetching non-users transfers data")
+            if(error.response.data.reLogin){
+                Swal.fire("Could not parse your authentication token. Please try to Login again.")
+            }else{
+                Swal.fire("Sorry, An error occurred while fetching non-users transfers data")
+            }
         });
     }, []);
     

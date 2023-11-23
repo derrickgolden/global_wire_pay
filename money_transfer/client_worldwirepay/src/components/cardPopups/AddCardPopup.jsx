@@ -1,11 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { collectUserDetails } from "../../assets/details/paymentDetails";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { setCallApi } from "../../redux/callApi";
 
 const AddCardPopup = ({ cardType}) =>{
+    const navigate = useNavigate()
+
     const ref = useRef(null)
     const {user_id} = useSelector(state => state.userDetails)
+    const dispath = useDispatch()
     const card = collectUserDetails[cardType];
     
     const [newCard, setNewCard] = useState({user_id, card_name: cardType, email_or_id:"",
@@ -37,16 +42,20 @@ const AddCardPopup = ({ cardType}) =>{
         console.log(name, value);
         setNewCard((obj) =>({...obj, [name]: value}))
     }
+
     const handleNewCardSubmit = (e) =>{
         e.preventDefault()
 
+        const token = JSON.parse(sessionStorage.getItem("userToken"));
         const data = JSON.stringify(newCard);
+
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
             url: 'http://localhost:5000/user/dashboard/add-card',
             headers: { 
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `${token}`
             },
             data : data
         };
@@ -58,6 +67,7 @@ const AddCardPopup = ({ cardType}) =>{
                 if(response.data.success){
                     alert("Card added successfully")
                     ref.current.click()
+                    dispath(setCallApi())
                 }else{
                     alert(response.data.msg)
                     ref.current.click()
@@ -68,29 +78,33 @@ const AddCardPopup = ({ cardType}) =>{
         })
         .catch((error) => {
             console.log(error);
-            alert("Server side error")
-            // setSignupDetails((obj) =>({...obj, password: ""}))
+            if(error.response.data.reLogin){
+                alert("Could not parse your authentication token. Please try to Login again.")
+                navigate("/user/login");
+            }else{
+                alert("Sorry, an error occurred while fetching cards")
+            }
         });
     }
     return(
-        <div class="add-card">
-        <div class="container-fruid">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="modal fade" id="addcardMod" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header justify-content-between">
+        <div className="add-card">
+        <div className="container-fruid">
+            <div className="row">
+                <div className="col-lg-6">
+                    <div className="modal fade" id="addcardMod" aria-hidden="true">
+                        <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content">
+                                <div className="modal-header justify-content-between">
                                     <h6>Add Card</h6>
-                                    <button ref={ref} type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                                    <button ref={ref} type="button" className="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"><i className="fa-solid fa-xmark"></i></button>
                                 </div>
                                 <form action="#" onSubmit={handleNewCardSubmit} >
-                                    <div class="row justify-content-center">
-                                        {card.map((detail,i) =>(
-                                            <div class="col-md-12">
-                                                <div class="single-input">
-                                                    <label for={detail.id}>{detail.label}</label>
+                                    <div className="row justify-content-center">
+                                        {card.map((detail, i) =>(
+                                            <div key={i} className="col-md-12">
+                                                <div className="single-input">
+                                                    <label htmlFor={detail.id}>{detail.label}</label>
                                                     <input required onChange={handleInputChange}
                                                         value = {newCard[detail.id]} name={detail.id}
                                                         type={detail.type} id={detail.id}
@@ -99,9 +113,9 @@ const AddCardPopup = ({ cardType}) =>{
                                                 </div>
                                             </div>
                                         ))}
-                                        <div class="col-12">
-                                            <div class="btn-border w-100">
-                                                <button type="submit" class="cmn-btn w-100">Add Card</button>
+                                        <div className="col-12">
+                                            <div className="btn-border w-100">
+                                                <button type="submit" className="cmn-btn w-100">Add Card</button>
                                             </div>
                                         </div>
                                     </div>

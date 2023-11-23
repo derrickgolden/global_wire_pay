@@ -35,7 +35,7 @@ const ChooseRecipient = ({connectedUsers, setSteps, chooseRecipient, setChooseRe
                                 <span>Send to myself</span>
                             </button> */}
                         </div>
-                        <p class="recipients-item">3 Recipients</p>
+                        <p class="recipients-item">{connectedUsers?.length} Recipients</p>
                     </div>
                     <form action="#" class="flex-fill">
                         <div class="form-group d-flex align-items-center">
