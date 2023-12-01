@@ -1,89 +1,5 @@
 const { pool } = require("./mysqlSetup");
 
-// const signupUser = async(first_name, last_name, email, remember_me, country, hash, phone) => {
-
-//     const signup_date = new Date();
-//     try {
-//         const connection = await pool.getConnection();
-
-//         const [response] = await connection.query(`
-//         SELECT * FROM user_details
-//         WHERE email = ?
-//         `, [ email]);
-
-//         const [nonuserRes] = await connection.query(`
-//         SELECT * FROM nonuser_transfers
-//         WHERE recipient_email = ?
-//         `, [ email]);
-
-        
-//         if(response.length === 0){
-//             const [res] = await connection.query(`
-//             INSERT INTO user_details (first_name, last_name, email, remember_me, country,
-//                 password, phone)
-//                 VALUES (?, ?, ?, ?, ?, ?, ?)
-//                 `, [first_name, last_name, email, remember_me, country, hash, phone]);
-
-//                 console.log(res)
-
-//             if(nonuserRes.length > 0){
-//                 await connection.beginTransaction();
-
-//                 try {
-//                     for (const nonuser of nonuserRes) {
-//                         const receiver_id = res.insertId;
-//                         const { sender_id, recipient_email, amount } = nonuser;
-
-//                         // Insert into transfers
-//                         const [transferRes] = await connection.query(`
-//                             INSERT INTO transfers(sender_id, receiver_id, recipient_email, amount)
-//                             VALUES (?, ?, ?, ?)
-//                         `, [sender_id, receiver_id, recipient_email, amount]);
-
-//                         const new_transfer_id = transferRes.insertId;
-
-//                         // Update nonuser_transfers
-//                         const [updateNonuserTransfer] = await connection.query(`
-//                             UPDATE nonuser_transfers
-//                             SET status = ?, new_transfer_id = ?
-//                             WHERE sender_id = ? AND recipient_email = ? AND amount = ?
-//                         `, ["completed", new_transfer_id, sender_id, recipient_email, amount]);
-//                     }
-
-//                     await connection.commit();
-//                 } catch (error) {
-//                     await connection.rollback();
-//                     console.error('Transaction failed. Rolling back...', error);
-
-//                     return {success: true, admin_id: res.insertId, msg: "Registration successfull, but failed to transfer money. Contant Customer care for help.", 
-//                     details: [{first_name, last_name, email, remember_me, country}]
-//                 }
-
-//             };
-//                 connection.release();
-                
-//                 return {success: true, admin_id: res.insertId, msg: "User Registered", 
-//                 details: [{first_name, last_name, email, remember_me, country}]
-//             };
-//         }else{
-//             connection.release();
-//             if(response[0].email.toLowerCase() === email.toLowerCase()){
-//                 return { success: true, rejectInput: "email", msg: "Email already Registered, login"};
-//             } 
-//             return { success: true, rejectInput: null, msg: "Posibility of insertion of data already in the database"};
-//         }
-//     } catch (error) {
-//         console.log(error)
-
-//         if (error.sqlMessage) {
-//             return { success: false, msg: error.sqlMessage };
-//           } else {
-//             console.error('Error:', error.message);
-//             return { success: false, msg: error.message };
-//           }
-//     }
-// };
-
 const signupUser = async (first_name, last_name, email, remember_me, country, hash, phone) => {
     try {
         const connection = await pool.getConnection();
@@ -170,7 +86,6 @@ const signupUser = async (first_name, last_name, email, remember_me, country, ha
     }
 };
 
-
 const loginUser = async(email, ) => {
     try {
         const connection = await pool.getConnection();
@@ -207,6 +122,7 @@ const loginUser = async(email, ) => {
         }
     }
 }
+
 const loginAdmin = async(email, ) => {
     try {
         const connection = await pool.getConnection();

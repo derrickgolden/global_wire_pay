@@ -2,7 +2,7 @@ import './App.css'
 
 import LandingPage from './pages/LandingPage'
 import Transfers from './pages/Transfers';
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import AdminDashboard from './admin/pages/AdminDashboard';
 
 import { DashboardBody, Header, TransferMoney, WithdrawMoney, Footer, DepositMoney  } from './sections';
