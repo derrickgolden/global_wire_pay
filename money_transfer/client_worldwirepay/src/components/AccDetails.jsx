@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { option } from "../assets/images";
 import { useSelector } from 'react-redux'
+import { client_baseurl } from "../baseUrl";
 
 const AccDetails = () =>{
     const {
@@ -39,9 +40,9 @@ const AccDetails = () =>{
                                 </div>
                                 <div className="bottom-area">
                                     <div className="left-side">
-                                        <Link to="http://localhost:5173/user/dashboard/transfer-money" className="cmn-btn">Send Money</Link>
-                                        <Link to='http://localhost:5173/user/dashboard/deposit-money' className="cmn-btn">Deposit</Link>
-                                        <Link to='http://localhost:5173/user/dashboard/withdraw-money' className="cmn-btn">Withdraw</Link>
+                                        <Link to={`${client_baseurl}/user/dashboard/transfer-money`} className="cmn-btn">Send Money</Link>
+                                        <Link to={`${client_baseurl}/user/dashboard/deposit-money`} className="cmn-btn">Deposit</Link>
+                                        <Link to={`${client_baseurl}/user/dashboard/withdraw-money`} className="cmn-btn">Withdraw</Link>
                                     </div>
                                     <div className="right-side">
                                         <div className="dropdown-area">
@@ -49,9 +50,9 @@ const AccDetails = () =>{
                                                 <img src={option} alt="icon"/>
                                             </button>
                                             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><Link className="dropdown-item" to='http://localhost:5173/user/dashboard/transfer-money'>Send Money</Link></li>
-                                                <li><Link className="dropdown-item" to='http://localhost:5173/user/dashboard/deposit-money'>Deposit Money</Link></li>
-                                                <li><Link className="dropdown-item" to='http://localhost:5173/user/dashboard/withdraw-money'>Withdraw Money</Link></li>
+                                                <li><Link className="dropdown-item" to={`${client_baseurl}/user/dashboard/transfer-money`}>Send Money</Link></li>
+                                                <li><Link className="dropdown-item" to={`${client_baseurl}/user/dashboard/deposit-money`}>Deposit Money</Link></li>
+                                                <li><Link className="dropdown-item" to={`${client_baseurl}/user/dashboard/withdraw-money`}>Withdraw Money</Link></li>
                                             </ul>
                                         </div>
                                     </div>

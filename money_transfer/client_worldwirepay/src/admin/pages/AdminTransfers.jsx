@@ -16,6 +16,7 @@ import Add_data_modal from '../components/UpdateDataModal'
 import axios from 'axios'
 import { updateTransferStatus } from '../apiCalls/modifyTransfers'
 import { useDispatch, useSelector } from 'react-redux'
+import { server_baseurl } from '../../baseUrl'
 // import { columns } from './data/transfersColumns'
 // import {Modal} from 'bootstrap'
 // import { useState, useEffect } from 'react'
@@ -322,7 +323,7 @@ export default function AdminTransfers() {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: 'http://localhost:5000/admin/dashboard/transfers',
+            url: `${server_baseurl}/admin/dashboard/transfers`,
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `${token}`,
@@ -349,7 +350,7 @@ export default function AdminTransfers() {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: 'http://localhost:5000/admin/dashboard/transfers/non-users',
+            url: `${server_baseurl}/admin/dashboard/transfers/non-users`,
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `${token}`,

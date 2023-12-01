@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { left_arrow, logo, register_illus, show_hide } from "../assets/images";
 
 import { continents, countries, languages } from 'countries-list'
+import { server_baseurl } from '../baseUrl';
 
 const Signup = () =>{
     const navigate = useNavigate()
@@ -37,7 +38,7 @@ const Signup = () =>{
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://localhost:5000/user/signup',
+            url: `${server_baseurl}/user/signup`,
             headers: { 
                 'Content-Type': 'application/json'
             },
@@ -67,13 +68,13 @@ const Signup = () =>{
                 <div class="top-head-area">
                     <div class="row d-flex align-items-center">
                         <div class="col-sm-5 col">
-                            <Link class="back-home" to='http://localhost:5173/'>
+                            <Link class="back-home" to={`${client_baseurl}`}>
                                 <img src={left_arrow} alt="image"/>
                                 Back To World Wire Pay
                             </Link>
                         </div>
                         <div class="col-sm-5 col">
-                            <Link to='http://localhost:5173/'>
+                            <Link to={`${client_baseurl}`}>
                                 <img src={logo} alt="image"/>
                             </Link>
                         </div>
@@ -88,7 +89,8 @@ const Signup = () =>{
                     <div class="col-lg-6 col-md-7 z-1 text-center ">
                         <div class="form-box">
                             <h4>Register with World Wire Pay</h4>
-                            <p class="alr-acc dont-acc">Already have an account? <Link to='http://localhost:5173/user/login'>Log in now.</Link></p>
+                            <p class="alr-acc dont-acc">Already have an account? 
+                                <Link to={`${client_baseurl}/user/login`}>Log in now.</Link></p>
                             {/* <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="personal-tab" data-bs-toggle="tab"
@@ -170,7 +172,9 @@ const Signup = () =>{
                                                 <label for="check1"><span class="check_span">Remember Me</span></label>
                                             </div> */}
                                             <div class="forget-pw">
-                                                <Link to="http://localhost:5173/user/forgot-password">Forgot your password?</Link>
+                                                <Link to={`${client_baseurl}/user/forgot-password`}>
+                                                    Forgot your password?
+                                                </Link>
                                             </div>
                                         </div>
                                         

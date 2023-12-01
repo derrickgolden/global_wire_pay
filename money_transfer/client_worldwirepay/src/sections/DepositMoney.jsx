@@ -8,6 +8,7 @@ import ConfirmOrder from "../components/ConfirmOrder";
 import FeedbackPopup from "../components/cardPopups/FeedbackPopup";
 import { support_icon } from "../assets/images";
 import { useSelector } from "react-redux";
+import { server_baseurl } from "../baseUrl";
 
 const DepositMoney = () =>{
     const navigate = useNavigate();
@@ -48,7 +49,7 @@ const DepositMoney = () =>{
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://localhost:5000/user/dashboard/deposit-money',
+            url: `${server_baseurl}/user/dashboard/deposit-money`,
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': token,

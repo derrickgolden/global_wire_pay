@@ -3,6 +3,7 @@ import { forgot_password_illus, left_arrow, logo } from "../assets/images"
 
 import axios from 'axios';
 import { useState } from "react";
+import { server_baseurl } from "../baseUrl";
 
 const ForgotPassword = () =>{
     const [emailDetails, setEmailDetails] = useState({email:""})
@@ -24,7 +25,7 @@ const ForgotPassword = () =>{
         let config = {
             method: 'POST',
             maxBodyLength: Infinity,
-            url: 'http://localhost:5000/user/forgot-password',
+            url: `${server_baseurl}/user/forgot-password`,
             headers: { 
                 'Content-Type': 'application/json'
             },
@@ -48,13 +49,13 @@ const ForgotPassword = () =>{
                 <div class="top-head-area">
                     <div class="row d-flex align-items-center">
                         <div class="col-sm-5 col">
-                            <Link class="back-home" to="http://localhost:5173">
+                            <Link class="back-home" to={`${client_baseurl}`}>
                                 <img src={left_arrow} alt="image"/>
                                 Back To Paylio
                             </Link>
                         </div>
                         <div class="col-sm-5 col">
-                            <Link to="http://localhost:5173">
+                            <Link to={`${client_baseurl}`}>
                                 <img src={logo} alt="image"/>
                             </Link>
                         </div>
@@ -80,7 +81,8 @@ const ForgotPassword = () =>{
                                     <button type="submit" class="cmn-btn">Recover Password</button>
                                 </div>
                             </form>
-                            <p class="back-login dont-acc">Go back to <Link to='http://localhost:5173/user/login'>Login</Link></p>
+                            <p class="back-login dont-acc">Go back to 
+                                <Link to={`${client_baseurl}/user/login`}>Login</Link></p>
                         </div>
                     </div>
                 </div>

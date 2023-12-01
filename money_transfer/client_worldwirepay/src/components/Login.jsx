@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { left_arrow, logo, show_hide } from "../assets/images";
 
 import { setUserDetails } from '../redux/userDetails'; // Adjust the path as needed
+import { client_baseurl, server_baseurl } from '../baseUrl';
 
 const Login = ({loginType}) =>{
     const dispatch = useDispatch()
@@ -26,7 +27,7 @@ const Login = ({loginType}) =>{
         let data = JSON.stringify(loginDetails);
         const login = loginType === "admin"? "loginadmin" : "login"
 
-        fetch(`http://localhost:5000/user/${login}`, {
+        fetch(`${server_baseurl}/user/${login}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -71,7 +72,7 @@ const Login = ({loginType}) =>{
                             </Link>
                         </div>
                         <div className="col-sm-5 col">
-                            <Link to='http://localhost:5173/'>
+                            <Link to={`${client_baseurl}`}>
                                 <img src={logo} alt="image"/>
                             </Link>
                         </div>
@@ -81,9 +82,12 @@ const Login = ({loginType}) =>{
                     <div className="col-lg-6 text-center">
                         <div className="form-box">
                             <h4>Log in to World Wire Pay</h4>
-                            <p className="dont-acc">Don't have an account? <Link to='http://localhost:5173/user/signup'>Register</Link></p>
+                            <p className="dont-acc">Don't have an account? 
+                                <Link to={`${client_baseurl}/user/signup`}>Register</Link>
+                            </p>
                             <div className="tab-content" id="myTabContent">
-                                <div className="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">                                
+                                <div className="tab-pane fade show active" id="personal" role="tabpanel" 
+                                aria-labelledby="personal-tab">                                
                                     <form onSubmit={handleLoginDetailsSubmit} action="#">
                                         <div className="row">
                                             <div className="col-12">
@@ -111,7 +115,9 @@ const Login = ({loginType}) =>{
                                             <a href="javascript:void(0)"><img src="assets/img/fb.png" alt="image"/></a>
                                         </div> */}
                                         <div className="forget-pw">
-                                            <Link to='http://localhost:5173/user/forgot-password'>Forgot your password?</Link>
+                                            <Link to={`${client_baseurl}/user/forgot-password`}>
+                                                Forgot your password?
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
@@ -141,7 +147,9 @@ const Login = ({loginType}) =>{
                                             <a href="javascript:void(0)"><img src="assets/img/fb.png" alt="image"/></a>
                                         </div> */}
                                         <div className="forget-pw">
-                                            <Link to='http://localhost:5173/user/forgot-password'>Forgot your password?</Link>
+                                            <Link to={`${client_baseurl}/user/forgot-password`}>
+                                                Forgot your password?
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>

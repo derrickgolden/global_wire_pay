@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { setCallApi } from "../redux/callApi";
 import axios from "axios";
 import { sideBarDetails } from "../assets/details/sideBarDetails";
+import { client_baseurl, server_baseurl } from "../baseUrl";
 
 const Header = (props) =>{
     const navigate = useNavigate()
@@ -28,7 +29,7 @@ const Header = (props) =>{
                 let config = {
                     method: 'get',
                     maxBodyLength: Infinity,
-                    url: `http://localhost:5000/user/dashboard/user-details/${user?.user_id}`,
+                    url: `${server_baseurl}/user/dashboard/user-details/${user?.user_id}`,
                     headers: { 
                         'Content-Type': 'application/json',
                         'Authorization': `${token}`,
@@ -182,7 +183,7 @@ const Header = (props) =>{
                                         </li>
                                         <li>
                                             <Link style={{color: "#0c266c"}} onClick={handleLogout}
-                                            to="http://localhost:5173/"><i className="fas fa-sign-out"></i>Logout</Link>
+                                            to={`${client_baseurl}`}><i className="fas fa-sign-out"></i>Logout</Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -195,7 +196,7 @@ const Header = (props) =>{
                             <i className="fa-solid fa-xmark"></i>
                         </div>
                         <div className="sidebar-logo">
-                            <Link to="http://localhost:5173/user/dashboard"><img src={logo} alt="logo"/></Link>
+                            <Link to={`${client_baseurl}/user/dashboard`}><img src={logo} alt="logo"/></Link>
                         </div>
                         <ul style={{color: "blue"}}>
                             {sideBarDetails.map((detail, i) =>(

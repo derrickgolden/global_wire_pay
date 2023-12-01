@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import formatDateAndTime from "../utils/dateTimeFormat";
 import {  useNavigate } from "react-router-dom";
+import { server_baseurl } from "../baseUrl";
 
 const Transations = () =>{
     const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Transations = () =>{
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://localhost:5000/user/dashboard/transactions',
+            url: `${server_baseurl}/user/dashboard/transactions`,
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `${token}`,

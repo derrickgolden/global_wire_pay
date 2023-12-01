@@ -5,6 +5,7 @@ import axios from "axios";
 import { worldWirePaymentDetails } from "../assets/details/paymentDetails";
 import { useEffect, useState } from "react";
 import userDetails from "../redux/userDetails";
+import { server_baseurl } from "../baseUrl";
 
 const ChoosePaymentMethod = ({onChangeOption, onHandleTransationDetails, transationDetails, withdraw}) =>{
     const {user_id} = useSelector(state => state.userDetails)
@@ -16,7 +17,7 @@ const ChoosePaymentMethod = ({onChangeOption, onHandleTransationDetails, transat
         //     let config = {
         //         method: 'get',
         //         maxBodyLength: Infinity,
-        //         url: `http://localhost:5000/user/dashboard/get-card/${user_id}`,
+                // url: `${server_baseurl}/user/dashboard/get-card/${user_id}`,
         //         headers: { 
         //             'Content-Type': 'application/json'
         //         },

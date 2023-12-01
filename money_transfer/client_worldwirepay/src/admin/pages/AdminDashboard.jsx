@@ -6,6 +6,7 @@ import { setAllUsersTransactions } from "../../redux/allUsersTransactions";
 import { Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import { server_baseurl } from "../../baseUrl";
 
 const AdminDashboard = () => {
   const allUsersTransactions = useSelector(state => state.allUsersTransactions)
@@ -19,7 +20,7 @@ const AdminDashboard = () => {
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'http://localhost:5000/admin/dashboard/users-transactions',
+        url: `${server_baseurl}/admin/dashboard/users-transactions`,
         headers: { 
             'Content-Type': 'application/json',
             'Authorization': `${token}`,
@@ -45,7 +46,7 @@ const AdminDashboard = () => {
     let config2 = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: 'http://localhost:5000/admin/dashboard/admin-details',
+        url: `${server_baseurl}/admin/dashboard/admin-details`,
         headers: { 
             'Content-Type': 'application/json',
             'Authorization': `${token}`,

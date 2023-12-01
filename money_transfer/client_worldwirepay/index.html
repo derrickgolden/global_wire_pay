@@ -36,17 +36,16 @@
     <script src="./src/assets/js/bootstrap.min.js"></script>
     <script>
       // Check URL location and dynamically change the stylesheet
-      if (window.location.href.includes('/user')) {
-          document.body.classList.add("styleBody")
-        }
-
-      // if (window.location.href.includes('/user')){
-      //     const adminStyle = document.createElement('link');
-      //     adminStyle.rel = 'stylesheet';
-      //     adminStyle.href = './src/assets/css/style.css';
-      //     adminStyle.id = 'admin';
-      //     document.head.appendChild(adminStyle);
-      // }
+      const url = window.location.href
+      // if(process.env.NODE_ENV === 'development'){
+        // if (url.includes('http://localhost:5173/user') || url == "http://localhost:5173/") {
+        //     document.body.classList.add("styleBody")
+        //   }
+      // }else{
+        if (url.includes('https://worldwirepay.com/user') || url == "https://worldwirepay.com/") {
+            document.body.classList.add("styleBody")
+          }
+      // }      
   </script>
     <!-- <script src="./src/assets/js/jquery.min.js"></script>
     <script src="./src/assets/js/jquery-ui.js"></script>

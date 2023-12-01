@@ -2,13 +2,14 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import { setCallApi } from '../../redux/callApi';
+import { server_baseurl } from "../../baseUrl";
 
 const updateTransferStatus = (row, success, status, dispatch, error = "Sorry, An error occurred") => {
     console.log(row)
     let config = {
         method: 'patch',
         maxBodyLength: Infinity,
-        url: 'http://localhost:5000/admin/dashboard/transfers/update-status',
+        url: `${server_baseurl}/admin/dashboard/transfers/update-status`,
         headers: { 
             'Content-Type': 'application/json'
         },

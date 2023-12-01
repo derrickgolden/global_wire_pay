@@ -1,6 +1,7 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import { setCallApi } from '../../redux/callApi';
+import { server_baseurl } from "../../baseUrl";
 
 const updateTransactionStatus = (row, success, status, dispatch, error = "Sorry, An error occurred") => {
     
@@ -17,7 +18,7 @@ const updateTransactionStatus = (row, success, status, dispatch, error = "Sorry,
             let config = {
                 method: 'patch',
                 maxBodyLength: Infinity,
-                url: 'http://localhost:5000/admin/dashboard/update-status',
+                url: `${server_baseurl}/admin/dashboard/update-status`,
                 headers: { 
                     'Content-Type': 'application/json',
                     'Authorization': `${token}`,
@@ -65,7 +66,7 @@ const modifyTransaction = (data, success, setRen, ren, rerendar, dispatch, serro
             let config = {
                 method: 'patch',
                 maxBodyLength: Infinity,
-                url: 'http://localhost:5000/admin/dashboard/modify-transaction',
+                url: `${server_baseurl}/admin/dashboard/modify-transaction`,
                 headers: { 
                     'Content-Type': 'application/json',
                     'Authorization': `${token}`,

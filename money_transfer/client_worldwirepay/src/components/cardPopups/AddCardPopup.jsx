@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { setCallApi } from "../../redux/callApi";
+import { server_baseurl } from "../../baseUrl";
 
 const AddCardPopup = ({ cardType}) =>{
     const navigate = useNavigate()
@@ -52,7 +53,7 @@ const AddCardPopup = ({ cardType}) =>{
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://localhost:5000/user/dashboard/add-card',
+            url: `${server_baseurl}/user/dashboard/add-card`,
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `${token}`

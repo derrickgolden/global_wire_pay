@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { setUserCardDetails } from "../redux/userCardDetails";
 import { useNavigate } from "react-router-dom";
+import { server_baseurl } from "../baseUrl";
 
 const LinkedPayments = ({handleAddCardPopup}) =>{
     const dispath = useDispatch()
@@ -20,7 +21,7 @@ const LinkedPayments = ({handleAddCardPopup}) =>{
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://localhost:5000/user/dashboard/get-card/${user_id}`,
+            url: `${server_baseurl}/user/dashboard/get-card/${user_id}`,
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `${token}`,

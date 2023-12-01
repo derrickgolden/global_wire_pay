@@ -1,5 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import { server_baseurl } from "../../baseUrl";
 
 const getUserCardDetails = (row, setModal_status_data) => {
     const token = JSON.parse(sessionStorage.getItem("adminToken"))
@@ -7,7 +8,7 @@ const getUserCardDetails = (row, setModal_status_data) => {
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: `http://localhost:5000/user/dashboard/get-card/${row.user_id}`,
+        url: `${server_baseurl}/user/dashboard/get-card/${row.user_id}`,
         headers: { 
             'Content-Type': 'application/json',
             'Authorization': `${token}`,

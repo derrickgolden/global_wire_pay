@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import FeedbackPopup from "../cardPopups/FeedbackPopup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { server_baseurl } from "../../baseUrl";
 
 const TransferWithWorldWire = () =>{
     const sender = useSelector(state => state.userDetails)
@@ -41,7 +42,7 @@ const TransferWithWorldWire = () =>{
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://localhost:5000/user/dashboard/transfer-money/world-wire-pay',
+            url: `${server_baseurl}/user/dashboard/transfer-money/world-wire-pay`,
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `${token}`,
@@ -67,13 +68,13 @@ const TransferWithWorldWire = () =>{
     }
     return(
         <>
-        <section class="dashboard-section body-collapse pay step">
-        <div class="overlay pt-120">
-            <div class="container-fruid">
-                <div class="main-content">
-                    <div class="head-area d-flex align-items-center justify-content-between">
+        <section className="dashboard-section body-collapse pay step">
+        <div className="overlay pt-120">
+            <div className="container-fruid">
+                <div className="main-content">
+                    <div className="head-area d-flex align-items-center justify-content-between">
                         <h4>Make a Payment</h4>
-                        <div class="icon-area">
+                        <div className="icon-area">
                             <img src={support_icon} alt="icon"/>
                         </div>
                     </div>

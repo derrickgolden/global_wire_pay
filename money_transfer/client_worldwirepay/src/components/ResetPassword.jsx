@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { forgot_password_illus, forgot_pwd_2_illus, left_arrow, logo, show_hide } from "../assets/images"
+import { client_baseurl, server_baseurl } from '../baseUrl';
 
 const ResetPassword = () =>{
     const navigate = useNavigate()
@@ -35,7 +36,7 @@ const ResetPassword = () =>{
         let config = {
             method: 'PATCH',
             maxBodyLength: Infinity,
-            url: 'http://localhost:5000/user/reset-password',
+            url: `${server_baseurl}/user/reset-password`,
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': token
@@ -114,7 +115,7 @@ const ResetPassword = () =>{
                                     <button type="submit" class="cmn-btn">Reset Password</button>
                                 </div>
                             </form>
-                            <p class="back-login dont-acc">Go back to <Link to='http://localhost:5173/user/login'>Login</Link></p>
+                            <p class="back-login dont-acc">Go back to <Link to={`${client_baseurl}/user/login`}>Login</Link></p>
                         </div>
                     </div>
                 </div>

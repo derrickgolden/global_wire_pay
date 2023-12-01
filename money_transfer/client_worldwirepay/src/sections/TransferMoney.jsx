@@ -1,5 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import { bank_account_icon, paylio_account_icon, support_icon } from "../assets/images";
+import { client_baseurl } from "../baseUrl";
 
 const TransferMoney = () =>{
     return(
@@ -16,7 +17,7 @@ const TransferMoney = () =>{
                     </div>
                     <div className="row pb-120">
                         <div className="col-xxl-3 col-xl-4 col-md-5">
-                            <Link to="http://localhost:5173/user/dashboard/transfer-money/world-wire-pay" 
+                            <Link to={`${client_baseurl}/user/dashboard/transfer-money/world-wire-pay`} 
                             className="single-item">
                                 <div className="icon-area">
                                     <img src={paylio_account_icon} alt="icon"/>
@@ -28,7 +29,7 @@ const TransferMoney = () =>{
                             </Link>
                         </div>
                         <div className="col-xxl-3 col-xl-4 col-md-5">
-                            <Link to="http://localhost:5173/user/dashboard/transfer-money/bank-account"  
+                            <Link to={`${client_baseurl}/user/dashboard/transfer-money/bank-account`}  
                             className="single-item">
                                 <div className="icon-area">
                                     <img src={bank_account_icon} alt="icon"/>

@@ -7,6 +7,7 @@ import ConfirmOrder from "../components/ConfirmOrder";
 import FeedbackPopup from "../components/cardPopups/FeedbackPopup";
 import { support_icon } from '../assets/images';
 import { useSelector } from 'react-redux';
+import { server_baseurl } from '../baseUrl';
 
 const WithdrawMoney = () =>{
     const { user_id, balance } = useSelector(state => state.userDetails);
@@ -48,7 +49,7 @@ const WithdrawMoney = () =>{
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://localhost:5000/user/dashboard/withdraw-money',
+            url: `${server_baseurl}/user/dashboard/withdraw-money`,
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': token,

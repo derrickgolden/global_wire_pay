@@ -4,6 +4,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2'
 import { setCallApi } from '../../redux/callApi';
+import { server_baseurl } from '../../baseUrl';
 export default function Status_modal({ row, openModal,rerendar,status_id }) {
 
     const dispatch = useDispatch()
@@ -58,7 +59,7 @@ export default function Status_modal({ row, openModal,rerendar,status_id }) {
                 let config = {
                     method: 'post',
                     maxBodyLength: Infinity,
-                    url: `http://localhost:5000/admin/dashboard/user/balance-update`,
+                    url: `${server_baseurl}/admin/dashboard/user/balance-update`,
                     headers: { 
                         'Content-Type': 'application/json',
                         'Authorization': `${token}`,

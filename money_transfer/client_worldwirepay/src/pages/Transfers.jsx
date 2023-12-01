@@ -4,6 +4,7 @@ import TransactionPopup from "../components/cardPopups/TransactionPopup";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { server_baseurl } from "../baseUrl";
 
 const Transfers = () =>{
     const navigate = useNavigate()
@@ -19,7 +20,7 @@ const Transfers = () =>{
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://localhost:5000/user/dashboard/transfers/${user_id}`,
+            url: `${server_baseurl}/user/dashboard/transfers/${user_id}`,
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `${token}`

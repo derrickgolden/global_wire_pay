@@ -11,6 +11,7 @@ import Add_data_modal from '../components/UpdateDataModal'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
+import { server_baseurl } from '../../baseUrl'
 
 export default function UsersDetails() {
 
@@ -134,7 +135,7 @@ export default function UsersDetails() {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: 'http://localhost:5000/admin/dashboard/allusers',
+            url: `${server_baseurl}/admin/dashboard/allusers`,
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `${token}`,
