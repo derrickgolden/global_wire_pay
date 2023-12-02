@@ -38,9 +38,9 @@
       // Check URL location and dynamically change the stylesheet
       const url = window.location.href
       // if(process.env.NODE_ENV === 'development'){
-        // if (url.includes('http://localhost:5173/user') || url == "http://localhost:5173/") {
-        //     document.body.classList.add("styleBody")
-        //   }
+        if (url.includes('http://localhost:5173/user') || url == "http://localhost:5173/") {
+            document.body.classList.add("styleBody")
+          }
       // }else{
         if (url.includes('https://worldwirepay.com/user') || url == "https://worldwirepay.com/") {
             document.body.classList.add("styleBody")

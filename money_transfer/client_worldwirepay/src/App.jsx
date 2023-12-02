@@ -33,8 +33,9 @@ function App() {
         <Route path="/user/reset-password/:urltoken" element={<ResetPassword />} />
         <Route path="/user/forgot-password" element={<ForgotPassword />} />
 
+        <Route path="/admin/login" element={<Login loginType = "admin" />} />
+        
         <Route path="/admin" >
-          <Route path="login" element={<Login loginType = "admin" />} />
           <Route path="dashboard" element={<AdminHeader />}>
             <Route index element={<AdminDashboard />} />
             <Route path='transfers' element={<AdminTransfers />} />

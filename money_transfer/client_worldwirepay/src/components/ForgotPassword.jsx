@@ -3,7 +3,7 @@ import { forgot_password_illus, left_arrow, logo } from "../assets/images"
 
 import axios from 'axios';
 import { useState } from "react";
-import { server_baseurl } from "../baseUrl";
+import { client_baseurl, server_baseurl } from "../baseUrl";
 
 const ForgotPassword = () =>{
     const [emailDetails, setEmailDetails] = useState({email:""})
@@ -43,45 +43,45 @@ const ForgotPassword = () =>{
         });
     }
     return(
-        <section class="log-reg forgot-pws land-pg">
-        <div class="overlay pb-120">
-            <div class="container">
-                <div class="top-head-area">
-                    <div class="row d-flex align-items-center">
-                        <div class="col-sm-5 col">
-                            <Link class="back-home" to={`${client_baseurl}`}>
+        <section className="log-reg forgot-pws land-pg">
+        <div className="overlay pb-120">
+            <div className="container">
+                <div className="top-head-area">
+                    <div className="row d-flex align-items-center">
+                        <div className="col-sm-5 col">
+                            <Link className="back-home" to={`${client_baseurl}`}>
                                 <img src={left_arrow} alt="image"/>
                                 Back To Paylio
                             </Link>
                         </div>
-                        <div class="col-sm-5 col">
+                        <div className="col-sm-5 col">
                             <Link to={`${client_baseurl}`}>
                                 <img src={logo} alt="image"/>
                             </Link>
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-6 text-center">
-                        <div class="form-box">
-                            <div class="icon-area">
+                <div className="row justify-content-center">
+                    <div className="col-lg-6 text-center">
+                        <div className="form-box">
+                            <div className="icon-area">
                                 <img src={forgot_password_illus} alt="image"/>
                             </div>
                             <h4>Forgot your password?</h4>
                             <p>To reset your password, enter the email address that you used to set up your Paylio account. We'll send you a link to help you get back into your account.</p>
                             <form onSubmit={handleEmailDetailsSubmit} action="#">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="single-input d-flex align-items-center">
+                                <div className="row">
+                                    <div className="col-12">
+                                        <div className="single-input d-flex align-items-center">
                                             <input onChange={handleInputChange} type="email" placeholder="Email"/>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="btn-area">
-                                    <button type="submit" class="cmn-btn">Recover Password</button>
+                                <div className="btn-area">
+                                    <button type="submit" className="cmn-btn">Recover Password</button>
                                 </div>
                             </form>
-                            <p class="back-login dont-acc">Go back to 
+                            <p className="back-login dont-acc">Go back to 
                                 <Link to={`${client_baseurl}/user/login`}>Login</Link></p>
                         </div>
                     </div>
