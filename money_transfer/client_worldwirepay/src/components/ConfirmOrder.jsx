@@ -14,7 +14,7 @@ const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDeta
                                         <h6>Confirm  account & amount</h6>
                                         <div class="right">
                                             <a onClick={onChangeOption} id="method"
-                                            href="javascript:void(0)">
+                                            href="#">
                                                 <i class="icon-h-edit"></i>
                                                 Edit
                                             </a>
@@ -73,14 +73,14 @@ const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDeta
                                 <div class="checkbox-area mt-40 d-flex align-items-center justify-content-center">
                                     <input onChange={onHandleTransationDetails} value={transationDetails.termsConditions}
                                     type="checkbox" id="accept" name="termsConditions"/>
-                                    <label htmlFor="accept">I accept <a href="javascript:void(0)">terms of use</a></label>
+                                    <label htmlFor="accept">I accept <a href="#">terms of use</a></label>
                                 </div>
                                 <div class="footer-area mt-40">
-                                    <Link onClick={onChangeOption} id="amount" to="javascript:void(0)"  class="active">Previous Step</Link>
+                                    <Link onClick={onChangeOption} id="amount" to="#"  class="active">Previous Step</Link>
                                     <Link onClick={onHandleTransateMoney}
-                                        class="active" id="amount" to="javascript:void(0)" >Confirm</Link>
+                                        class="active" id="amount" to="#" >Confirm</Link>
                                     
-                                    <a ref={buttonRef} style={{display:"none"}} href="javascript:void(0)" class="active" data-bs-toggle="modal" data-bs-target="#congratulationsMod">Next</a>
+                                    <a ref={buttonRef} style={{display:"none"}} href="#" class="active" data-bs-toggle="modal" data-bs-target="#congratulationsMod">Next</a>
                                 </div>
                             </form>
         </div>

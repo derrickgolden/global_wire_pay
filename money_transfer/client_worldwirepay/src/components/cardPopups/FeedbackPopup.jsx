@@ -3,6 +3,10 @@ import { success } from "../../assets/images"
 import { client_baseurl } from "../../baseUrl"
 
 const FeedbackPopup = ({transationDetails}) =>{
+    const handleLinkClick = () => {
+        window.location.reload();
+    };
+    
     return(
         <div className="congratulations-popup purchased-popup modal-open">
         <div className="container-fruid">
@@ -22,8 +26,9 @@ const FeedbackPopup = ({transationDetails}) =>{
                                     <p>You have successfully transacted: <br/>
                                         {transationDetails.amount} {transationDetails.currency} 
                                     </p>
-                                    <Link to={`${client_baseurl}/user/dashboard`} className="mt-40"
+                                    <Link to={`${client_baseurl}/#/user/dashboard`} className="mt-40"
                                         reloadDocument
+                                        onClick={handleLinkClick}
                                     >Back to Dashboard</Link>
                                 </div>
                             </div>

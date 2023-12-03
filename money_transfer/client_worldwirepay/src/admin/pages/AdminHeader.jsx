@@ -66,6 +66,7 @@ export default function AdminHeader() {
             if (result.isConfirmed) {
                 sessionStorage.clear("adminToken");
                 navigate("/")
+                window.location.reload();
       
             } else if (result.isDenied) {
               Swal.fire('Changes are not saved', '', 'info')
