@@ -4,7 +4,7 @@ import { right_arrow } from "../assets/images";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import formatDateAndTime from "../utils/dateTimeFormat";
-import {  useNavigate } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 import { server_baseurl } from "../baseUrl";
 
 const Transations = () =>{
@@ -48,6 +48,7 @@ const Transations = () =>{
     useEffect(() =>{
         setTransactionsLength(transactions.slice(0,5))
     }, [transactions])
+
     const handleViewAll = (e) =>{
         if(e.target.id === "latest-tab"){
             setTransactionsLength(transactions.slice(0,5))
@@ -75,8 +76,9 @@ const Transations = () =>{
                                         </li> */}
                                     </ul>
                                     <div className="view-all d-flex align-items-center">
-                                        <a onClick={handleViewAll}
-                                        href="#" style={{color:"blue"}}>View All</a>
+                                        <button onClick={handleViewAll}  style={{color:"blue"}}>
+                                            View All
+                                        </button>
                                         <img src={right_arrow} alt="icon"/>
                                     </div>
                                 </div>

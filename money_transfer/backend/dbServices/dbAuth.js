@@ -98,7 +98,7 @@ const loginUser = async(email, ) => {
         `, [email]);
 
         connection.release();
-        console.log(res);
+        // console.log(res);
         if(res.length === 1){
             const {user_id, first_name, last_name, email, remember_me, country, password, 
                 total_deposit, total_withdraw, balance} = res[0]
@@ -133,7 +133,7 @@ const loginAdmin = async(email, ) => {
         `, [email]);
 
         connection.release();
-        console.log(res);
+        // console.log(res);
         if(res.length === 1){
             const {admin_id, first_name, last_name, email, password, balance} = res[0]
                 

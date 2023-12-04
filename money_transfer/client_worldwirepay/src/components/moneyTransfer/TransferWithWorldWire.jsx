@@ -10,6 +10,7 @@ import FeedbackPopup from "../cardPopups/FeedbackPopup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { server_baseurl } from "../../baseUrl";
+import Swal from "sweetalert2";
 
 const TransferWithWorldWire = () =>{
     const sender = useSelector(state => state.userDetails)
@@ -35,7 +36,7 @@ const TransferWithWorldWire = () =>{
         }));
     },[chooseRecipient]);
 
-    const onHandleSubmitTransferDetails = (e) =>{
+    const onHandleSubmitTransferDetails = async(e) =>{
         const token = JSON.parse(sessionStorage.getItem("userToken"));
 
         const data = JSON.stringify(transferDetails);
@@ -50,11 +51,19 @@ const TransferWithWorldWire = () =>{
             data : data
         };
 
-        axios.request(config)
+        await axios.request(config)
         .then((response) => {
-            console.log(JSON.stringify(response.data));
-            alert(response.data.msg);
-            navigate("/user/dashboard/transfers")
+            Swal.fire({
+                icon: 'success',
+                title: `Transfer successful.`,
+                html: `<p> ${response.data.msg} </p>`,
+                showCloseButton: true,
+                confirmButtonText: 'Back to transfers',
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate("/user/dashboard/transfers")
+                } 
+              })
         })
         .catch((error) => {
             console.log(error);

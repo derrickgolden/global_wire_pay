@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ChoosePaymentMethod from "../components/ChoosePaymentMethod";
 import EnterAmount from "../components/EnterAmount";
 import ConfirmOrder from "../components/ConfirmOrder";
@@ -8,42 +8,48 @@ import FeedbackPopup from "../components/cardPopups/FeedbackPopup";
 import { support_icon } from '../assets/images';
 import { useSelector } from 'react-redux';
 import { server_baseurl } from '../baseUrl';
+import { useNavigate } from 'react-router-dom';
+import { swalFeedbackPopup } from '../components/cardPopups/swalPopup';
+import Swal from 'sweetalert2';
 
 const WithdrawMoney = () =>{
+    const [disableBtn, setDisableBtn] = useState(false)
+
     const { user_id, balance } = useSelector(state => state.userDetails);
+
+    const navigate = useNavigate()
     
     const [option, setOption] = useState("method")
-
-    console.log(option)
     
-    const changeOption = (e) =>{
-        console.log(transationDetails);
-        setOption(e.target.id)
-    }
     const buttonRef = useRef(null)
     const [transationDetails, setTransationDetails] = useState({ user_id, status: "inprogress",
-        method: "webmoney", amount: "", currency: "USD", termsConditions: false, type: "withdraw"
+        method: "", amount: "", currency: "USD", termsConditions: false, type: "withdraw"
     })
 
+    useEffect(() =>{
+        setTransationDetails({...transationDetails, user_id})
+    }, [user_id])
+
+    const changeOption = (e) =>{
+        setOption(e.target.id)
+    }
+
     const handleTransationDetails = (e) =>{
-        console.log(e);
         const name = e.target.name
         const value = name === "termsConditions" ? !transationDetails.termsConditions : e.target.value
-        console.log(name,value)
         setTransationDetails(obj => ({...obj, [name]: value}))
     }
-    const handleClick = () => {
-        buttonRef.current.click(); // Programmatically trigger a click event
-    };
+   
     const handleTransateMoney =() =>{
         let data = JSON.stringify(transationDetails);
-        console.log(transationDetails);
 
-        if(transationDetails.amount > balance) return alert(
+        if(Number(transationDetails.amount) > Number(balance)) return alert(
             "You do not have enough money in your account. Deposit first"
         )
         if(!transationDetails.amount) return alert("Enter amount you want to send")
         if(!transationDetails.termsConditions) return alert("Accept terms and conditions")
+
+        setDisableBtn(true);
 
         const token = JSON.parse(sessionStorage.getItem("userToken"));
         let config = {
@@ -59,8 +65,7 @@ const WithdrawMoney = () =>{
 
         axios.request(config)
         .then((response) => {
-            console.log(JSON.stringify(response.data));
-            handleClick();
+            swalFeedbackPopup(transationDetails, navigate);
         })
         .catch((error) => {
             console.log(error.response);
@@ -70,6 +75,8 @@ const WithdrawMoney = () =>{
             }else{
                 alert("Error: withdrawal was not successful")
             }
+        }).finally(() =>{
+            setDisableBtn(false);
         });
     }
     return(
@@ -109,8 +116,8 @@ const WithdrawMoney = () =>{
                                     onHandleTransationDetails = {handleTransationDetails}
                                     transationDetails = {transationDetails}
                                     onHandleTransateMoney= {handleTransateMoney}
-                                    onHandleClick = {handleClick}
                                     buttonRef = {buttonRef}
+                                    disableBtn ={disableBtn}
                                 /> : null 
                         }
                     </div>

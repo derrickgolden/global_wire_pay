@@ -9,21 +9,24 @@ import FeedbackPopup from "../components/cardPopups/FeedbackPopup";
 import { support_icon } from "../assets/images";
 import { useSelector } from "react-redux";
 import { server_baseurl } from "../baseUrl";
+import { swalFeedbackPopup } from "../components/cardPopups/swalPopup";
 
 const DepositMoney = () =>{
     const navigate = useNavigate();
     const { user_id, email} = useSelector(state => state.userDetails);
 
     const [option, setOption] = useState("method");
-    const [disableBtn, setDisableBtn] = useState(true)
+    const [disableBtn, setDisableBtn] = useState(false)
     const buttonRef = useRef(null);
     
     const [transationDetails, setTransationDetails] = useState({ user_id, email, status: "inprogress",
-        method: "Mpesa", amount: "", currency: "USD", termsConditions: false, ref_code: "", type: "deposit"
+        method: "", amount: "", currency: "USD", termsConditions: false, ref_code: "", type: "deposit"
     })
+
     useEffect(() =>{
         setTransationDetails({...transationDetails, user_id, email})
     }, [user_id])
+
     const changeOption = (e) =>{
         console.log(transationDetails);
         setOption(e.target.id)
@@ -60,9 +63,8 @@ const DepositMoney = () =>{
         axios.request(config)
         .then((response) => {
             console.log(JSON.stringify(response.data));
-            handleClick();
-            // navigate('/user/login', {replace: true});
-            // return redirect('user/login')
+            swalFeedbackPopup(transationDetails, navigate);
+            // handleClick();
         })
         .catch((error) => {
             console.log(error.response);

@@ -37,14 +37,15 @@ router.post('/login', async (req, res) =>{
     console.log(req.body)
 
     const response = await loginUser(email);
-    const { passwordHash, userAvailable, details } = response;
+    const { passwordHash, userAvailable, details, res: loginRes } = response;
 
-    console.log(response);
     try {
+        if(loginRes?.msg?.length){
+            return res.status(200).send({success: false, msg: "Sorry, server error occurred", details: response});
+        }
         if(!userAvailable){
             return res.status(200).send({success: false, msg: "Email not registered", details: response});
         }
-        console.log(details)
 
         const match = await bcrypt.compare(password, passwordHash);
         if(match) {

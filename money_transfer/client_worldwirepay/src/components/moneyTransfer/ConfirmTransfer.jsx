@@ -13,13 +13,21 @@ const ConfirmTransfer = ({setSteps, handleSubmitTransferDetails, transferDetails
     const handleCheckboxChange = () => {
         setChecked(!isChecked); // Toggle the state (checked to unchecked or vice versa)
     };
-    const handleSendClick = () =>{
-        if(!isChecked) return alert("Confirm that you have counter checked the details")
-        setSendDisabled(true);
-        handleSubmitTransferDetails()
-
-        setSendDisabled(false);
-    }
+    const handleSendClick = async () => {
+        try {
+          if (!isChecked) return alert("Confirm that you have counter checked the details");
+      
+          setSendDisabled(true);
+      
+          await handleSubmitTransferDetails();
+      
+        } catch (error) {
+          console.error("Error during handleSubmitTransferDetails:", error);
+        } finally {
+          setSendDisabled(false);
+        }
+      };
+      
     return(
         <>
         <div class="choose-recipient">
@@ -102,7 +110,7 @@ const ConfirmTransfer = ({setSteps, handleSubmitTransferDetails, transferDetails
                                 Previous Step
                             </Link>
                             <Link href="#" onClick={handleSendClick} aria-disabled
-                            style={sendDisabled? { pointerEvents: 'none', color: 'gray' } : null} 
+                            style={{pointerEvents: `${sendDisabled? "none" : ""}`, color: `${sendDisabled? "gray" : ""}`}} 
                             class="transferMod active" data-bs-toggle="modal" data-bs-target="#transferMod">Send</Link>
                         </div>
                     </form>

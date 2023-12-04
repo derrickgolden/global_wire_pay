@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDetails,
                         onHandleTransateMoney, buttonRef, deposit, disableBtn }) =>{
     const userCards = useSelector(state => state.userCardDetails)
+    console.log(disableBtn);
     return(
         <div class="col-xl-8 col-lg-8">
                             <form action="#">
@@ -29,7 +30,7 @@ const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDeta
                                                 </li>
                                                 <li>
                                                     <span>{deposit ? "Deposit": "Withdraw"} {transationDetails.method} money to: &nbsp;</span>
-                                                    {deposit? <b>{worldWirePaymentDetails[transationDetails.method].send_to}</b> :
+                                                    {deposit? <b>{worldWirePaymentDetails[transationDetails.method]?.send_to}</b> :
                                                     <b>{userCards.map((userCard, i)=> {
                                                         if(userCard.email_or_id && userCard.card_name === transationDetails.method ){
                                                             return userCard.email_or_id;
@@ -77,10 +78,12 @@ const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDeta
                                 </div>
                                 <div class="footer-area mt-40">
                                     <Link onClick={onChangeOption} id="amount" to="#"  class="active">Previous Step</Link>
-                                    <Link onClick={onHandleTransateMoney}
+                                    <Link onClick={onHandleTransateMoney} 
+                                        style={{pointerEvents: `${disableBtn? "none": ""}`}}
                                         class="active" id="amount" to="#" >Confirm</Link>
                                     
-                                    <a ref={buttonRef} style={{display:"none"}} href="#" class="active" data-bs-toggle="modal" data-bs-target="#congratulationsMod">Next</a>
+                                    <a ref={buttonRef} style={{display:"none"}} href="#" class="active" 
+                                        data-bs-toggle="modal" data-bs-target="#congratulationsMod">Next</a>
                                 </div>
                             </form>
         </div>

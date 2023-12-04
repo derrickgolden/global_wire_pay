@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faChevronLeft, faChevronDown, faListUl, faBuildingColumns, faIndent, faFileInvoice, faFileCode,faUsersGear,
     faStore, faGear, faMobileScreen, faGlobe, faWrench, faLifeRing, faGaugeHigh,faEye,faPenToSquare, faUsers,
-    faEnvelope, faBell, faRing, faKey, faPuzzlePiece, faUniversalAccess, faTree,faMessage, faListCheck, faCircleInfo, faPeopleGroup, faVideo,faBars,faX
+    faListCheck, faCircleInfo, faPeopleGroup, faVideo,faBars,faX
 } from '@fortawesome/free-solid-svg-icons'
 import { MdDashboard } from "react-icons/md";
 import { RiAdminFill } from "react-icons/ri";

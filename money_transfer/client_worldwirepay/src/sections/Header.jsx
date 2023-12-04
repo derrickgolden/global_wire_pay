@@ -90,9 +90,9 @@ const Header = (props) =>{
                         </form>
                         <div className="dashboard-nav">
                             <div className="single-item notifications-area">
-                                <div className="notifications-btn">
+                                {/* <div className="notifications-btn">
                                     <img src={bell} className="bell-icon" alt="icon"/>
-                                </div>
+                                </div> */}
                                 <div className="main-area notifications-content">
                                     <div className="head-area d-flex justify-content-between">
                                         <h5>Notifications</h5>
@@ -177,10 +177,10 @@ const Header = (props) =>{
                                         </div>
                                     </div>
                                     <ul style={{color: "#0c266c"}}>
-                                        <li className="border-area">
+                                        {/* <li className="border-area">
                                             <a style={{color: "#0c266c"}}
                                             href="#"><i className="fas fa-cog"></i>Settings</a>
-                                        </li>
+                                        </li> */}
                                         <li>
                                             <Link style={{color: "#0c266c"}} onClick={handleLogout}
                                             to={`${client_baseurl}`}><i className="fas fa-sign-out"></i>Logout</Link>

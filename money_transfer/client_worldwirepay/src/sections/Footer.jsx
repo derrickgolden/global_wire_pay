@@ -52,7 +52,7 @@ const Footer = () =>{
                         <div className="single-area">
                             <h5>Subscribe to our news</h5>
                             <p>Get the latest happenings and tips from World Pay Wire</p>
-                            <form action="#">
+                            <form action="#" onSubmit={(e) => e.preventDefault()}>
                                 <div className="subscribe d-flex">
                                     <input type="email" placeholder="Your Email Address"/>
                                     <button><img src={send} alt="icon"/></button>

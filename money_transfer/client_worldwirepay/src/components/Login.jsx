@@ -36,7 +36,7 @@ const Login = ({loginType}) =>{
         })
         .then(response => response.json())
         .then(data => {
-            console.log("login successful");
+            console.log(data);
             if(data.success){
                 if(loginType === "user"){
                     sessionStorage.setItem("user", JSON.stringify(data?.details[0]));
