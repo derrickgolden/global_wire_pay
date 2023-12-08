@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ban_frame_1, ban_frame_2, ban_frame_3, ban_frame_4, ban_right, banner_bg } from "../assets/images";
 import { client_baseurl } from "../baseUrl";
 
+import { FaVideo } from "react-icons/fa";
 
 const LandingPageBody = () =>{
     return(
@@ -34,7 +35,7 @@ const LandingPageBody = () =>{
                                     <div className="left">
                                         <Link className="icon mfp-iframe popupvideo"
                                             to="#">
-                                            <img src="assets/img/video-icon.png" alt="icon"/>
+                                            <FaVideo size={24} style={{color: "blueviolet"}}/>
                                         </Link>
                                     </div>
                                     <div className="right d-grid">

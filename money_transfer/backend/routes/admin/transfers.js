@@ -3,7 +3,9 @@ const { getAllTransfers } = require('../../dbServices/admin/dbTransfers');
 const { updateStatusTransfers } = require('../../dbServices/admin/dbTransfers');
 const { updateUserTransfers } = require('../../dbServices/admin/dbTransfers');
 const { sendEmail } = require('../../controllers/sendEmail');
-const { completeTransaction, cancelledTransaction } = require('../../controllers/emailMessages');
+const { generateSuccessTransferReceiverMsg, generateSuccessTransferSenderMsg, 
+    generateCancelSenderMsg, generateCancelReceiverMsg } 
+    = require('../../controllers/emailMessages');
 const { getAllnonuserTransfers } = require('../../dbServices/admin/dbTransfers');
 const router = express.Router();
 
@@ -32,32 +34,45 @@ router.get('/transfers/non-users', async (req, res) =>{
 });
 
 router.patch('/transfers/update-status', async (req, res) =>{
-    const { transfer_id, status, recipient_email, sender_email } = req.body;
+    const { transfer_id, status, recipient_email, sender_email, receiver_first_name,
+    sender_first_name, amount, receiver_email } = req.body;
         console.log(req.body);
     try{
         const response = await updateStatusTransfers(transfer_id, status)
         if(response.success) {
-            // const getEmail = await getUserEmailById(user_id)
+
             if(status === "completed"){
+                const completeTransferReceiverMsg = generateSuccessTransferReceiverMsg(
+                    receiver_first_name, amount, transfer_id, sender_first_name, sender_email
+                )
                 const senderRes = sendEmail(
-                    sender_email, "Payment Confirmation: Successfully Processed", 
-                    completeTransaction
+                    receiver_email, "Transfer Confirmation: Successfully Processed", 
+                    completeTransferReceiverMsg
+                    )
+                const completeTransferSenderMsg = generateSuccessTransferSenderMsg(
+                    sender_first_name, amount, transfer_id, receiver_first_name, receiver_email
                 )
                 const receiverRes = sendEmail(
-                    recipient_email, "Payment Confirmation: Successfully Processed", 
-                    completeTransaction
+                    sender_email, "Transfer Confirmation: Successfully Processed", 
+                    completeTransferSenderMsg
                 )
-                console.log(recipient_email)
+
             }else if(status === "cancelled"){
+                const cancellTransferSenderMsg = generateCancelSenderMsg(
+                    sender_first_name, amount, transfer_id, receiver_first_name, receiver_email,
+                )
                 const senderRes = sendEmail(
-                    sender_email, "Payment Cancellation: Acknowledgment", 
-                    cancelledTransaction 
+                    sender_email, "Transfer Cancellation", 
+                    cancellTransferSenderMsg, 
+                )
+
+                const cancellTransferReceiverMsg = generateCancelReceiverMsg(
+                    receiver_first_name, amount, transfer_id, sender_first_name, sender_email
                 )
                 const receiverRes = sendEmail(
-                    recipient_email, "Payment Cancellation: Acknowledgment", 
-                    cancelledTransaction 
+                    recipient_email, "Transfer Cancellation", 
+                    cancellTransferReceiverMsg
                 )
-                // console.log("cancelled" , emailRes)
             }
             
             res.status(200).send(response)

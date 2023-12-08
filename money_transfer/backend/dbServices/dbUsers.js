@@ -34,16 +34,14 @@ const getUserEmailById = async( user_id ) =>{
         const connection = await pool.getConnection();
 
         const [res] = await connection.query(`
-        SELECT email from user_details 
+        SELECT first_name, last_name, email from user_details 
         WHERE user_id = ?;
         `, [user_id])
 
         connection.release();
 
-        console.log("response email", res)
-
         if(res.length){
-            return {success: true, email: res[0].email}
+            return {success: true, ...res[0]}
         }else{
             return {success: false, msg: "email unavaible"}
         }

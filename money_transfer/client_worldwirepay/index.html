@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" href="/smallLogo.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>World Wire Pay</title>
@@ -39,24 +39,13 @@
     <script>
       // Check URL location and dynamically change the stylesheet
       const url = window.location.href
-      // if(process.env.NODE_ENV === 'development'){
-        if (url.includes('http://localhost:5173/user') || url == "http://localhost:5173/") {
-            document.body.classList.add("styleBody")
-          }
-      // }else{
-        if (url.includes('https://worldwirepay.com/#/user') || url == "https://worldwirepay.com/" || 
-            url == "https://worldwirepay.com/#/") {
-            document.body.classList.add("styleBody")
-          }
-      // }      
+
+      if(url.includes('/#/admin')){
+        
+      }else{
+        document.body.classList.add("styleBody")
+      }
+
   </script>
-    <!-- <script src="./src/assets/js/jquery.min.js"></script>
-    <script src="./src/assets/js/jquery-ui.js"></script>
-    <script src="./src/assets/js/plugin/apexcharts.js"></script>
-    <script src="./src/assets/js/plugin/jquery.nice-select.min.js"></script>
-    <script src="./src/assets/js/plugin/waypoint.min.js"></script>
-    <script src="./src/assets/js/plugin/wow.min.js"></script>
-    <script src="./src/assets/js/plugin/plugin.js"></script>
-    <script src="./src/assets/js/main.js"></script> -->
   </body>
 </html>

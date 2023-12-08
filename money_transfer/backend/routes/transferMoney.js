@@ -2,7 +2,7 @@ const express = require('express');
 const { getUserDetailsByemail } = require('../dbServices/dbUsers');
 const { insertTransfersDetails, insertNonuserTransferDetails, getTransfersDetails } = require('../dbServices/dbTransferMoney');
 const { sendEmail } = require('../controllers/sendEmail');
-const { generateNonuserEmail } = require('../controllers/emailMessages');
+const { generateNonuserMsg } = require('../controllers/emailMessages');
 const router = express.Router();
 
 router.post('/world-wire-pay', async (req, res) =>{
@@ -36,7 +36,9 @@ router.post('/world-wire-pay', async (req, res) =>{
                     const recipientNames = `${recipient.company_name || recipient.first_name} ${recipient.last_name}`
                     const senderNames = `${sender.company_name || sender.first_name} ${sender.last_name}`
 
-                    const message = generateNonuserEmail(recipientNames, senderNames, 'http://localhost:5173/user/signup' )
+                    const message = generateNonuserMsg(
+                        recipientNames, senderNames, 'https://worldwirepay.com/#/user/signup', amount
+                     )
 
                     const sendEnailRes = await sendEmail(recipient.email, "You have received money", message);
                     if(sendEnailRes.success){

@@ -1,4 +1,4 @@
-const { completeTransaction, cancelledTransaction } = require("../../controllers/emailMessages");
+const { generateCompleteTransactionMsg, generateCancelledTransactionMsg } = require("../../controllers/emailMessages");
 const { sendEmail } = require("../../controllers/sendEmail");
 const { getUsersTransactions, updateStatusTransaction, updateUserTransaction } = require("../../dbServices/admin/dbUserTransactions");
 
@@ -19,22 +19,24 @@ router.post('/users-transactions', async (req, res) =>{
 });
 
 router.patch('/update-status', async (req, res) =>{
-    const { transaction_id, status, email } = req.body;
-        console.log(req.body);
+    const { transaction_id, status, email, first_name, last_name, amount, type } = req.body;
+        // console.log(req.body);
     try{
         const response = await updateStatusTransaction(transaction_id, status)
         if(response.success) {
             // const getEmail = await getUserEmailById(user_id)
             if(status === "completed"){
+                const completeTransactionMsg = generateCompleteTransactionMsg(first_name, amount, type, transaction_id)
                 const emailRes = sendEmail(
                     email, "Payment Confirmation: Successfully Processed", 
-                    completeTransaction
+                    completeTransactionMsg
                 )
                 // console.log(emailRes)
             }else if(status === "cancelled"){
+                const cancelledTransactionMsg = generateCancelledTransactionMsg(first_name, amount, type, transaction_id)
                 const emailRes = sendEmail(
                     email, "Payment Cancellation: Acknowledgment", 
-                    cancelledTransaction 
+                    cancelledTransactionMsg 
                 )
                 // console.log("cancelled" , emailRes)
             }

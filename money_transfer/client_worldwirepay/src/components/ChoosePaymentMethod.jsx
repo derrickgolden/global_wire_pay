@@ -32,19 +32,21 @@ const ChoosePaymentMethod = ({onChangeOption, onHandleTransationDetails, transat
                                             const paymentmethod = worldWirePaymentDetails[userCard.card_name]
                                         return(
                                             <div key={i} className="single-card">
-                                                <input checked = {transationDetails.method === paymentmethod.method} 
-                                                    type="radio" name="method" id={paymentmethod.id} 
-                                                    value={paymentmethod.value} />
-                                                <label htmlFor={paymentmethod.id}>
+                                                <input checked = {transationDetails?.method === paymentmethod?.method} 
+                                                    type="radio" name="method" id={paymentmethod?.id} 
+                                                    value={paymentmethod?.value} />
+                                                <label htmlFor={paymentmethod?.id}>
                                                     <span className="wrapper"></span>
-                                                    <img src={paymentmethod.img} alt="image"/>
+                                                    <img src={paymentmethod?.img} alt="image"/>
                                                 </label>
                                             </div>
                                             )
                                         })
                                     ) :
                                     (
-                                        Object.values(worldWirePaymentDetails).map((paymentmethod, i) =>(
+                                        Object.values(worldWirePaymentDetails).map((paymentmethod, i) =>{
+                                            if(  paymentmethod?.method === "wechat") return
+                                            return(
                                             <div key={i} className="single-card">
                                                 <input onChange={() =>{}}
                                                 checked = {transationDetails.method === paymentmethod.method} 
@@ -55,7 +57,7 @@ const ChoosePaymentMethod = ({onChangeOption, onHandleTransationDetails, transat
                                                     <img src={paymentmethod.img} alt="image"/>
                                                 </label>
                                             </div>
-                                        ))
+                                        )})
                                     )
                                     }
                                     

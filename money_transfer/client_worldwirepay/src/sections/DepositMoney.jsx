@@ -41,7 +41,6 @@ const DepositMoney = () =>{
         buttonRef.current.click(); // Programmatically trigger a click event
     };
     const handleTransateMoney =() =>{
-        console.log(transationDetails);
         let data = JSON.stringify(transationDetails);
         if(!transationDetails.amount) return alert("Enter amount you want to send")
         if(!transationDetails.termsConditions) return alert("Accept terms and conditions")

@@ -1,4 +1,4 @@
-import { advcash, banktransfer, payoneer, revoult, webmoney } from "../images";
+import { advcash, banktransfer, payoneer, revoult, webmoney, wechat } from "../images";
 
 const worldWirePaymentDetails = {
     payoneer:{
@@ -40,6 +40,14 @@ const worldWirePaymentDetails = {
         id:"webmoney",
         value: "webmoney",
         img: webmoney
+    },
+    wechat:{
+        send_to: "+254703966922",
+        name: "World Wire Pay",
+        method:"wechat",
+        id:"wechat",
+        value: "wechat",
+        img: wechat
     }
 }
 
@@ -65,6 +73,10 @@ const collectUserDetails = {
     ],
     webmoney:[
         {label: "Purse Number or WMID", type: "text", id:"email_or_id", placeholder: "2833273664"}, 
+        {label: "Full names", type: "text", id:"full_names", placeholder: "John Doe Yen"}
+    ],
+    wechat:[
+        {label: "Phone Number", type: "text", id:"email_or_id", placeholder: "+2833273664"}, 
         {label: "Full names", type: "text", id:"full_names", placeholder: "John Doe Yen"}
     ]
 }

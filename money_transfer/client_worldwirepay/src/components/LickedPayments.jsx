@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { advcash, banktransfer, option, payoneer, revoult, webmoney } from "../assets/images";
+import { advcash, banktransfer, option, payoneer, revoult, webmoney, wechat } from "../assets/images";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { setUserCardDetails } from "../redux/userCardDetails";
@@ -103,6 +103,15 @@ const LinkedPayments = ({handleAddCardPopup}) =>{
                                             type="button" className="reg w-100" data-bs-toggle="modal"
                                                 data-bs-target="#addcardMod">
                                                 <img src={webmoney} alt="image" className="w-100" id="webmoney"/>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="col-6">
+                                        <div className="single-card">
+                                            <button onClick = {handleAddCardPopup}
+                                            type="button" className="reg w-100" data-bs-toggle="modal"
+                                                data-bs-target="#addcardMod">
+                                                <img src={wechat} alt="image" className="w-100" id="wechat"/>
                                             </button>
                                         </div>
                                     </div>

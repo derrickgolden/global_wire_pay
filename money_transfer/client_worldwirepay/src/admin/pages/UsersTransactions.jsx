@@ -171,13 +171,10 @@ export default function AllTransactions() {
         setOpen_add_modal({ render: !open_add_modal.render, modal_open: true })
     }
     const completeTransaction = (row) => {
-        console.log(row)
+        // console.log(row)
         const success = "Transaction status changed to updated"
         const status = "completed"
         updateTransactionStatus(row, success, status, dispatch)
-        
-        // setOpen_email_sender_modal({ render: !open_email_sender_modal.render, modal_open: true })
-        // setEmail_sender_modal_data(row)
     }
 
     const setUpdateStoreBtn = (row) => {

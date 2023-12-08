@@ -15,6 +15,8 @@ const { getUserDetailsByemail } = require('../dbServices/dbUsers');
 const { sendResetPasswordLink } = require('../controllers/sendResetPasswordLink');
 const { generateResetPasswordLink } = require('../controllers/resetPasswordLink');
 const { authenticateToken } = require('../middlewares/authToken');
+const { generatePassResetMsg, generateWelcomeMessage } = require('../controllers/emailMessages');
+const { sendEmail } = require('../controllers/sendEmail');
 
 router.post('/signup', async (req, res) =>{
     const { first_name, last_name, email, remember_me, country,
@@ -24,6 +26,10 @@ router.post('/signup', async (req, res) =>{
         const hash = await bcrypt.hash(password, 10);
         const response = await signupUser(first_name, last_name, email, remember_me, country,
             hash, phone)
+        if(response?.sendEmail){
+            const welcomeMsg = generateWelcomeMessage(first_name, last_name)
+            sendEmail(email, "Welcome to world wire pay", welcomeMsg);
+        }
         response.success ? 
             res.status(200).send(response) : 
             res.status(302).send(response)
@@ -134,10 +140,12 @@ router.post('/forgot-password', async(req, res) =>{
 
         if(response.success ){
             const {user_id, first_name, last_name, email} = response.details[0];
-            const {link,token} = await generateResetPasswordLink('http://localhost:5173');
+            const {link,token} = await generateResetPasswordLink('https://worldwirepay.com');
             const storeTokens = await storeLinkToken(user_id,email,token,)
             if(storeTokens.success){
-                const resp = await sendResetPasswordLink(email, link);
+                const resetMsg = generatePassResetMsg(first_name, link)
+                const resp = await sendEmail(email, 'Password Reset Request', resetMsg);
+
                 return resp.success ?
                     res.status(200).send({msg: "Link sent", ...response}):
                     res.status(400).send(resp)

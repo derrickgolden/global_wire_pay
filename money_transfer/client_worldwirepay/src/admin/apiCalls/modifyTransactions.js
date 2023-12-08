@@ -23,11 +23,11 @@ const updateTransactionStatus = (row, success, status, dispatch, error = "Sorry,
                     'Content-Type': 'application/json',
                     'Authorization': `${token}`,
                 },
-                data: JSON.stringify({transaction_id: row.transaction_id, status, email: row.email })
+                data: JSON.stringify({ ...row, status })
             };
             axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data.msg)); 
+                console.log("statusudate", JSON.stringify(response.data)); 
                 // alert(success)           
                 
                 // setRen(!ren);

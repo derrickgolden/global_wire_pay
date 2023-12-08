@@ -26,8 +26,6 @@ export default function Status_modal({ row, openModal,rerendar,status_id }) {
     
     // status model show and filter status value 
     useEffect(() => {
-        console.log("modal", row)
-        // row.status && (row.status !== 'refunded' && set_status_modal_Show(true))
         row.user_id && set_status_modal_Show(true)
     }, [openModal])
 
@@ -55,7 +53,7 @@ export default function Status_modal({ row, openModal,rerendar,status_id }) {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
                 const token = JSON.parse(sessionStorage.getItem("adminToken"))
-
+                const amount = balance - users_modal_data?.balance
                 let config = {
                     method: 'post',
                     maxBodyLength: Infinity,
@@ -64,13 +62,13 @@ export default function Status_modal({ row, openModal,rerendar,status_id }) {
                         'Content-Type': 'application/json',
                         'Authorization': `${token}`,
                     },
-                    data: JSON.stringify({user_id:users_modal_data.user_id, balance})
+                    data: JSON.stringify({...users_modal_data, balance, amount})
                 };
 
                 axios.request(config)
                 .then((response) => {
                     // console.log(JSON.stringify(response.data)); 
-                    Swal.fire('Balance changed to:'+balance)
+                    Swal.fire('Balance changed to: '+balance)
                     dispatch(setCallApi());
                 })
                 .catch((error) => {

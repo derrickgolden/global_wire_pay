@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
-import { left_arrow, logo, register_illus, show_hide } from "../assets/images";
+import { left_arrow, logo, register_illus, show_hide, white_logo } from "../assets/images";
 
 import { continents, countries, languages } from 'countries-list'
 import { client_baseurl, server_baseurl } from '../baseUrl';
@@ -75,7 +75,7 @@ const Signup = () =>{
                         </div>
                         <div className="col-sm-5 col">
                             <Link to={`${client_baseurl}`}>
-                                <img src={logo} alt="image"/>
+                                <img src={white_logo} alt="image"/>
                             </Link>
                         </div>
                     </div>

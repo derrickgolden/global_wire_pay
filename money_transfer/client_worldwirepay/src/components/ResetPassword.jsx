@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import { forgot_password_illus, forgot_pwd_2_illus, left_arrow, logo, show_hide } from "../assets/images"
+import { forgot_password_illus, forgot_pwd_2_illus, left_arrow, logo, show_hide, white_logo } from "../assets/images"
 import { client_baseurl, server_baseurl } from '../baseUrl';
 
 const ResetPassword = () =>{
@@ -70,7 +70,7 @@ const ResetPassword = () =>{
                         </div>
                         <div class="col-sm-5 col">
                             <a href="index.html">
-                                <img src={logo} alt="image"/>
+                                <img src={white_logo} alt="image"/>
                             </a>
                         </div>
                     </div>

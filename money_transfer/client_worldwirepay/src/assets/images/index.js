@@ -4,8 +4,9 @@ import search from "./icon/search.png"
 import option from "./icon/option.png"
 import right_arrow from "./icon/right-arrow.png"
 import left_arrow from "./icon/left-icon.png"
-import logo from "./logo.png"
+import logo from "./logo-wwp.png"
 import avator from "./avatar.png"
+import white_logo from "./whiteLogo.png"
 
 import payoneer from "./payoneer.jpg"
 import revoult from "./revoult.jpg"
@@ -13,6 +14,7 @@ import advcash from "./Adv-cash-usd.png"
 import banktransfer from "./banktransfer.png"
 import add_new from "./add-new.png"
 import webmoney from "./webmoney.png"
+import wechat from "./WeChat-logo.jpg"
 
 // landing page
 import payment_illus from "./payment-illus-2.png"
@@ -60,7 +62,7 @@ import withdraw from "./icon/withdraw.png"
 
 export{
     menu, logo, avator, bell, search, option, right_arrow, 
-    payoneer, revoult, banktransfer, advcash, webmoney, add_new,
+    payoneer, revoult, banktransfer, advcash, webmoney, add_new, wechat, white_logo,
     payment_illus, payment_illus_2,
     left_arrow, register_illus, send,
     ban_frame_1, ban_frame_2, ban_frame_3, ban_frame_4, ban_right, banner_bg,

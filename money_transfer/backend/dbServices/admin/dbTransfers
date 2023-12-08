@@ -26,6 +26,7 @@ const getAllnonuserTransfers = async() => {
         }
     }
 }
+
 const  getAllTransfers = async() => {
     try {
         const connection = await pool.getConnection();
@@ -110,8 +111,10 @@ try {
       }
 }
 }
+
 const updateUserTransfers = async(
-    transfer_id, amount, receiver_fees, sender_fees, description, receiver_balance, sender_balance, receiver_id, sender_id
+    transfer_id, amount, receiver_fees, sender_fees, description, receiver_balance, sender_balance, 
+    receiver_id, sender_id
 ) => {
 try {
     const connection = await pool.getConnection();
@@ -156,7 +159,6 @@ try {
       }
 }
 }
-
 
 module.exports = {
     getAllTransfers,

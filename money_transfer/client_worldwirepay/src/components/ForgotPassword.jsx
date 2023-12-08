@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { forgot_password_illus, left_arrow, logo } from "../assets/images"
+import { forgot_password_illus, left_arrow, logo, white_logo } from "../assets/images"
 
 import axios from 'axios';
 import { useState } from "react";
@@ -34,11 +34,11 @@ const ForgotPassword = () =>{
 
         axios.request(config)
         .then((response) => {
-            console.log(JSON.stringify(response.data));
+            console.log(JSON.stringify(response.data.msg));
             alert("Link sent to your email, use the link to reset your password")
         })
         .catch((error) => {
-            console.log(error.response.data);
+            console.log(error);
             alert(`Error: ${error.response.data.msg}`)
         });
     }
@@ -56,7 +56,7 @@ const ForgotPassword = () =>{
                         </div>
                         <div className="col-sm-5 col">
                             <Link to={`${client_baseurl}`}>
-                                <img src={logo} alt="image"/>
+                                <img src={white_logo} alt="image"/>
                             </Link>
                         </div>
                     </div>

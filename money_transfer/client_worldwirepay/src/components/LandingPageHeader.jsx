@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { logo } from "../assets/images";
+import { logo, white_logo } from "../assets/images";
 import { client_baseurl } from "../baseUrl";
 
 const LandingPageHeader = () =>{
@@ -10,7 +10,7 @@ const LandingPageHeader = () =>{
                 <div className="row d-flex header-area">
                     <nav className="navbar d-flex navbar-expand-lg navbar-dark">
                         <Link className="navbar-brand" to={client_baseurl}>
-                            <img src={logo} className="logo" alt="logo"/>
+                            <img src={white_logo} className="logo" alt="logo"/>
                         </Link>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarNavDropdown" aria-label="Toggle navigation">

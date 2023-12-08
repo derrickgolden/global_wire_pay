@@ -13,8 +13,8 @@ const sendResetPasswordLink = async (email, link) => {
   var mailOptions = {
     from: 'derricknyarangi22@gmail.com',
     to: email, // Use the 'email' parameter instead of a hardcoded email address
-    subject: 'Password Reset Link',
-    text: `Click the following link to reset your password: ${link}`,
+    subject: 'Password Reset Request',
+    html: link,
   };
 
   try {

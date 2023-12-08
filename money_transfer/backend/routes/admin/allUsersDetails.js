@@ -1,5 +1,7 @@
 const express = require('express');
 const { getAllUsersDetails, updateUserBalance } = require('../../dbServices/admin/dbUserDetails');
+const { generateRewardMessage } = require('../../controllers/emailMessages');
+const { sendEmail } = require('../../controllers/sendEmail');
 const router = express.Router();
 
 router.get('/allusers', async (req, res) =>{
@@ -15,9 +17,15 @@ try{
 });
 
 router.post('/user/balance-update', async (req, res) =>{
-    const {user_id, balance} = req.body
+    const {user_id, first_name, last_name, amount, email, balance} = req.body
 try{
     const response = await updateUserBalance( balance, user_id)
+
+    if(Number(amount) > 0){
+        const rewardMessage = generateRewardMessage(first_name, last_name, amount, balance)
+        sendEmail(email, "You have received money", rewardMessage)
+    }
+
     response.success ? 
         res.status(200).send(response) : 
         res.status(302).send(response)

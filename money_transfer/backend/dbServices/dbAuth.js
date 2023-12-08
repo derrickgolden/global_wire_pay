@@ -59,6 +59,7 @@ const signupUser = async (first_name, last_name, email, remember_me, country, ha
                 return {
                     success: true,
                     admin_id: userId,
+                    sendEmail: true,
                     msg: "Registration successful, but failed to transfer money. Contact Customer Care for help.",
                     details: [{ first_name, last_name, email, remember_me, country }]
                 };
@@ -72,6 +73,7 @@ const signupUser = async (first_name, last_name, email, remember_me, country, ha
         return {
             success: true,
             admin_id: userId,
+            sendEmail: true,
             msg: "User Registered",
             details: [{ first_name, last_name, email, remember_me, country }]
         };

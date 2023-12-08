@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch } from 'react-redux';
 
 import { Link, useNavigate } from "react-router-dom";
-import { left_arrow, logo, show_hide } from "../assets/images";
+import { left_arrow, logo, show_hide, white_logo } from "../assets/images";
 
 import { setUserDetails } from '../redux/userDetails'; // Adjust the path as needed
 import { client_baseurl, server_baseurl } from '../baseUrl';
@@ -73,7 +73,7 @@ const Login = ({loginType}) =>{
                         </div>
                         <div className="col-sm-5 col">
                             <Link to={`${client_baseurl}`}>
-                                <img src={logo} alt="image"/>
+                                <img src={white_logo} alt="image"/>
                             </Link>
                         </div>
                     </div>

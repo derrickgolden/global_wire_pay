@@ -23,9 +23,7 @@ const updateTransferStatus = (row, success, status, dispatch, error = "Sorry, An
                     'Content-Type': 'application/json',
                     'Authorization': `${token}`,
                 },
-                data: JSON.stringify({
-                    transfer_id: row.transfer_id, status, recipient_email: row.recipient_email, sender_email: row.sender_email
-                 })
+                data: JSON.stringify({ ...row, status })
             };
             axios.request(config)
             .then((response) => {

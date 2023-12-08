@@ -73,33 +73,33 @@ const AdminDashboard = () => {
     {/* <AdminHeader 
       adminDetails = {adminDetails}
     /> */}
-    <div style={{marginTop: "10vh", padding: "20px"}} class="container-fluid">
-      <div class="row justify-content-between">
+    <div style={{marginTop: "10vh", padding: "20px"}} className="container-fluid">
+      <div className="row justify-content-between">
         <div
-          class="col d-flex align-items-center"
+          className="col d-flex align-items-center"
           style={{ whiteSpace: "nowrap" }}
         >
-          <span class="text-xl" style={{ fontSize: "150%" }}>
+          <span className="text-xl" style={{ fontSize: "150%" }}>
             Dashboard{" "}
           </span>
         </div>
       </div>
-      <div class="row ">
-        <div class="col-lg-3 col-sm-6 col-12 d-flex">
-          <div class="dash-count">
-            <div class="dash-counts text-white" >
+      <div className="row ">
+        <div className="col-lg-3 col-sm-6 col-12 d-flex">
+          <div className="dash-count">
+            <div className="dash-counts text-white" >
               <h4>
                 <span style={{color: "white", fontSize: "110%"}}>{allUsersTransactions?.length}</span>
               </h4>
               <h5 style={{color: "white", fontSize: "110%"}}>Transactions</h5>
             </div>
-            <div class="dash-imgs">
+            <div className="dash-imgs">
               <svg
                 aria-hidden="true"
                 focusable="false"
                 data-prefix="fas"
                 data-icon="credit-card"
-                class="svg-inline--fa fa-credit-card fa-2xl "
+                className="svg-inline--fa fa-credit-card fa-2xl "
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 576 512"
@@ -113,9 +113,9 @@ const AdminDashboard = () => {
             </div>
           </div>
         </div>
-        <div class="col-lg-3 col-sm-6 col-12 d-flex">
-          <div class="dash-count das1">
-            <div class="dash-counts">
+        <div className="col-lg-3 col-sm-6 col-12 d-flex">
+          <div className="dash-count das1">
+            <div className="dash-counts">
               <h4>
                 <span style={{color: "white", fontSize: "110%"}}>
                   {allUsersTransactions?.filter(transaction =>(
@@ -126,13 +126,13 @@ const AdminDashboard = () => {
                 Inprogress Transactions
               </h5>
             </div>
-            <div class="dash-imgs">
+            <div className="dash-imgs">
               <svg
                 aria-hidden="true"
                 focusable="false"
                 data-prefix="fas"
                 data-icon="eye-low-vision"
-                class="svg-inline--fa fa-eye-low-vision fa-lg "
+                className="svg-inline--fa fa-eye-low-vision fa-lg "
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 640 512"
@@ -146,9 +146,9 @@ const AdminDashboard = () => {
             </div>
           </div>
         </div>
-        <div class="col-lg-3 col-sm-6 col-12 d-flex">
-          <div class="dash-count das2">
-            <div class="dash-counts">
+        <div className="col-lg-3 col-sm-6 col-12 d-flex">
+          <div className="dash-count das2">
+            <div className="dash-counts">
               <h4>
                 <span style={{color: "white", fontSize: "110%"}} >{allUsersTransactions?.filter(transaction =>(
                   transaction?.status === "inprogress" && transaction?.type === "deposit"
@@ -156,13 +156,13 @@ const AdminDashboard = () => {
               </h4>
               <h5 style={{color: "white", fontSize: "110%"}}>Inprogress Deposit</h5>
             </div>
-            <div class="dash-imgs">
+            <div className="dash-imgs">
               <svg
                 aria-hidden="true"
                 focusable="false"
                 data-prefix="fas"
                 data-icon="building-columns"
-                class="svg-inline--fa fa-building-columns fa-lg "
+                className="svg-inline--fa fa-building-columns fa-lg "
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512"
@@ -176,9 +176,9 @@ const AdminDashboard = () => {
             </div>
           </div>
         </div>
-        <div class="col-lg-3 col-sm-6 col-12 d-flex">
-          <div class="dash-count das3">
-            <div class="dash-counts">
+        <div className="col-lg-3 col-sm-6 col-12 d-flex">
+          <div className="dash-count das3">
+            <div className="dash-counts">
               <h4>
                 <span style={{color: "white", fontSize: "110%"}}>{allUsersTransactions?.filter(transaction =>(
                   transaction?.status === "inprogress" && transaction?.type === "withdraw"
@@ -186,13 +186,13 @@ const AdminDashboard = () => {
               </h4>
               <h5 style={{color: "white", fontSize: "110%"}}>Inprogress Withdraw</h5>
             </div>
-            <div class="dash-imgs">
+            <div className="dash-imgs">
               <svg
                 aria-hidden="true"
                 focusable="false"
                 data-prefix="fas"
                 data-icon="eye-low-vision"
-                class="svg-inline--fa fa-eye-low-vision fa-lg "
+                className="svg-inline--fa fa-eye-low-vision fa-lg "
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 640 512"
@@ -207,22 +207,22 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-6 col-sm-6 col-12 d-flex">
-          <div class="dash-count das1">
-            <div class="dash-counts ">
+      <div className="row">
+        <div className="col-lg-6 col-sm-6 col-12 d-flex">
+          <div className="dash-count das1">
+            <div className="dash-counts ">
               <h4>
                 <span style={{color: "white", fontSize: "110%"}}>{adminDetails[0]?.balance}</span>
               </h4>
               <h5 style={{color: "white", fontSize: "110%"}}>Account Balance</h5>
             </div>
-            <div class="dash-imgs">
+            <div className="dash-imgs">
               <svg
                 aria-hidden="true"
                 focusable="false"
                 data-prefix="fas"
                 data-icon="database"
-                class="svg-inline--fa fa-database fa-lg "
+                className="svg-inline--fa fa-database fa-lg "
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 448 512"
@@ -236,9 +236,9 @@ const AdminDashboard = () => {
             </div>
           </div>
         </div>
-        <div class="col-lg-6 col-sm-6 col-12 d-flex">
-          <div class="dash-count">
-            <div class="dash-counts">
+        <div className="col-lg-6 col-sm-6 col-12 d-flex">
+          <div className="dash-count">
+            <div className="dash-counts">
               <h4>
                 <span style={{color: "white", fontSize: "110%"}}>
                   {allUsersTransactions.reduce((users, transaction) => {
@@ -251,13 +251,13 @@ const AdminDashboard = () => {
               </h4>
               <h5 style={{color: "white", fontSize: "110%"}}>Total Users</h5>
             </div>
-            <div class="dash-imgs">
+            <div className="dash-imgs">
               <svg
                 aria-hidden="true"
                 focusable="false"
                 data-prefix="fas"
                 data-icon="file-invoice"
-                class="svg-inline--fa fa-file-invoice fa-lg "
+                className="svg-inline--fa fa-file-invoice fa-lg "
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 384 512"
@@ -273,11 +273,11 @@ const AdminDashboard = () => {
         </div>
       </div>
       
-      <div class="accordion mb-2" id="transactions_table">
-        <div class="accordion-item">
-          <h2 class="accordion-header">
+      <div className="accordion mb-2" id="transactions_table">
+        <div className="accordion-item">
+          <h2 className="accordion-header">
             <button
-              class="accordion-button"
+              className="accordion-button"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapseOne3"
@@ -289,12 +289,12 @@ const AdminDashboard = () => {
           </h2>
           <div
             id="collapseOne3"
-            class="accordion-collapse collapse show"
+            className="accordion-collapse collapse show"
             data-bs-parent="#transactions_table"
           >
-            <div class="accordion-body">
-              <div class="table-responsive my-3">
-                <table class="table align-middle border table-striped table-hover">
+            <div className="accordion-body">
+              <div className="table-responsive my-3">
+                <table className="table align-middle border table-striped table-hover">
                   <thead>
                     <tr>
                       <th>User Id</th>
