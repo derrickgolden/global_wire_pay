@@ -23,7 +23,6 @@ const Login = ({loginType}) =>{
     const handleLoginDetailsSubmit = (e) =>{
         e.preventDefault()
         
-        // console.log(loginDetails);
         let data = JSON.stringify(loginDetails);
         const login = loginType === "admin"? "loginadmin" : "login"
 
@@ -36,7 +35,6 @@ const Login = ({loginType}) =>{
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             if(data.success){
                 if(loginType === "user"){
                     sessionStorage.setItem("user", JSON.stringify(data?.details[0]));

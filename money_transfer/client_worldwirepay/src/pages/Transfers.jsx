@@ -29,12 +29,11 @@ const Transfers = () =>{
 
         axios.request(config)
         .then((response) => {
-            console.log(response);
-            setTransfers(response.data.details);
+            setTransfers(response?.data?.details);
         })
         .catch((error) => {
-            console.log(error.response);
-            if(error.response.data.reLogin){
+            console.log(error?.response);
+            if(error?.response?.data?.reLogin){
                 alert("Could not parse your authentication token. Please try to Login again.")
                 navigate("/user/login");
             }else{

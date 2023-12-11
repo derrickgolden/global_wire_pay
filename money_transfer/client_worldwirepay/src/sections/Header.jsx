@@ -21,7 +21,6 @@ const Header = (props) =>{
     useEffect(() =>{
         if(!user_id){
             const user = JSON.parse(sessionStorage.getItem("user"));
-            console.log("stored user")
             if(!user){
                 navigate("/user/login");
             }else{
@@ -38,7 +37,6 @@ const Header = (props) =>{
         
                 axios.request(config)
                 .then((response) => {
-                    // console.log(JSON.stringify(response.data));
                     dispatch(setUserDetails(response.data.details[0]));
                 })
                 .catch((error) => {

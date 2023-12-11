@@ -9,7 +9,6 @@ import CardDetailsPopup from "../components/cardPopups/cardDetailsPopup";
 const DashboardBody = () =>{
     const [cardType, setCardType] = useState("payoneer");
     const onHandleAddCardPopup = (e) =>{
-        console.log("id: ", e.target.id)
         setCardType(e.target.id);
     }
     useEffect(() => {

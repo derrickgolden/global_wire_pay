@@ -11,8 +11,6 @@ const ResetPassword = () =>{
     const {urltoken} = useParams()
     const [token, setToken] = useState(urltoken.replace(/_/g, '.'));
 
-    console.log(token)
-
     const [signupDetails, setSignupDetails] = useState({
         email:"", password: "", confirm_password: ""
     })
@@ -46,7 +44,6 @@ const ResetPassword = () =>{
 
         axios.request(config)
         .then((response) => {
-            console.log(JSON.stringify(response.data));
             setSignupDetails((obj) =>({...obj, password: ""}))
             navigate('/user/login', {replace: true});
         })

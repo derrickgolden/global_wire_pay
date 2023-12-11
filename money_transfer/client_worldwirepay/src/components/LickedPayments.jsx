@@ -30,7 +30,6 @@ const LinkedPayments = ({handleAddCardPopup}) =>{
 
         axios.request(config)
         .then((response) => {
-            console.log("Fecthed linked payments succesfully");
             dispath(setUserCardDetails((response.data.details)))
         })
         .catch((error) => {

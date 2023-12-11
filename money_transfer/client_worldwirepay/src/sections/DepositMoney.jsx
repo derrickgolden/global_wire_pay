@@ -28,13 +28,11 @@ const DepositMoney = () =>{
     }, [user_id])
 
     const changeOption = (e) =>{
-        console.log(transationDetails);
         setOption(e.target.id)
     }
     const handleTransationDetails = (e) =>{
         const name = e.target.name
         const value = name === "termsConditions" ? !transationDetails.termsConditions : e.target.value
-        console.log(name,value)
         setTransationDetails(obj => ({...obj, [name]: value}))
     }
     const handleClick = () => {
@@ -61,9 +59,7 @@ const DepositMoney = () =>{
 
         axios.request(config)
         .then((response) => {
-            console.log(JSON.stringify(response.data));
             swalFeedbackPopup(transationDetails, navigate);
-            // handleClick();
         })
         .catch((error) => {
             console.log(error.response);

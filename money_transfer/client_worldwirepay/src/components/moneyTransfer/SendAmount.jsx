@@ -7,7 +7,6 @@ import { FaRegEdit } from "react-icons/fa";
 const SendAmount = ({setSteps, selectedUser, setTransferDetails, transferDetails}) =>{
     const { balance} = useSelector(state => state.userDetails)
     const handleNextClick = () =>{
-        console.log(Number(transferDetails.amount) > Number(balance))
         Number(transferDetails.amount) > Number(balance) ?
          alert(`You do not have enough balance to send ${transferDetails.amount} USD. Deposit First`):
         Number(transferDetails.amount) < Number(5) ? alert("You can only send 5 USD and above") :

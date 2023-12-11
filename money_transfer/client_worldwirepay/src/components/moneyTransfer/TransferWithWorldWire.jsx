@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { avator, search, support_icon } from "../../assets/images";
 import RecipientsPopup from "../cardPopups/RecipientsPopup";
 import ChooseRecipient from "./ChooseRecipient";
-import SendAmount from "./sendAmount";
 import ConfirmTransfer from "./ConfirmTransfer";
 import TransferPopup from "../cardPopups/TransferPopup";
 import { useSelector } from "react-redux";
@@ -11,6 +10,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { server_baseurl } from "../../baseUrl";
 import Swal from "sweetalert2";
+import SendAmount from "./SendAmount";
 
 const TransferWithWorldWire = () =>{
     const sender = useSelector(state => state.userDetails)

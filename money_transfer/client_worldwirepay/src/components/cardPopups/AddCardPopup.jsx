@@ -37,10 +37,8 @@ const AddCardPopup = ({ cardType}) =>{
     }, [user_id]);
 
     const handleInputChange = (e) =>{
-        console.log(newCard)
         const name = e.target.name
         const value = e.target.value
-        console.log(name, value);
         setNewCard((obj) =>({...obj, [name]: value}))
     }
 
@@ -63,7 +61,6 @@ const AddCardPopup = ({ cardType}) =>{
 
         axios.request(config)
         .then((response) => {
-            console.log(response.data);
             if(response.data.msg === "Card Registered"){
                 if(response.data.success){
                     alert("Card added successfully")

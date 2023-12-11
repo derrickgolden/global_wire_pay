@@ -14,12 +14,9 @@ const Signup = () =>{
         last_name: "", first_name:"",email:"", remember_me: false, country: "US", password: "", phone:""
     })
     const handleInputChange = (e) =>{
-        console.log(e)
         const name = e.target.name
         const value = e.target.value
-        console.log(name, value);
         setSignupDetails((obj) =>({...obj, [name]: value}))
-        console.log(signupDetails);
     }
 
     const [showPassword, setShowPassword] = useState(false);
@@ -31,7 +28,6 @@ const Signup = () =>{
     const handleSignupDetailsSubmit = (e) =>{
         e.preventDefault()
         
-        console.log(signupDetails);
         const phone = "+" + countries[signupDetails.country].phone + signupDetails.phone
         let data = JSON.stringify({...signupDetails, phone});
 
@@ -47,7 +43,6 @@ const Signup = () =>{
 
         axios.request(config)
         .then((response) => {
-            console.log(response.data);
             if(response.data.msg === "User Registered"){
                 navigate('/user/login', {replace: true});
             }else{

@@ -34,7 +34,6 @@ const ForgotPassword = () =>{
 
         axios.request(config)
         .then((response) => {
-            console.log(JSON.stringify(response.data.msg));
             alert("Link sent to your email, use the link to reset your password")
         })
         .catch((error) => {

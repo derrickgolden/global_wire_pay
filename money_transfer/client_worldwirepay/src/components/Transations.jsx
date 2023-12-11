@@ -30,9 +30,7 @@ const Transations = () =>{
 
         axios.request(config)
         .then((response) => {
-            console.log("transaction details successful", response.data.details);
-            setTransationDetails(response.data.details)
-            
+            setTransationDetails(response.data.details)            
         })
         .catch((error) => {
             console.log(error.response);

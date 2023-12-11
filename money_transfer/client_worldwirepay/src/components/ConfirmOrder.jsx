@@ -6,24 +6,25 @@ import { useSelector } from "react-redux";
 const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDetails,
                         onHandleTransateMoney, buttonRef, deposit, disableBtn }) =>{
     const userCards = useSelector(state => state.userCardDetails)
-    console.log(disableBtn);
+    const placeholder = new Date().toLocaleString()
+
     return(
-        <div class="col-xl-8 col-lg-8">
+        <div className="col-xl-8 col-lg-8">
                             <form action="#">
-                                <div class="payment-details">
-                                    <div class="top-area">
+                                <div className="payment-details">
+                                    <div className="top-area">
                                         <h6>Confirm  account & amount</h6>
-                                        <div class="right">
+                                        <div className="right">
                                             <a onClick={onChangeOption} id="method"
                                             href="#">
-                                                <i class="icon-h-edit"></i>
+                                                <i className="icon-h-edit"></i>
                                                 Edit
                                             </a>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-xxl-8 col-xl-9 col-lg-12">
-                                            <ul class="details-list">
+                                    <div className="row">
+                                        <div className="col-xxl-8 col-xl-9 col-lg-12">
+                                            <ul className="details-list">
                                                 <li>
                                                     <span>Payment System: &nbsp;</span>
                                                     <b> {transationDetails.method}</b>
@@ -54,35 +55,28 @@ const ConfirmOrder = ({onChangeOption, onHandleTransationDetails, transationDeta
                                                 </li>
                                                 {
                                                     deposit? 
-                                                (<li class="input-area flex flex-column">
+                                                (<li className="input-area flex flex-column">
                                                     <p>Enter message code below if applicable or Date and time you have done transaction then confirm.</p> <br />
                                                     <input onChange={onHandleTransationDetails} required 
-                                                    class="xxlr" placeholder="Enter ref code" type="text" name="ref_code"/>
+                                                    className="xxlr" placeholder={placeholder} type="text" name="ref_code"/>
                                                 </li>) : null
                                                 }
-                                                {/* <li>
-                                                    <span>E-mail</span>
-                                                    <b><a href="https://pixner.net/cdn-cgi/l/email-protection" 
-                                                    class="__cf_email__" data-cfemail="7711121b1e141e165905121e1337120f161a071b125914181a">
-                                                        [email&#160;protected]</a>
-                                                    </b>
-                                                </li> */}
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="checkbox-area mt-40 d-flex align-items-center justify-content-center">
+                                <div className="checkbox-area mt-40 d-flex align-items-center justify-content-center">
                                     <input onChange={onHandleTransationDetails} value={transationDetails.termsConditions}
                                     type="checkbox" id="accept" name="termsConditions"/>
                                     <label htmlFor="accept">I accept <a href="#">terms of use</a></label>
                                 </div>
-                                <div class="footer-area mt-40">
-                                    <Link onClick={onChangeOption} id="amount" to="#"  class="active">Previous Step</Link>
+                                <div className="footer-area mt-40">
+                                    <Link onClick={onChangeOption} id="amount" to="#"  className="active">Previous Step</Link>
                                     <Link onClick={onHandleTransateMoney} 
                                         style={{pointerEvents: `${disableBtn? "none": ""}`}}
-                                        class="active" id="amount" to="#" >Confirm</Link>
+                                        className="active" id="amount" to="#" >Confirm</Link>
                                     
-                                    <a ref={buttonRef} style={{display:"none"}} href="#" class="active" 
+                                    <a ref={buttonRef} style={{display:"none"}} href="#" className="active" 
                                         data-bs-toggle="modal" data-bs-target="#congratulationsMod">Next</a>
                                 </div>
                             </form>

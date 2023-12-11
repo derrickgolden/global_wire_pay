@@ -10,12 +10,9 @@ const RecipientsPopup = ({setConnectedUsers, setChooseRecipient}) =>{
         last_name: "", first_name:"",email:"", country: "US"
     })
     const handleInputChange = (e) =>{
-        // console.log(e)
         const name = e.target.name
         const value = e.target.value
-        console.log(name, value);
         setRecipientDetails((obj) =>({...obj, [name]: value}))
-        console.log(recipientDetails);
     }
     const handleButtonClick = (e) =>{
         const name = e.target.name

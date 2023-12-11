@@ -21,7 +21,6 @@ const { sendEmail } = require('../controllers/sendEmail');
 router.post('/signup', async (req, res) =>{
     const { first_name, last_name, email, remember_me, country,
         password, phone } = req.body;
-        console.log(req.body);
     try{
         const hash = await bcrypt.hash(password, 10);
         const response = await signupUser(first_name, last_name, email, remember_me, country,
@@ -40,7 +39,6 @@ router.post('/signup', async (req, res) =>{
 
 router.post('/login', async (req, res) =>{
     const { email, password, loginType} = req.body;
-    console.log(req.body)
 
     const response = await loginUser(email);
     const { passwordHash, userAvailable, details, res: loginRes } = response;
@@ -76,17 +74,14 @@ router.post('/login', async (req, res) =>{
 });
 router.post('/loginadmin', async (req, res) =>{
     const { email, password, loginType} = req.body;
-    console.log(req.body)
 
     const response = await loginAdmin(email);
     const { passwordHash, userAvailable, details } = response;
 
-    console.log(response);
     try {
         if(!userAvailable){
             return res.status(200).send({success: false, msg: "Email not registered", details: response});
         }
-        console.log(details)
 
         const match = await bcrypt.compare(password, passwordHash);
         if(match) {
@@ -134,7 +129,6 @@ router.patch('/reset-password', async(req, res) =>{
 
 router.post('/forgot-password', async(req, res) =>{
     const { email } = req.body;
-    console.log(email);
     try {
         const response = await getUserDetailsByemail(email);
 

@@ -30,20 +30,20 @@ const ConfirmTransfer = ({setSteps, handleSubmitTransferDetails, transferDetails
       
     return(
         <>
-        <div class="choose-recipient">
-                        <div class="step-area">
-                            <span class="mdr">Step 3 of 3</span>
+        <div className="choose-recipient">
+                        <div className="step-area">
+                            <span className="mdr">Step 3 of 3</span>
                             <h5>Confirm Your Transfer</h5>
                         </div>
-                        <div class="user-select">
-                            <div class="single-user">
-                                <div class="left d-flex align-items-center">
-                                    <div class="img-area">
+                        <div className="user-select">
+                            <div className="single-user">
+                                <div className="left d-flex align-items-center">
+                                    <div className="img-area">
                                         <img src={avator} alt="image"/>
                                     </div>
-                                    <div class="text-area">
+                                    <div className="text-area">
                                         <p>{company_name || first_name} {last_name}</p>
-                                        <span class="mdr">{email}</span>
+                                        <span className="mdr">{email}</span>
                                     </div>
                                 </div>
                                 <div  className="right flex flex-row no-wrap"
@@ -63,20 +63,20 @@ const ConfirmTransfer = ({setSteps, handleSubmitTransferDetails, transferDetails
                             </div>
                         </div>
                     </div>
-                    <div class="payment-details m-2">
-                        <div class="top-area flex flex-row my-3"
+                    <div className="payment-details m-2">
+                        <div className="top-area flex flex-row my-3"
                         style={{display: "flex", justifyContent: 'space-between'}}>
                             <h6>Payment Details</h6>
-                            <div class="right" >
+                            <div className="right" >
                                 <Link to="#" style={{color: "#414BA3"}}>
                                     <FaRegEdit />
                                     Edit
                                 </Link>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <ul class="details-list flex flex-column gap-4">
+                        <div className="row">
+                            <div className="col-xl-6">
+                                <ul className="details-list flex flex-column gap-4">
                                     <li style={{display: "flex", justifyContent: 'space-between'}}>
                                         <span>You Send</span>
                                         <b style={{color: "#0c266c"}}>{transferDetails.amount} USD</b>
@@ -100,18 +100,18 @@ const ConfirmTransfer = ({setSteps, handleSubmitTransferDetails, transferDetails
                         </div>
                     </div>
                     <form action="#">
-                        <div class="checkbox">
+                        <div className="checkbox">
                             <input type="checkbox" checked={isChecked}
                                 onChange={handleCheckboxChange} id="confirm"/>
-                            <label for="confirm">I confirm the payment details above</label>
+                            <label htmlFor="confirm">I confirm the payment details above</label>
                         </div>
-                        <div class="footer-area mt-40">
+                        <div className="footer-area mt-40">
                             <Link to="#" onClick={() =>setSteps("2")} style={{color: "#414BA3"}}>
                                 Previous Step
                             </Link>
                             <Link href="#" onClick={handleSendClick} aria-disabled
                             style={{pointerEvents: `${sendDisabled? "none" : ""}`, color: `${sendDisabled? "gray" : ""}`}} 
-                            class="transferMod active" data-bs-toggle="modal" data-bs-target="#transferMod">Send</Link>
+                            className="transferMod active" data-bs-toggle="modal" data-bs-target="#transferMod">Send</Link>
                         </div>
                     </form>
         </>
