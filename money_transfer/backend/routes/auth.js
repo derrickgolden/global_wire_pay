@@ -54,7 +54,7 @@ router.post('/login', async (req, res) =>{
         const match = await bcrypt.compare(password, passwordHash);
         if(match) {
             // Create a JWT token
-            const {user_id, first_name, last_name, email} = details;
+            const {user_id, first_name, last_name, email} = details[0];
             const expiresInDays = 1;
 
             const { token, exp_date } = await generateAuthToken(
